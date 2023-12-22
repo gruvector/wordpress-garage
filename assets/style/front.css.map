@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "sourceRoot": "",
+  "sources": [
+    "front.scss"
+  ],
+  "names": [],
+  "mappings": "AAKA,UACI,iCACA,2BACA,2BAEA,oBACI,2BAIR,eACI,aACA,QACA,mBAGJ,cACI,8BACA,iCAGJ,sBACI,aACA,uBACA,mBACA,aAEA,uCACI,WAjCK,KAkCL,MAjCW,KAkCX,kBACA,kBAKR,2BACI,aACA,uBACA,mBACA,aAGA,iDACI,WAjDK,KAkDL,MAjDW,KAkDX,kBACA,kBAIR,0BACI,aACA,SAEA,gCACI,uBAGJ,8BACI,YACA,WAIR,wBACI,aACA,SACA,eAEA,8BACI,UACA,aACA",
+  "file": "front.css"
+}

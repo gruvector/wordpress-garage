@@ -1,0 +1,193 @@
+.gm-input {
+  border: solid 1px #ccc !important;
+  background: #fff !important;
+  margin-bottom: 0 !important;
+}
+.gm-input[disabled] {
+  background: #eee !important;
+}
+.gm-radio-wrap {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-around;
+}
+.gm-has-error {
+  background: #ffebe8 !important;
+  border: solid 1px #c00 !important;
+}
+.gm-input-button-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.gm-input-button-wrap .gm-input-button {
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.gm-mypage-add-button-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.gm-mypage-add-button-wrap .gm-mypage-add-button {
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.gm-mypage-add-button {
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.gm-input-datepicker-wrap {
+  display: flex;
+  gap: 10px;
+}
+.gm-input-datepicker-wrap input {
+  width: 150px !important;
+}
+.gm-input-datepicker-wrap img {
+  height: 40px;
+  width: 40px;
+}
+.gm-checkbox-group-wrap {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.gm-checkbox-group-wrap label {
+  width: 30%;
+  display: flex;
+  gap: 5px;
+} /*# sourceMappingURL=front.css.map */
+
+.gm-container {
+  display: flex;
+  justify-content: space-between;
+
+}
+.gm-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  box-shadow: 3px 5px #ddd;
+}
+
+.gm-card-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.gm-card-img {
+  
+  height: auto;
+}
+.gm-card-img > img {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.gm-card-info{
+  padding: 10px;
+}
+
+.testimonials-slider {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.testimonial {
+  width: calc(30%);
+  margin-bottom: 40px;
+  margin-left: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gm-custom-wrap {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto 80px auto;
+}
+
+.gm-custom-wrap > form {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.gm-grid {
+  display: grid;
+  grid-template-columns: 50% auto;
+  column-gap: 20px;
+  margin-bottom: 60px;
+}
+.gm-basic-table-section1 {
+  background-color: #111;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+.gm-basic-table-section2 {
+  color: black;
+  text-align: center;
+  padding: 15px;
+  border: 1px solid black;
+}
+.gm-basic-table {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30% auto;
+}
+.gm-character-table {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% auto;
+  margin-bottom: 60px;
+}
+.gm-border-left {
+  border-left: 1px solid black;
+}
+.gm-fee-month {
+  width: 60%;
+  display: grid;
+  grid-template-columns: 35% auto;
+  margin-bottom: 60px;
+}
+.gm-basic-table-section3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+.gm-special-term {
+  display: grid;
+  grid-template-columns: 28% auto;
+  width: 100%;
+}
+
+.gm-basic-table-section4 {
+  grid-column: 1/ span 2;
+  border: 1px solid black;
+  padding: 15px;
+  height: 200px ;
+  margin-bottom: 60px;
+}
+
+.gm-special-term2 {
+  display: grid;
+  grid-template-columns: 38% auto;
+  width: 100%;
+}
