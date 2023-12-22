@@ -1,5 +1,5 @@
 <?php
-/* Template Name:【ガレージ】物件追加[マイページ]
+/* Template Name:【ガレージ】物件追加
  * Template Post Type: page
  */
 ?>
