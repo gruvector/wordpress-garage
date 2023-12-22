@@ -6,8 +6,6 @@ if (! defined('ABSPATH')) {
 <div class="gm-custom-wrap">
 <?php if($this->mode == '') :?>
     <form id="gm-page-form" method="POST">
-        <input type="text" style="display:none" palceholder="Enter対策">
-        <input type="hidden" name="process" value="check">
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
                 <tr>
@@ -48,10 +46,11 @@ if (! defined('ABSPATH')) {
                     <th><div>ご不明な点</div></th>
                     <td>
                         <div>
-                        <textarea class="gm-input" name="apply_memo" value=></textarea>
+                        <textarea class="gm-input" name="apply_memo" value=""></textarea>
                         </div>
                     </td>
                 </tr>
+                <input type="hidden" name="hidden" value="hidden">
             </table>
         </div>
         <div class="gm-input-button-wrap">
@@ -59,6 +58,13 @@ if (! defined('ABSPATH')) {
         </div>
     </form>
 <?php elseif($this->mode == 'completed') :?>
-    完了asfasfasfsafasdfsaf
+    <div class="gm-completed">
+        <div>
+        お問合せを受け付けました。
+        info@ar-garage.comより、メールにてご回答いたします。
+        お問合せ後2日以内にメールが届かない場合、迷惑メールフォルダをご確認いただ
+        くか、お手数をおかけしますが再度お申し込みをお願いいたします。
+        </div>
+    </div>
 <?php endif; ?>
 </div>

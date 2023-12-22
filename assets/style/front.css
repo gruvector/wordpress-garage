@@ -191,3 +191,10 @@
   grid-template-columns: 38% auto;
   width: 100%;
 }
+
+.gm-completed {
+  display: flex;
+  padding: 50px;
+  border: 1px solid black;
+
+}
