@@ -90,7 +90,7 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            <input class="gm-input" type="number" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
                             data-gm-required data-gm-postal-code="address_1,address_2">
                         </div>
                     </td>
@@ -589,9 +589,13 @@ if (! defined('ABSPATH')) {
         </div>
         <div class="gm-input-button-wrap">
             <input type="submit" class="gm-input-button" value="申請する">
+        
+
         </div>
     </form>
 <?php elseif($this->mode == 'completed') :?>
-    完了
+    <div>
+        
+    </div>
 <?php endif; ?>
 </div>

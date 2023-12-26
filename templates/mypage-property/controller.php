@@ -88,31 +88,23 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'handover_date' => $params['handover_date'],
                 'min_period' => $params['min_period'],
                 'min_period_unit' => $params['min_period_unit'],
-                'size_w' => $params['size_w'],
-                'size_h' => $params['size_h'],
-                'size_d' => $params['size_d'],
-                'fee_monthly_rent' => $params['fee_monthly_rent'],
-                'fee_monthly_common_service' => $params['fee_monthly_common_service'],
-                'fee_monthly_others' => $params['fee_monthly_others'],
-                'fee_contract_security' => $params['fee_contract_security'],
-                'fee_contract_security_amortization' => $params['fee_contract_security_amortization'],
-                'fee_contract_deposit' => $params['fee_contract_deposit'],
-                'fee_contract_deposit_amortization' => $params['fee_contract_deposit_amortization'],
-                'fee_contract_key_money' => $params['fee_contract_key_money'],
-                'fee_contract_guarantee_charge' => $params['fee_contract_guarantee_charge'],
-                'fee_contract_other' => $params['fee_contract_other'],
-                'facility_ids' => $params['facility_ids'],
-                'other_description' => $params['other_description'],
-                'appeal_description' => $params['appeal_description'],
-                'postal_code' => $params['postal_code'],
-                'address_1' => $params['address_1'],
-                'address_2' => $params['address_2'],
-                'address_3' => $params['address_3'],
-                'address_4' => $params['address_4'],
             ]
         );
 
-
+        Stripe::setApiKey('sk_test_51OERDlJax9oIpgFhYjEKcq0vZFblnfiNTVDF6JavaJYcf8vIN2InO9YvIrr3fjCUkbPEm8rdIQvkoVqXqUMMik6n00xoX800OC');
+        $token = $_POST('stripeToken');
+        try {
+            $charge = Charge::create([
+                'amount' => '400',
+                'currency' => 'jpy',
+                'description' => 'Example Charge',
+                'source' => $token,
+            ]);            
+        } catch (\Exception $e) {
+            // Handle payment error
+            $url = explode('?', Gm_Util::get_url())[0];
+            header('Location: ' . $url . '?mode=nopaid');
+        }
         // -----------------
         // 画面遷移
         // -----------------

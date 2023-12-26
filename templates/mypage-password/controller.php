@@ -50,9 +50,11 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
         $validation = new Gm_Validation($params);
         $user = $_SESSION['account_id'];
         $old_pwd = $this->wpdb->get_results("SELECT password FROM {$this->wpdb->prefix}gmt_account WHERE ID = $user"); 
-        if ($params['new_pwd'] != $params['confirm'] || $params['old_pwd'] != $old_pwd) {
+        $strOld_Pwd1 = json_encode($old_pwd[0]); // Assuming the key is 'password'
+        $objOld_Pwd2 = json_decode($strOld_Pwd1);
+        $password = $objOld_Pwd2->password;
+        if ($params['new_pwd'] != $params['confirm'] || $params['old_pwd'] != $password) {
             $this->set_input_params($params);
-            $old_pwd;
             echo "<script>alert(\"以前のパスワードが間違っています。 新しいパスワードを再確認してください。\");</script>";
             return;
         }
@@ -81,7 +83,7 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_account',
             [
-                'new_pwd' => $params['new_pwd'],
+                'password' => $params['new_pwd'],
             ]
         );
 
