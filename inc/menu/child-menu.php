@@ -67,6 +67,79 @@ final class Gm_Menu
             'Gm_Menu::show_property_tmp'
         );
 
+        add_menu_page(
+            'アカウント管理[編集]',
+            '[A]アカウント',
+            'manage_options',
+            'menu_gm_account',
+            'Gm_Menu::show_account',
+            'dashicons-admin-users',
+            100
+        );
+        add_submenu_page(
+            'menu_gm_account',
+            'アカウント管理[編集]',
+            '編集',
+            'manage_options',
+            'menu_gm_account',
+            'Gm_Menu::show_account'
+        );
+
+        add_submenu_page(
+            'menu_gm_account',
+            'アカウント管理[BAN]',
+            'BAN',
+            'manage_options',
+            'menu_gm_account',
+            'Gm_Menu::show_account'
+        );
+
+        add_menu_page(
+            '物件管理[編集]',
+            '[A]物件',
+            'manage_options',
+            'menu_gm_property',
+            'Gm_Menu::show_property',
+            'dashicons-admin-users',
+            100
+        );
+        add_submenu_page(
+            'menu_gm_property',
+            '物件管理[編集]',
+            '編集',
+            'manage_options',
+            'menu_gm_property',
+            'Gm_Menu::show_property'
+        );
+
+        add_submenu_page(
+            'menu_gm_property',
+            '物件管理[BAN]',
+            'BAN',
+            'manage_options',
+            'menu_gm_property',
+            'Gm_Menu::show_property'
+        );
+
+        add_menu_page(
+            '料金[編集]',
+            '[A]料金',
+            'manage_options',
+            'menu_gm_price',
+            'Gm_Menu::show_price',
+            'dashicons-admin-users',
+            100
+        );
+        add_submenu_page(
+            'menu_gm_price',
+            '料金[編集]',
+            '編集 ',
+            'manage_options',
+            'menu_gm_price',
+            'Gm_Menu::show_price'
+        );
+
+
     }
 
     /** アカウント管理 */

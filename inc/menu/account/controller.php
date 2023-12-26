@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/inc/menu/abstract-menu-controller.php';
-class Gm_Account_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
+class Gm_Account_Menu_Controller extends Gm_Abstract_List_Menu_Controller
 {
     public $area_list = [];
     public $service;
@@ -14,8 +14,8 @@ class Gm_Account_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     public function __construct()
     {
         require_once plugin_dir_path(__FILE__) . 'service.php';
-        $this->service = new Gm_Account_Tmp_Menu_Service();
-        $table = new Gm_Account_Tmp_Menu_Table();
+        $this->service = new Gm_Account_Menu_Service();
+        $table = new Gm_Account_Menu_Table();
         $keys = array('ID');
         parent::__construct($this->service, $table, $keys);
     }
@@ -56,7 +56,7 @@ class Gm_Account_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
 /****************************************************
 / 以下、テーブル用
 *****************************************************/
-class Gm_Account_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
+class Gm_Account_Menu_Table extends Gm_Abstract_Menu_Table
 {
     /** コンストラクタ */
     public function __construct()
@@ -100,7 +100,7 @@ class Gm_Account_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
     /** データ生成 */
     protected function create_data($items)
     {
-        return Gm_Account_Tmp_Menu_Info::create_data($items);
+        return Gm_Account_Menu_Info::create_data($items);
     }
 
     /*******************
@@ -173,7 +173,7 @@ class Gm_Account_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
 
 }
 
-class Gm_Account_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
+class Gm_Account_Menu_Item extends Gm_Abstract_Menu_Item
 {
     public function __construct($record)
     {
@@ -274,16 +274,16 @@ class Gm_Account_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
 
 }
 
-class Gm_Account_Tmp_Menu_Info extends Gm_Abstract_Menu_Info
+class Gm_Account_Menu_Info extends Gm_Abstract_Menu_Info
 {
     public static function create_data($records)
     {
         $items = [];
         if (is_array($records)) {
             foreach ($records as $record) {
-                $items[] = new Gm_Account_Tmp_Menu_Item($record);
+                $items[] = new Gm_Account_Menu_Item($record);
             }
         }
-        return new Gm_Account_Tmp_Menu_Info($GLOBALS['title'], $items);
+        return new Gm_Account_Menu_Info($GLOBALS['title'], $items);
     }
 }
