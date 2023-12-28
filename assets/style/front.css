@@ -198,3 +198,123 @@
   border: 1px solid black;
 
 }
+.gm-mypage-filter-raido-wrap > label {
+  margin-left: 20px;
+}
+.map_group {
+  margin-bottom: 100px;
+}
+.gm-help {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gm-help1 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gm-help1-desc {
+  display: flex;
+  width: 100%;
+  
+}
+
+.gm-help1-desc-img {
+  width: 20%;
+}
+
+.gm-help1-desc-img > img {
+  width: 100%;
+}
+
+.gm-help1-desc-text {
+  text-align: center;
+  margin-left: 50px;
+  width: 80%;
+  font-size: 25px;
+  font-weight: bold;
+}
+.gm-help1-property {
+  text-align: center;
+  margin: 30px auto;
+  border: 1px solid black;
+  padding: 5px;
+  width: 400px;
+  height: 500px;
+  
+}
+.gm-help1-property-header {
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.gm-help1-flow-tap {
+  background-color: #111;
+  color: white;
+  width: 150px;
+  text-align: center;
+  padding: 5px;
+
+}
+
+.gm-help-flow-content {
+  border: 1px solid black;
+  padding: 10px 15px;
+
+}
+
+.gm-help1-steps {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 100px;
+}
+.gm-help1-steps1 {
+  width: 18%;
+}
+.gm-help1-steps-text {
+  text-align: center;
+  font-size: 25px;
+
+}
+
+.gm-help1-steps-img {
+  margin-top: 10px;
+  border: 1px solid black;
+  height: 205px;
+
+}
+
+.gm-help1-steps-img > img {
+  width: 100%;
+  font-size: 35px;
+  
+}
+
+.entry-content h2 {
+  margin: 0;
+}
+
+.gm-mypage-list-area{
+  margin-top: 30px;
+
+}
+.gm-property-list-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.gm-property-list {
+  width: 350px;
+  border: 1px solid black;
+  border-radius: 7px;
+  box-shadow: lightgray 5px 3px;
+  padding: 20px;
+
+}

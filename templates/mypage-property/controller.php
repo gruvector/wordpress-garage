@@ -91,20 +91,6 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             ]
         );
 
-        Stripe::setApiKey('sk_test_51OERDlJax9oIpgFhYjEKcq0vZFblnfiNTVDF6JavaJYcf8vIN2InO9YvIrr3fjCUkbPEm8rdIQvkoVqXqUMMik6n00xoX800OC');
-        $token = $_POST('stripeToken');
-        try {
-            $charge = Charge::create([
-                'amount' => '400',
-                'currency' => 'jpy',
-                'description' => 'Example Charge',
-                'source' => $token,
-            ]);            
-        } catch (\Exception $e) {
-            // Handle payment error
-            $url = explode('?', Gm_Util::get_url())[0];
-            header('Location: ' . $url . '?mode=nopaid');
-        }
         // -----------------
         // 画面遷移
         // -----------------

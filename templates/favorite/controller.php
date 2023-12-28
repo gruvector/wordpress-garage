@@ -16,7 +16,7 @@ class Gm_Favorite_Controller extends Abstract_Template_Controller
     }
 
     public function action() {
-        $this->favorite_list = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE availability_id = 1");
+        $this->favorite_list = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE favorite = 1");
         $this->render();
     }
 

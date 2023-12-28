@@ -23,7 +23,13 @@ if (!$_SESSION['account_id']) {
         <label><input type="radio" name="property_filter" value="4">非公開</label>
     </div>
     <div class="gm-mypage-list-area">
-        
+        <div class="gm-property-list">
+            <div class="gm-property-list-header">ガレージ名: dfgdrgdgd</div>
+            物件番号: adsfaewf <br>
+            掲載状況: asfawefsaf <br>
+            区画名  : sdfasfsdf <br>
+
+        </div>
     </div>
     <div class="gm-mypage-add-button-wrap">
         <a class="gm-mypage-add-button" href="/mypage-property/?type=add">

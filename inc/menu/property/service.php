@@ -37,7 +37,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
 
         $password = Gm_Util::get_rand_str(8);
 
-        $wpdb->insert(
+        $wpdb->update(
             $wpdb->prefix.'gmt_property',
             [
                 // 'property_id' => $record->property_id,

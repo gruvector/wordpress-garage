@@ -159,6 +159,22 @@ final class Gm_Menu
         $contoroller->action();
     }
 
+    public static function show_account()
+    {
+        require_once plugin_dir_path(__FILE__) . '/account/controller.php';
+        $contoroller = new Gm_Account_Menu_Controller();
+        $contoroller->action();
+    }
+
+
+    /** 物件管理 */
+    public static function show_property()
+    {
+        require_once plugin_dir_path(__FILE__) . '/property/controller.php';
+        $contoroller = new Gm_Property_Menu_Controller();
+        $contoroller->action();
+    }
+
 
     public static function request_ajax()
     {
