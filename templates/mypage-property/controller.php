@@ -34,7 +34,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         // 確認
         if ($this->mode == 'confirm') {
             $this->set_input_params($this->url_params());
-        }
+        };
+
         $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
         $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
 
@@ -88,6 +89,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'handover_date' => $params['handover_date'],
                 'min_period' => $params['min_period'],
                 'min_period_unit' => $params['min_period_unit'],
+                'account_id' => $_SESSION['account_id'],
             ]
         );
 

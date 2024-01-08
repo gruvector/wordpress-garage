@@ -7,10 +7,12 @@ abstract class Abstract_Template_Controller
     public $arrow_history_back = true;
     protected $wpdb;
     protected $input_params = [];
+    protected $wpgomap = [];
     protected $error_list = [
         'common_errors' => [],
         'contents_errors' => [],
     ];
+    
 
     public function __construct()
     {

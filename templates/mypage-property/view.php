@@ -27,6 +27,10 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
             </table>
+            <div>
+                ※左端の写真が、地図上で料金ボタンをクリックした際に表示される写真となります。また、この写真の並び順通りに写真は掲載されます。<br> <br>
+                ※写真のデータが大きすぎてアップロードできない方向はこちらのサイトをどうぞ 写真データサイズ圧縮ツール https://tinypng.com/ <br> <br>
+            </div>
             <table class="gm-input-table">
                 <tr>
                     <th><div>名称</div></th>
@@ -134,6 +138,10 @@ if (! defined('ABSPATH')) {
             </table>
             <table class="gm-input-table">
                 <tr>
+                    <th><div>ガレージサイズ</div></th>
+                    <td></td>
+                </tr>
+                <tr>
                     <th><div>サイズ：横幅</div></th>
                     <td>
                         <div>
@@ -163,6 +171,10 @@ if (! defined('ABSPATH')) {
             </table>
             <table class="gm-input-table">
                 <tr>
+                    <th><div>毎月支払うもの</div></th>
+                    <td></td>
+                </tr>
+                <tr>
                     <th><div>月額費用：賃料</div></th>
                     <td>
                         <div>
@@ -191,6 +203,10 @@ if (! defined('ABSPATH')) {
                 </tr>
             </table>
             <table class="gm-input-table">
+                <tr>
+                    <th><div>契約時のみ支払うもの</div></th>
+                    <td></td>
+                </tr>
                 <tr>
                     <th><div>契約費用：敷金</div></th>
                     <td>
@@ -306,7 +322,7 @@ if (! defined('ABSPATH')) {
         <input type="text" style="display:none" palceholder="Enter対策">
         <input type="hidden" name="process" value="regist">
         <div class="gm-input-table-wrap">
-        <table class="gm-input-table">
+            <table class="gm-input-table">
                 <tr>
                     <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
@@ -589,8 +605,6 @@ if (! defined('ABSPATH')) {
         </div>
         <div class="gm-input-button-wrap">
             <input type="submit" class="gm-input-button" value="申請する">
-        
-
         </div>
     </form>
 <?php elseif($this->mode == 'completed') :?>

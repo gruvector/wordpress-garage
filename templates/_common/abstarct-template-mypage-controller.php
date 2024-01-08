@@ -3,6 +3,10 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_co
 abstract class Abstract_Template_Mypage_Controller extends Abstract_Template_Controller
 {
     protected $_account_record = [];
+    protected $availability_records = [];
+    protected $facility_records = [];
+    protected $records1 = [];
+    protected $records2 = [];
 
     protected function pre_action()
     {
@@ -10,7 +14,7 @@ abstract class Abstract_Template_Mypage_Controller extends Abstract_Template_Con
 
         session_start();
         if (!isset($_SESSION['account_id'])) {
-            header('Location: /timeout/');
+            header('Location: /login/');
             exit();
         }
 
@@ -21,7 +25,7 @@ abstract class Abstract_Template_Mypage_Controller extends Abstract_Template_Con
             $this->wpdb->prepare("SELECT * FROM {$this->wpdb->prefix}gmt_account WHERE ID = %d ", $_SESSION['account_id'])
         );
         if (empty($account_records)) {
-            header('Location: /timeout/');
+            header('Location: /login/');
             exit();
         }
         $this->_account_record = $account_records[0];
