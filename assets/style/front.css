@@ -330,3 +330,31 @@
 .gm-input-table {
   border: white;
 }
+
+.gm-property-list-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+.gm-property-list-editbutton {
+  width: 40%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #111;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+  
+}
+.gm-property-list-private_publicbutton {
+  width: 40%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #1d2a9e;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+}

@@ -42,6 +42,22 @@ if (!$_SESSION['account_id']) {
                         if($record2->property_id == $record1->ID) { echo "掲載期間: ".$record2->publish_from." - <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$record2->publish_to; }
                     } 
                 ?>
+            <form class="gm-property-list-button" method="post">
+                <a class="gm-property-list-editbutton" href="<?= home_url('mypage-property') ?>">編集する</a>
+                <?php 
+                    if($record1->availability_id == 1) { ?>
+                        <button class="gm-property-list-private_publicbutton" type="submit">>>非公開</button>
+                        <input type="hidden" name="public_private" value="private">
+                <?php
+                    } else {
+                ?>
+                        <button class="gm-property-list-private_publicbutton" type="submit">>>公開申請</button>
+                        <input type="hidden" name="public_private" value="public">
+                <?php
+                    }
+                ?>
+                
+            </form>
             </div> <?php
             }
         ?>
