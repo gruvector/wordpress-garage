@@ -35,8 +35,7 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
         if ($this->mode == 'confirm') {
             $this->set_input_params($this->url_params());
         }
-        $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
-        $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
+
 
         // 画面描画
         $this->render();
@@ -80,20 +79,15 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // データ登録
         // -----------------
-        $this->wpdb->insert(
+        echo $params['new_pwd'];
+        $this->wpdb->update(
             $this->wpdb->prefix.'gmt_account',
             [
                 'password' => $params['new_pwd'],
-            ]
+            ], ['account_attr_id' => $_SESSION['account_id']]
         );
 
-
-        // -----------------
-        // 画面遷移
-        // -----------------
-        // 画面遷移
-        $url = explode('?', Gm_Util::get_url())[0];
-        header('Location: ' . $url . '?mode=completed');
+        header('Location:/mypage');
         exit();
     }
 

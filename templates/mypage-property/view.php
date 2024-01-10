@@ -13,7 +13,7 @@ if (! defined('ABSPATH')) {
 <div class="gm-custom-wrap">
 <?php if($this->mode == '') :?>
     <form id="gm-page-form" method="POST">
-        <input type="text" style="display:none" palceholder="Enter対策">
+        <input type="text" style="display:none" placeholder="Enter対策">
         <input type="hidden" name="process" value="check">
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
@@ -94,7 +94,7 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="number" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            <input class="gm-input" type="zipcode" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>" id="postal_code"
                             data-gm-required data-gm-postal-code="address_1,address_2">
                         </div>
                     </td>

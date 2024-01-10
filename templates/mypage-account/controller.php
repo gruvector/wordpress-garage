@@ -77,10 +77,14 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
         // データ登録
         // -----------------
         $this->wpdb->insert(
-            $this->wpdb->prefix.'gmt_property_tmp',
+            $this->wpdb->prefix.'gmt_account_tmp',
             [
-                // 'property_id' => $params['property_id'],
-                
+                'nm' => $params['account_nm'],
+                'email' => $params['account_email'],
+                'phone' => $params['account_tel'],
+                'address' => $params['account_'],
+                'nm' => $params['account_nm'],
+                'nm' => $params['account_nm'],
             ]
         );
 

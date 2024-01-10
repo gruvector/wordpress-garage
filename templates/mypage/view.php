@@ -15,7 +15,10 @@ if (!$_SESSION['account_id']) {
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <div class="gm-custom-wrap">
-    
+    <div id="mySidenav" class="sidenav">
+        <a href="<?= home_url('mypage-account') ?>" id="account">アカウント変更</a>
+        <a href="<?= home_url('mypage-password') ?>" id="password">パスワード変更</a>
+    </div>
     <h2>登録済みの物件一覧</h2>
     <form class="gm-mypage-filter-raido-wrap" method="GET">
         <label><input type="radio" name="propertyFilter" value="1" checked>全て</label>

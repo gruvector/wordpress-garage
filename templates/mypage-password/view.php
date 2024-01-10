@@ -69,7 +69,7 @@ if (! defined('ABSPATH')) {
                     <th><div>新しいパスワード</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="section_nm" value="<?php echo $this->get_input_param('new_pwd') ?>" disabled
+                            <input class="gm-input" type="text" name="new_pwd_confirm" value="<?php echo $this->get_input_param('new_pwd') ?>" disabled
                             data-gm-required>
                         </div>
                     </td>
@@ -78,7 +78,7 @@ if (! defined('ABSPATH')) {
                     <th><div>パスワードの確認</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="section_nm" value="<?php echo $this->get_input_param('confirm') ?>" disabled
+                            <input class="gm-input" type="text" name="confirm_confirm" value="<?php echo $this->get_input_param('confirm') ?>" disabled
                             data-gm-required>
                         </div>
                     </td>
