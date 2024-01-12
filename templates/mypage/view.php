@@ -46,7 +46,11 @@ if (!$_SESSION['account_id']) {
                     } 
                 ?>
             <form class="gm-property-list-button" method="post">
-                <a class="gm-property-list-editbutton" href="<?= home_url('mypage-property') ?>">編集する</a>
+                <?php
+                    $param = array('type'=>'edit', 'id'=>$record1->ID);
+                    $link = add_query_arg($param, home_url('mypage-property'));
+                ?>
+                <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
                 <?php 
                     if($record1->availability_id == 1) { ?>
                         <button class="gm-property-list-private_publicbutton" type="submit">>>非公開</button>

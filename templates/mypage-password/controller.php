@@ -87,6 +87,7 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
             ], ['account_attr_id' => $_SESSION['account_id']]
         );
 
+
         header('Location:/mypage');
         exit();
     }

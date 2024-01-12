@@ -17,30 +17,79 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
     public function action()
     {
+
+        if (isset($_GET['id'])) {
+            $param_id = sanitize_key($_GET['id']);
+        }
+
+        if (isset($_GET['type'])) {
+            $param_type = sanitize_key($_GET['type']);
+        }       
+        
         // -------------------
         // メイン処理
         // -------------------
-        if (isset($_POST['process']) && $_POST['process'] == 'check') {
-            $this->check($_POST);
+
+        if ($param_type == "add") {
+            if (isset($_POST['process']) && $_POST['process'] == 'check') {
+                $this->check($_POST);
+            }
+            if (isset($_POST['process']) && $_POST['process'] == 'regist') {
+                $this->regist($this->url_params());
+            }
+    
+            // -------------------
+            // 画面描画
+            // -------------------
+            $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
+            // 確認
+            if ($this->mode == 'confirm') {
+                $this->set_input_params($this->url_params());
+            };
+    
+            $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
+            $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
+    
+            // 画面描画
+            $this->render();
+        } else if ($param_type == "edit") {
+            $edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $param_id");
+            $edit_data_from_db_1 = objectToObject($edit_data_from_db[0]);
+            var_dump($edit_data_from_db[0]);
+            $this->edit_data['nm'] = $edit_data_from_db['nm'];
+
+            if (isset($_POST['process']) && $_POST['process'] == 'check') {
+                $this->check($_POST);
+            }
+            if (isset($_POST['process']) && $_POST['process'] == 'regist') {
+                $this->regist($this->url_params());
+            }
+    
+            // -------------------
+            // 画面描画
+            // -------------------
+            $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
+            // 確認
+            if ($this->mode == 'confirm') {
+                $this->set_input_params($this->url_params());
+            };
+    
+            $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
+            $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
+    
+            // 画面描画
+            $this->render();
         }
-        if (isset($_POST['process']) && $_POST['process'] == 'regist') {
-            $this->regist($this->url_params());
-        }
+        
+    }
 
-        // -------------------
-        // 画面描画
-        // -------------------
-        $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
-        // 確認
-        if ($this->mode == 'confirm') {
-            $this->set_input_params($this->url_params());
-        };
-
-        $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
-        $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
-
-        // 画面描画
-        $this->render();
+    private function objectToObject($instance, $className) {
+        return unserialize(sprintf(
+            'O:%d:"%s"%s',
+            strlen($className),
+            $className,
+            strstr(strstr(serialize($instance), '"'), ':')
+        ));
     }
 
     private function check($params)
@@ -93,10 +142,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             ]
         );
 
-        // -----------------
-        // 画面遷移
-        // -----------------
-        // 画面遷移
+        
         $url = explode('?', Gm_Util::get_url())[0];
         header('Location: ' . $url . '?mode=completed');
         exit();

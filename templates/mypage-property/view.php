@@ -36,6 +36,9 @@ if (! defined('ABSPATH')) {
                     <th><div>名称</div></th>
                     <td>
                         <div>
+                            <?php
+                                echo $this->edit_data['nm'];
+                            ?>
                             <input class="gm-input" type="text" name="nm" value="<?php echo $this->get_input_param('nm') ?>" 
                             data-gm-required>
                         </div>
@@ -46,7 +49,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="section_nm" value="<?php echo $this->get_input_param('section_nm') ?>" 
-                            data-gm-required>
+                            data-gm-required>   
                         </div>
                     </td>
                 </tr>
