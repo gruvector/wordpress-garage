@@ -3,6 +3,8 @@
 require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_common/abstarct-template-mypage-controller.php';
 class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 {
+
+    public $edit_data_from_db = [];
     protected function setting()
     {
         parent::setting();
@@ -53,10 +55,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             // 画面描画
             $this->render();
         } else if ($param_type == "edit") {
-            $edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $param_id");
-            $edit_data_from_db_1 = objectToObject($edit_data_from_db[0]);
-            var_dump($edit_data_from_db[0]);
-            $this->edit_data['nm'] = $edit_data_from_db['nm'];
+            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $param_id");
 
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
                 $this->check($_POST);

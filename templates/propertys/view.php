@@ -6,8 +6,7 @@ if (! defined('ABSPATH')) {
 
 <div class="gm-custom-wrap">
     <div class="">
-        <?php   
-            foreach ($this->property_details as $i => $record) { ?>
+        <?php foreach ($this->property_details as $i => $record) { ?>
             <div class="gm-img-slide">
 
             </div>
