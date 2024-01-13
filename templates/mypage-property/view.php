@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
                     <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="imgs" value="" >
+                            <input class="gm-input" type="file" name="imgs" value="<?= $record_edit->nm ?>" >
                         </div>
                     </td>
                 </tr>
@@ -330,8 +330,7 @@ if (! defined('ABSPATH')) {
                     <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="imgs" value="<?php echo $this->get_input_param('imgs') ?>" disabled
-                            >
+                            <input class="gm-input" type="text" name="imgs" value="<?php echo $this->get_input_param('imgs') ?>" disabled>
                         </div>
                     </td>
                 </tr>
@@ -341,8 +340,7 @@ if (! defined('ABSPATH')) {
                     <th><div>名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="nm" value="<?php echo $this->get_input_param('nm') ?>" disabled
-                            data-gm-required>
+                            <input class="gm-input" type="text" name="nm" value="<?php echo $this->get_input_param('nm') ?>" disabled data-gm-required>
                         </div>
                     </td>
                 </tr>
@@ -350,8 +348,7 @@ if (! defined('ABSPATH')) {
                     <th><div>区画名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="section_nm" value="<?php echo $this->get_input_param('section_nm') ?>" disabled
-                            data-gm-required>
+                            <input class="gm-input" type="text" name="section_nm" value="<?php echo $this->get_input_param('section_nm') ?>" disabled data-gm-required>
                         </div>
                     </td>
                 </tr>

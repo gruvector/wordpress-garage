@@ -20,13 +20,7 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
     public function action()
     {
         $wpgomap = $this->wpdb->get_results("SELECT ID, address_1 FROM {$this->wpdb->prefix}gmt_property");
-        // $this->wpdb->insert(
-        //     $this->wpdb->prefix.'wpgmza',
-        //     [
-        //         // 'property_id' => $params['property_id'],
-        //         'address' => $wpgomap['address_1']
-        //     ]
-        // );
+
 
         // -------------------
         // 画面描画

@@ -5,6 +5,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 {
 
     public $edit_data_from_db = [];
+    public $param_id = "";
+    public $param_type = "";
     protected function setting()
     {
         parent::setting();
@@ -21,18 +23,18 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
     {
 
         if (isset($_GET['id'])) {
-            $param_id = sanitize_key($_GET['id']);
+            $this->param_id = sanitize_key($_GET['id']);
         }
 
         if (isset($_GET['type'])) {
-            $param_type = sanitize_key($_GET['type']);
+            $this->param_type = sanitize_key($_GET['type']);
         }       
         
         // -------------------
         // メイン処理
         // -------------------
 
-        if ($param_type == "add") {
+        if ($this->param_type == "add") {
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
                 $this->check($_POST);
             }
@@ -54,8 +56,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
     
             // 画面描画
             $this->render();
-        } else if ($param_type == "edit") {
-            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $param_id");
+        } else if ($this->param_type == "edit") {
+            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
 
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
                 $this->check($_POST);
@@ -80,15 +82,6 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             $this->render();
         }
         
-    }
-
-    private function objectToObject($instance, $className) {
-        return unserialize(sprintf(
-            'O:%d:"%s"%s',
-            strlen($className),
-            $className,
-            strstr(strstr(serialize($instance), '"'), ':')
-        ));
     }
 
     private function check($params)
@@ -113,7 +106,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             if (isset($params['process'])) {
                 unset($params['process']);
             }
-            $url = $url . '?mode=confirm&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
+            $url = $url . '?mode=confirm&type=edit&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
         }
         // 画面遷移
         header('Location: ' . $url);
