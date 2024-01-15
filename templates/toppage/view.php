@@ -149,6 +149,8 @@ if (!defined('ABSPATH')) {
 
     async function initMap() {
         // Request needed libraries.
+        document.cookie = "favorite=0;";
+        console.log(document.cookie);
         const {
             Map
         } = await google.maps.importLibrary("maps");
@@ -194,68 +196,89 @@ if (!defined('ABSPATH')) {
         const content = document.createElement("div");
 
         content.classList.add("property");
-        content.innerHTML = `
-        <div class="icon">
-            <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
-            <span class="fa-sr-only">home</span>
-        </div>
-        <div class="details">
-            
-            <div class="gm-map-item">
-                <div class="gm-card-img">
-                    <img src="<?php echo get_template_directory_uri() ?>/library/images/${property.imgs}.jpg" alt="img" >
-                </div>
-                <div class="gm-map-info">
-                    <div class="gm-card-info__div">車庫名: ${property.nm}</div>
-                    <div class="gm-card-info__div">価格: ${property.postal_code}</div>
-                </div>
-                
-                <div class="gm-map-favorite">
-                    <button class="heart" onclick="${setCookie("ID", property.ID, 365)}"><i class="far fa-heart border-heart"></i></button>
-                </div>
+            content.innerHTML = `
+            <div class="icon">
+                <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
+                <span class="fa-sr-only">home</span>
             </div>
-            
-            
-        </div>
-        `;
+            <div class="details">
+                
+                <div class="gm-map-item">
+                    <div class="gm-card-img">
+                        <img src="<?php echo get_template_directory_uri() ?>/library/images/${property.imgs}.jpg" alt="img" >
+                    </div>
+                    <div class="gm-map-info">
+                        <div class="gm-card-info__div">車庫名: ${property.nm}</div>
+                        <div class="gm-card-info__div">価格: ${property.postal_code}</div>
+                    </div>
+                    
+                    <div class="gm-map-favorite">
+                        <button class="heart" onclick="handleFavorite(${property.ID})"><i class="far fa-heart border-heart" id="heart"></i></button>
+                    </div>
+                </div>
+            </div> `;
+        
         return content;
     }
 
 
     initMap();
 
+    function handleFavorite(id) {
+        let a = getCookie("favorite");
+        const element = document.getElementById("heart");  
+        if (a.indexOf(id) == -1) {
+            setCookie('favorite', id, 365, a);
+            element.classList.remove("border-heart"); 
+            element.classList.add("selected-heart");
+        } else {
+            let ind = a.indexOf(id);
+            deleteCookie('favorite', 365, a, ind);
+            element.classList.remove("selected-heart"); 
+            element.classList.add("border-heart");
+        }
+        
+    }
     
-    function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        let expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    function setCookie(cname, cvalue, expires, value) {
+        value.push(cvalue);
+        let b = value.toString();
+        document.cookie = cname + "=" + b + ";" + expires + ";path=/";
+        console.log(document.cookie);
+    }
+
+    function deleteCookie(cname, expires, value, indi) {
+        const spliced = value.toSpliced(indi, 1);
+        let b = spliced.toString();
+        document.cookie = cname + "=" + b + ";" + expires + ";path=/";
+        console.log(document.cookie);
     }
 
     function getCookie(cname) {
         let name = cname + "=";
-        let ca = document.cookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
+        
+        let decodedCookie = decodeURIComponent(document.cookie);
+        
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
             let c = ca[i];
             while (c.charAt(0) == ' ') {
             c = c.substring(1);
             }
             if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+            let d = c.substring(name.length, c.length);
+            let e = d.split(",");
+            let numberArray = [];
+            length = e.length;
+
+            for (let i = 0; i < length; i++)
+                numberArray.push(parseInt(e[i]));
+        
+            return numberArray;
             }
         }
         return "";
     }
 
-    function checkCookie() {
-        let user = getCookie("username");
-        if (user != "") {
-            alert("Welcome again " + user);
-        } else {
-            user = prompt("Please enter your name:", "");
-            if (user != "" && user != null) {
-            setCookie("username", user, 365);
-            }
-        }
-    }
+
 </script>
