@@ -57,7 +57,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             // 画面描画
             $this->render();
         } else if ($this->param_type == "edit") {
-            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
+            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id") || [];
 
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
                 $this->check($_POST);
@@ -113,12 +113,28 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         exit();
     }
 
+    public function getLnt($zip){
+        
+    }
 
     private function regist($params)
     {
         // -----------------
-        // データ登録
+        // start to get lat and long
         // -----------------
+
+        $lnt_url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($params['postal_code'])."&key=AIzaSyAb8pareaW9BgBJF52KiPbsyoljqKO9_C0";
+        $result_string = file_get_contents($lnt_url);
+        $result = json_decode($result_string, true);
+        $result1[]=$result['results'][0];
+        $result2[]=$result1[0]['geometry'];
+        $result3[]=$result2[0]['location'];
+        
+        // ---------------------
+        // end to get lat and long
+        // ----------------------
+
+
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_property_tmp',
             [
@@ -131,6 +147,30 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'min_period' => $params['min_period'],
                 'min_period_unit' => $params['min_period_unit'],
                 'account_id' => $_SESSION['account_id'],
+                'lat' => $result3[0]['lat'],
+                'long' => $result3[0]['lng'],
+                'size_w' => $params['size_w'],
+                'size_h' => $params['size_h'],
+                'size_d' => $params['size_d'],
+                'fee_monthly_rent' => $params['fee_monthly_rent'],
+                'fee_monthly_common_service' => $params['fee_monthly_common_service'],
+                'fee_monthly_others' => $params['fee_monthly_others'],
+                'fee_contract_security' => $params['fee_contract_security'],
+                'fee_contract_security_amortization' => $params['fee_contract_security_amortization'],
+                'fee_contract_deposit' => $params['fee_contract_deposit'],
+                'fee_contract_deposit_amortization' => $params['fee_contract_deposit_amortization'],
+                'fee_contract_money' => $params['fee_contract_money'],
+                'fee_contract_guarantee_charge' => $params['fee_contract_guarantee_charge'],
+                'fee_contract_other' => $params['fee_contract_other'],
+                'other_description' => $params['other_description'],
+                'appeal_description' => $params['appeal_description'],
+                'postal_code' => $params['postal_code'],
+                'address_1' => $params['address_1'],
+                'address_2' => $params['address_2'],
+                'address_3' => $params['address_3'],
+                'address_4' => $params['address_4'],
+
+
             ]
         );
 
@@ -139,5 +179,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         header('Location: ' . $url . '?mode=completed');
         exit();
     }
+
+    
 
 }

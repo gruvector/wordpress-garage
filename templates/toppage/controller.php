@@ -4,6 +4,7 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_co
 class Gm_Toppage_Controller extends Abstract_Template_Controller
 {
     public $account_attr_records = [];
+    public $wpgomap = [];
 
     protected function setting()
     {
@@ -19,13 +20,10 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
 
     public function action()
     {
-        $wpgomap = $this->wpdb->get_results("SELECT ID, address_1 FROM {$this->wpdb->prefix}gmt_property");
-
-
+        $this->wpgomap = $this->wpdb->get_results("SELECT ID, nm, imgs, lat, lng FROM {$this->wpdb->prefix}gmt_property");
         // -------------------
         // 画面描画
         // -------------------
-
         $this->render();
     }
 

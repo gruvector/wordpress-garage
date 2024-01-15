@@ -73,7 +73,7 @@ if (!$_SESSION['account_id']) {
     </div>
     <div class="gm-mypage-add-button-wrap">
         <a class="gm-mypage-add-button" href="/mypage-property/?type=add">
-            <div>物件を追加する</div>
+            物件を追加する
         </a>
     </div>
 </div>

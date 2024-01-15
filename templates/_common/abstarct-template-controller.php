@@ -7,40 +7,13 @@ abstract class Abstract_Template_Controller
     public $arrow_history_back = true;
     protected $wpdb;
     protected $input_params = [];
-    protected $wpgomap = [];
+    protected $wpgomap;
     protected $error_list = [
         'common_errors' => [],
         'contents_errors' => [],
     ];
-    protected $edit_data = [
-        "nm"                                 => "",
-        "section_nm"                         => "",
-        "handover_date"                      => "",
-        "min_period"                         => "",
-        "postal_code"                        => "",
-        "address_1"                          => "",
-        "address_2"                          => "",
-        "address_3"                          => "",
-        "address_4"                          => "",
-        "size_w"                             => "",
-        "size_h"                             => "",
-        "size_d"                             => "",
-        "fee_monthly_rent"                   => "",
-        "fee_monthly_common_service"         => "",
-        "fee_monthly_others"                 => "",
-        "fee_contract_security"              => "",
-        "fee_contract_security_amortization" => "",
-        "fee_contract_deposit"               => "",
-        "fee_contract_deposit_amortization"  => "",
-        "fee_contract_key_money"             => "",
-        "fee_contract_guarantee_charge"      => "",
-        "fee_contract_other"                 => "",
-        "other_description"                  => "",
-        "appeal_description"                 => "", 
-
-    ];
+  
     
-
     public function __construct()
     {
         date_default_timezone_set('Asia/Tokyo');

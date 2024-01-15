@@ -399,7 +399,7 @@
  */
 .property {
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #222;
   border-radius: 50%;
   color: #263238;
   display: flex;
@@ -447,6 +447,8 @@
   flex: 1;
 }
 
+
+
 .property .address {
   color: #9E9E9E;
   font-size: 10px;
@@ -463,7 +465,7 @@
 
 .property .features > div {
   align-items: center;
-  background: #F5F5F5;
+  background: #222;
   border-radius: 5px;
   border: 1px solid #ccc;
   display: flex;
@@ -476,12 +478,12 @@
  * Property styles in highlighted state.
  */
 .property.highlight {
-  background-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 8px;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
   height: 80px;
   padding: 8px 15px;
-  width: auto;
+  width: 0;
 }
 
 .property.highlight::after {
@@ -497,17 +499,6 @@
   height: 50px;
 }
 
-.property .bed {
-  color: #FFA000;
-}
-
-.property .bath {
-  color: #03A9F4;
-}
-
-.property .size {
-  color: #388E3C;
-}
 
 /*
  * House icon colors.
@@ -524,47 +515,37 @@
   border-top: 9px solid var(--house-color);
 }
 
-/*
- * Building icon colors.
- */
-.property.highlight:has(.fa-building) .icon {
-  color: var(--building-color);
+.gm-map-item {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: auto;
 }
 
-.property:not(.highlight):has(.fa-building) {
-  background-color: var(--building-color);
+.gm-map-info {
+  background-color: #eee;
+  padding: 20px;
+  font-size: 15;
+  font-weight: bold;
 }
 
-.property:not(.highlight):has(.fa-building)::after {
-  border-top: 9px solid var(--building-color);
+.gm-map-favorite {
+  position: absolute;
+  top: -60px;
+  right: -90px;
+  width: 25px;
+  height: auto;
 }
 
-/*
- * Warehouse icon colors.
- */
-.property.highlight:has(.fa-warehouse) .icon {
-  color: var(--warehouse-color);
+.border-heart{
+  color: #999;
+  font-size: 21px;
 }
-
-.property:not(.highlight):has(.fa-warehouse) {
-  background-color: var(--warehouse-color);
+.selected-heart{
+  color: red;
+  font-size: 22px;
 }
-
-.property:not(.highlight):has(.fa-warehouse)::after {
-  border-top: 9px solid var(--warehouse-color);
-}
-
-/*
- * Shop icon colors.
- */
-.property.highlight:has(.fa-shop) .icon {
-  color: var(--shop-color);
-}
-
-.property:not(.highlight):has(.fa-shop) {
-  background-color: var(--shop-color);
-}
-
-.property:not(.highlight):has(.fa-shop)::after {
-  border-top: 9px solid var(--shop-color);
+.heart {
+  background-color: rgba(0,0,0,0);
+  border: none;
 }

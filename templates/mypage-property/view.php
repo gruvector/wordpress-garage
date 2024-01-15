@@ -15,14 +15,16 @@ if (! defined('ABSPATH')) {
     <form id="gm-page-form" method="POST">
         <input type="text" style="display:none" placeholder="Enter対策">
         <input type="hidden" name="process" value="check">
-        <?php foreach ($this->edit_data_from_db as $i => $record_edit) { ?>
+        <?php if(!($this->edit_data_from_db == []))
+             foreach ($this->edit_data_from_db as $i => $record_edit) { ?>
+
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
                 <tr>
                     <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="file" name="imgs" value="<?= $record_edit->nm ?>" >
+                            <input class="gm-input" type="file" name="imgs" value="" >
                         </div>
                     </td>
                 </tr>
@@ -36,7 +38,7 @@ if (! defined('ABSPATH')) {
                     <th><div>名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="nm" value="<?= $record_edit->nm ?>" 
+                            <input class="gm-input" type="text" name="nm" value="<?= $record_edit->nm || "" ?>" 
                             data-gm-required>
                         </div>
                     </td>
@@ -315,7 +317,306 @@ if (! defined('ABSPATH')) {
         </div>
         <?php        
             }
+        else {
         ?>
+        <div class="gm-input-table-wrap">
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>画像リスト <br/>TODO 画像選択</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="file" name="imgs" value="" >
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                ※左端の写真が、地図上で料金ボタンをクリックした際に表示される写真となります。また、この写真の並び順通りに写真は掲載されます。<br> <br>
+                ※写真のデータが大きすぎてアップロードできない方向はこちらのサイトをどうぞ 写真データサイズ圧縮ツール https://tinypng.com/ <br> <br>
+            </div>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>名称</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="nm" value="" 
+                            data-gm-required>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>区画名称</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="section_nm" value="" 
+                            data-gm-required>   
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>空き状況</div></th>
+                    <td>
+                        <div class="gm-radio-wrap">
+                            <?php
+                            foreach ($this->availability_records as $i => $record) {
+                                $checked = '';
+                                if ($this->get_input_param('availability_id') == $record->ID || (empty($this->get_input_param('availability_id')) && $i == 0)){
+                                    $checked = 'checked';
+                                }
+                                echo '<label><input type="radio" name="availability_id" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
+                                }
+                            ?>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>引き渡し可能日</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="handover_date" value="" 
+                            data-gm-required data-gm-date="yyyy/MM/dd">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>最低契約期間</div></th>
+                    <td>
+                        <div style="display:flex;gap:10px">
+                            <input class="gm-input" style="width:150px;" type="text" name="min_period" value="" 
+                            data-gm-required data-gm-number>
+
+                            <select class="gm-input" style="width:100px;"  name="min_period_unit">
+                                <option value="1">年</option>
+                                <option value="2">月</option>
+                                <option value="3">日</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>郵便番号</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="zipcode" name="postal_code" value="" id="postal_code"
+                            data-gm-required data-gm-postal-code="address_1,address_2">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>都道府県</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="address_1" value=""  
+                            data-gm-required>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>市区町村</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="address_2" value=""  
+                            data-gm-required>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>地番</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="address_3" value=""
+                            data-gm-required>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>建物名・部屋番号</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="address_4" value=""  
+                            >
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>ガレージサイズ</div></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th><div>サイズ：横幅</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="size_w" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>サイズ：高さ</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="size_h" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>サイズ：奥行</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="size_d" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>毎月支払うもの</div></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th><div>月額費用：賃料</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_monthly_rent" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>月額費用：共益費</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_monthly_common_service" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>月額費用：その他</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input" name="fee_monthly_others" 
+                                ></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>契約時のみ支払うもの</div></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：敷金</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_contract_security" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：敷金償却</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_contract_security_amortization" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：保証金</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_contract_deposit" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：保証金償却</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_contract_deposit_amortization" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：礼金</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_contract_key_money" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：保証料</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="fee_contract_guarantee_charge" value="" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div>契約費用：その他</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input" name="fee_contract_other" 
+                                ></textarea>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>設備情報</div></th>
+                    <td>
+                        <div class="gm-checkbox-group-wrap">
+                            <?php
+                            foreach ($this->facility_records as $i => $record) {
+                                $checked = '';
+                                if ($this->get_input_param('facility_id') == $record->ID || (empty($this->get_input_param('facility_id')) && $i == 0)){
+                                    $checked = 'checked';
+                                }
+                                echo '<label><input type="checkbox" name="facility_id[]" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
+                                }
+                            ?>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>その他紹介</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input" name="other_description" 
+                                ></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>アピールポイント</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input" name="appeal_description" 
+                                ></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <?php } ?>
         <div class="gm-input-button-wrap">
             <input type="submit" class="gm-input-button" value="確認画面へ">
         </div>
