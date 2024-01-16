@@ -20,18 +20,22 @@ if (!$_SESSION['account_id']) {
         <a href="<?= home_url('mypage-password') ?>" id="password">パスワード変更</a>
     </div>
     <h2>登録済みの物件一覧</h2>
-    <form class="gm-mypage-filter-raido-wrap" method="GET">
+    
+    <form class="gm-mypage-filter-raido-wrap" method="post" id="radio_form">
         <label><input type="radio" name="propertyFilter" value="1" checked>全て</label>
         <label><input type="radio" name="propertyFilter" value="2">公開済み</label>
         <label><input type="radio" name="propertyFilter" value="3">公開申請中</label>
         <label><input type="radio" name="propertyFilter" value="4">非公開</label>
+        <input type="submit" class="submit_hidden" />
     </form>
+    <script>
+        var radio_form1 = document.getElementById("radio_form");
+        var check_num = parseInt(<?php echo $this->radio_value ?>);
+        radio_form1[check_num-1].checked = true;
+    </script>
     <div class="gm-mypage-list-area">
 
-        <?php 
-            if(!empty($_GET['propertyFilter'])){ $selected = $_GET['property_filter'];}
-            else{ $selected = '1';}
-        ?>
+
         
         <?php  
             foreach ($this->records1 as $i => $record1) {?>
@@ -68,8 +72,6 @@ if (!$_SESSION['account_id']) {
             </div> <?php
             }
         ?>
-        <span class="r-text"><?php echo $selected;?></span>
-
     </div>
     <div class="gm-mypage-add-button-wrap">
         <a class="gm-mypage-add-button" href="/mypage-property/?type=add">
@@ -81,7 +83,9 @@ if (!$_SESSION['account_id']) {
 <script>
     $('input[type=radio]').click(function(e) {//jQuery works on clicking radio box
         var value = $(this).val(); //Get the clicked checkbox value
-        console.log(value);
+        var radio_form = document.getElementById("radio_form");
+        console.log(radio_form);
+        radio_form.querySelector("input[type='submit']").click();
         
-        });
+    });
 </script>

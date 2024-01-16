@@ -12,7 +12,7 @@ if (! defined('ABSPATH')) {
 </style>
 <div class="gm-custom-wrap">
 <?php if($this->mode == '') :?>
-    <form id="gm-page-form" method="POST">
+    <form id="gm-page-form" method="POST" enctype="multipart/form-data">
         <input type="text" style="display:none" placeholder="Enter対策">
         <input type="hidden" name="process" value="check">
         <?php if(!($this->edit_data_from_db == []))
@@ -622,7 +622,7 @@ if (! defined('ABSPATH')) {
         </div>
     </form>
 <?php elseif($this->mode == 'confirm') :?>
-    <form id="gm-page-form" method="POST">
+    <form id="gm-page-form" method="POST" enctype="multipart/form-data">
         <input type="text" style="display:none" palceholder="Enter対策">
         <input type="hidden" name="process" value="regist">
         <div class="gm-input-table-wrap">

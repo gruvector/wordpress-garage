@@ -57,9 +57,10 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             // 画面描画
             $this->render();
         } else if ($this->param_type == "edit") {
-            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id") || [];
-
+            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
+                var_dump($_FILES['imgs']);
+                exit;
                 $this->check($_POST);
             }
             if (isset($_POST['process']) && $_POST['process'] == 'regist') {

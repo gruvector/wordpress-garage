@@ -1,8 +1,10 @@
 <?php
 
-require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_common/abstarct-template-mypage-controller.php';
+require_once ABSPATH .'wp-content/themes/sango-theme-child-garage/templates/_common/abstarct-template-mypage-controller.php';
+
 class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
 {
+    var $radio_value = "";
     protected function setting()
     {
         parent::setting();
@@ -17,15 +19,14 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
 
     public function action()
     {
-
         $account_id = $_SESSION['account_id'];
-
-        // switch($clarify) {
-        //     case 0:$this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");
-        //     case 1:$this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id");
-
-        // }
-        $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id");
+        $this->radio_value = $_POST['propertyFilter'];
+        switch($this->radio_value) {
+            case "1" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");break;
+            case "2" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = \"1\"");break;
+            case "3" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = \"2\"");break;
+            case "4" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = \"3\"");break;
+        }
         $this->records2 = $this->wpdb->get_results( "SELECT * FROM {$this->wpdb->prefix}gmt_property_publish");
         // 画面描画
         $this->render();

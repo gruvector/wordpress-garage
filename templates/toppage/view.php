@@ -196,7 +196,7 @@ if (!defined('ABSPATH')) {
         const content = document.createElement("div");
 
         content.classList.add("property");
-            content.innerHTML = `
+        content.innerHTML = `
             <div class="icon">
                 <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
                 <span class="fa-sr-only">home</span>
