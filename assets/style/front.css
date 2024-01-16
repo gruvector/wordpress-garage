@@ -79,6 +79,7 @@
   border: 1px solid lightgray;
   border-radius: 10px;
   box-shadow: 3px 5px #ddd;
+  width: 300px;
 }
 
 .gm-card-button {
