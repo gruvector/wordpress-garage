@@ -3,10 +3,11 @@ if (! defined('ABSPATH')) {
     exit;
 }
 ?>
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <div class="gm-custom-wrap">
 <?php if($this->mode == '') :?>
     <form id="gm-page-form" method="POST">
-        <input type="text" style="display:none" palceholder="Enter対策">
+        <input type="text" style="display:none" placeholder="Enter対策">
         <input type="hidden" name="process" value="check">
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
@@ -49,9 +50,12 @@ if (! defined('ABSPATH')) {
                 <tr>
                     <th><div>郵便番号</div></th>
                     <td>
-                        <div>
-                            <input class="gm-input" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
-                            data-gm-required data-gm-postal-code="address_1,address_2">
+                        <div class="gm-zipcode-part">
+                            <input class="gm-input2" type="text" maxlength="3" name="postal_code1" value="<?php echo $this->get_input_param('postal_code1') ?>"  
+                            data-gm-required >
+                            &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;
+                            <input class="gm-input2" type="text" maxlength="4" name="postal_code2" value="<?php echo $this->get_input_param('postal_code2') ?>"  
+                            data-gm-required onKeyUp="AjaxZip3.zip2addr('postal_code1','postal_code2','address_1','address_2','address_3');">
                         </div>
                     </td>
                 </tr>
@@ -126,7 +130,7 @@ if (! defined('ABSPATH')) {
     </form>
 <?php elseif($this->mode == 'confirm') :?>
     <form id="gm-page-form" method="POST">
-    <input type="text" style="display:none" palceholder="Enter対策">
+        <input type="text" style="display:none" palceholder="Enter対策">
         <input type="hidden" name="process" value="regist">
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
@@ -167,11 +171,13 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
                 <tr>
+                    
                     <th><div>郵便番号</div></th>
                     <td>
-                        <div>
-                            <input class="gm-input" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>" disabled
-                            >
+                        <div class="gm-zipcode-part">
+                            <input class="gm-input2" type="text" name="postal_code1" value="<?php echo $this->get_input_param('postal_code1') ?>" disabled >
+                            &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;
+                            <input class="gm-input2" type="text" name="postal_code2" value="<?php echo $this->get_input_param('postal_code2') ?>" disabled >
                         </div>
                     </td>
                 </tr>

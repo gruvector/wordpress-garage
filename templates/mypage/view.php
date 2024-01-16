@@ -21,7 +21,7 @@ if (!$_SESSION['account_id']) {
     </div>
     <h2>登録済みの物件一覧</h2>
     
-    <form class="gm-mypage-filter-raido-wrap" method="post" id="radio_form">
+    <form class="gm-mypage-filter-raido-wrap" method="get" id="radio_form">
         <label><input type="radio" name="propertyFilter" value="1" checked>全て</label>
         <label><input type="radio" name="propertyFilter" value="2">公開済み</label>
         <label><input type="radio" name="propertyFilter" value="3">公開申請中</label>

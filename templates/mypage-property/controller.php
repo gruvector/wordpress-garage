@@ -39,6 +39,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $this->check($_POST);
             }
             if (isset($_POST['process']) && $_POST['process'] == 'regist') {
+
                 $this->regist($this->url_params());
             }
     
@@ -56,14 +57,14 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
     
             // 画面描画
             $this->render();
-        } else if ($this->param_type == "edit") {
+        } else {
             $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
                 var_dump($_FILES['imgs']);
-                exit;
                 $this->check($_POST);
             }
             if (isset($_POST['process']) && $_POST['process'] == 'regist') {
+
                 $this->regist($this->url_params());
             }
     
@@ -114,42 +115,38 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         exit();
     }
 
-    public function getLnt($zip){
-        
-    }
-
     private function regist($params)
     {
         // -----------------
         // start to get lat and long
         // -----------------
 
-        $lnt_url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($params['postal_code'])."&key=AIzaSyAb8pareaW9BgBJF52KiPbsyoljqKO9_C0";
-        $result_string = file_get_contents($lnt_url);
-        $result = json_decode($result_string, true);
-        $result1[]=$result['results'][0];
-        $result2[]=$result1[0]['geometry'];
-        $result3[]=$result2[0]['location'];
+        // $lnt_url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($params['postal_code'])."&key=AIzaSyAb8pareaW9BgBJF52KiPbsyoljqKO9_C0";
+        // $result_string = file_get_contents($lnt_url);
+        // var_dump($result_string);
+
+        // $result = json_decode($result_string, true);
+        // $result1[]=$result['results'][0];
+        // $result2[]=$result1[0]['geometry'];
+        // $result3[]=$result2[0]['location'];
         
         // ---------------------
         // end to get lat and long
         // ----------------------
-
-
+        // 
+        $postal_code = $params['postal_code1'] ."-". $params['postal_code2'];
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_property_tmp',
             [
-                // 'property_id' => $params['property_id'],
                 'nm' => $params['nm'],
                 'section_nm' => $params['section_nm'],
-                'imgs' => $params['imgs'],
                 'availability_id' => $params['availability_id'],
                 'handover_date' => $params['handover_date'],
                 'min_period' => $params['min_period'],
                 'min_period_unit' => $params['min_period_unit'],
                 'account_id' => $_SESSION['account_id'],
-                'lat' => $result3[0]['lat'],
-                'long' => $result3[0]['lng'],
+                'lat' => "",
+                'long' => "",
                 'size_w' => $params['size_w'],
                 'size_h' => $params['size_h'],
                 'size_d' => $params['size_d'],
@@ -160,27 +157,22 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'fee_contract_security_amortization' => $params['fee_contract_security_amortization'],
                 'fee_contract_deposit' => $params['fee_contract_deposit'],
                 'fee_contract_deposit_amortization' => $params['fee_contract_deposit_amortization'],
-                'fee_contract_money' => $params['fee_contract_money'],
+                'fee_contract_money' => $params['fee_contract_key_money'],
                 'fee_contract_guarantee_charge' => $params['fee_contract_guarantee_charge'],
                 'fee_contract_other' => $params['fee_contract_other'],
                 'other_description' => $params['other_description'],
                 'appeal_description' => $params['appeal_description'],
-                'postal_code' => $params['postal_code'],
+                'postal_code' => $postal_code,
                 'address_1' => $params['address_1'],
                 'address_2' => $params['address_2'],
                 'address_3' => $params['address_3'],
                 'address_4' => $params['address_4'],
-
-
             ]
         );
 
-        
         $url = explode('?', Gm_Util::get_url())[0];
         header('Location: ' . $url . '?mode=completed');
         exit();
     }
-
-    
 
 }

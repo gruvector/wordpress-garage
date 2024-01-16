@@ -3,8 +3,18 @@
   background: #fff !important;
   margin-bottom: 0 !important;
 }
+.gm-input2 {
+  border: solid 1px #ccc !important;
+  background: #fff !important;
+  margin-bottom: 0.5rem !important;
+  width: 46% !important;
+}
 .gm-input[disabled] {
   background: #eee !important;
+}
+.gm-zipcode-part {
+  display: flex;
+
 }
 .gm-radio-wrap {
   display: flex;
