@@ -36,53 +36,36 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
         if ($this->param_type == "add") {
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
+
                 $this->check($_POST);
             }
-            if (isset($_POST['process']) && $_POST['process'] == 'regist') {
-
-                $this->regist($this->url_params());
-            }
-    
-            // -------------------
-            // 画面描画
-            // -------------------
-            $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
-            // 確認
-            if ($this->mode == 'confirm') {
-                $this->set_input_params($this->url_params());
-            };
-    
-            $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
-            $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
-    
-            // 画面描画
-            $this->render();
         } else {
             $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
                 var_dump($_FILES['imgs']);
                 $this->check($_POST);
             }
-            if (isset($_POST['process']) && $_POST['process'] == 'regist') {
-
-                $this->regist($this->url_params());
-            }
-    
-            // -------------------
-            // 画面描画
-            // -------------------
-            $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
-            // 確認
-            if ($this->mode == 'confirm') {
-                $this->set_input_params($this->url_params());
-            };
-    
-            $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
-            $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
-    
-            // 画面描画
-            $this->render();
         }
+
+        if (isset($_POST['process']) && $_POST['process'] == 'regist') {
+
+            $this->regist($this->url_params());
+        }
+
+        // -------------------
+        // 画面描画
+        // -------------------
+        $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
+        // 確認
+        if ($this->mode == 'confirm') {
+            $this->set_input_params($this->url_params());
+        };
+
+        $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
+        $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
+
+        // 画面描画
+        $this->render();
         
     }
 
@@ -91,6 +74,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // 入力チェック
         // -----------------
+        // 
         $validation = new Gm_Validation($params);
 
         $errors = $validation->errors();
@@ -108,8 +92,12 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             if (isset($params['process'])) {
                 unset($params['process']);
             }
+
+
             $url = $url . '?mode=confirm&type=edit&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
         }
+
+        
         // 画面遷移
         header('Location: ' . $url);
         exit();
@@ -135,6 +123,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         // ----------------------
         // 
         $postal_code = $params['postal_code1'] ."-". $params['postal_code2'];
+
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_property_tmp',
             [
@@ -145,21 +134,19 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'min_period' => $params['min_period'],
                 'min_period_unit' => $params['min_period_unit'],
                 'account_id' => $_SESSION['account_id'],
-                'lat' => "",
-                'long' => "",
-                'size_w' => $params['size_w'],
-                'size_h' => $params['size_h'],
-                'size_d' => $params['size_d'],
-                'fee_monthly_rent' => $params['fee_monthly_rent'],
-                'fee_monthly_common_service' => $params['fee_monthly_common_service'],
+                'size_w' => (int) $params['size_w'],
+                'size_h' => (int) $params['size_h'],
+                'size_d' => (int) $params['size_d'],
+                'fee_monthly_rent' => (int) $params['fee_monthly_rent'],
+                'fee_monthly_common_service' => (int) $params['fee_monthly_common_service'],
                 'fee_monthly_others' => $params['fee_monthly_others'],
-                'fee_contract_security' => $params['fee_contract_security'],
-                'fee_contract_security_amortization' => $params['fee_contract_security_amortization'],
-                'fee_contract_deposit' => $params['fee_contract_deposit'],
-                'fee_contract_deposit_amortization' => $params['fee_contract_deposit_amortization'],
-                'fee_contract_money' => $params['fee_contract_key_money'],
-                'fee_contract_guarantee_charge' => $params['fee_contract_guarantee_charge'],
-                'fee_contract_other' => $params['fee_contract_other'],
+                'fee_contract_security' => (int) $params['fee_contract_security'],
+                'fee_contract_security_amortization' => (int) $params['fee_contract_security_amortization'],
+                'fee_contract_deposit' => (int) $params['fee_contract_deposit'],
+                'fee_contract_deposit_amortization' => (int) $params['fee_contract_deposit_amortization'],
+                'fee_contract_key_money' => (int) $params['fee_contract_key_money'],
+                'fee_contract_guarantee_charge' => (int) $params['fee_contract_guarantee_charge'],
+                'fee_contract_other' => (int) $params['fee_contract_other'],
                 'other_description' => $params['other_description'],
                 'appeal_description' => $params['appeal_description'],
                 'postal_code' => $postal_code,
@@ -169,7 +156,6 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'address_4' => $params['address_4'],
             ]
         );
-
         $url = explode('?', Gm_Util::get_url())[0];
         header('Location: ' . $url . '?mode=completed');
         exit();

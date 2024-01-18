@@ -79,7 +79,6 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // データ登録
         // -----------------
-        echo $params['new_pwd'];
         $this->wpdb->update(
             $this->wpdb->prefix.'gmt_account',
             [

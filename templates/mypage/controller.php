@@ -19,7 +19,41 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
 
     public function action()
     {
+
+
         $account_id = $_SESSION['account_id'];
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            if ($_POST['public_private'] == "public") {
+                $this->wpdb->update(
+                    $this->wpdb->prefix.'gmt_property',
+                    [
+                        'availability_id' => 2,
+                    ],
+                    [
+                        'account_id' => $account_id,
+                        'ID' => $_POST['property_id_num'],
+                    ]
+                
+                );
+            };
+            
+            if ($_POST['public_private'] == "private") {
+                $this->wpdb->update(
+                    $this->wpdb->prefix.'gmt_property',
+                    [
+                        'availability_id' => 3,
+                    ],
+                    [
+                        'account_id' => $account_id,
+                        'ID' => $_POST['property_id_num'],
+                    ]
+                
+                );
+            };
+        }
+
         if(isset($_GET['propertyFilter'])){
         $this->radio_value = $_GET['propertyFilter'] || 0;
         switch($this->radio_value) {
@@ -31,6 +65,10 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
             $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");
         }
         $this->records2 = $this->wpdb->get_results( "SELECT * FROM {$this->wpdb->prefix}gmt_property_publish");
+
+
+        
+        
         // 画面描画
         $this->render();
     }

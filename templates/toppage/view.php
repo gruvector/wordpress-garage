@@ -213,7 +213,7 @@ if (!defined('ABSPATH')) {
                     </div>
                     
                     <div class="gm-map-favorite">
-                        <button class="heart" onclick="handleFavorite(${property.ID})"><i class="far fa-heart border-heart" id="heart"></i></button>
+                        <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart border-heart" id="heart${property.ID}"></i></button>
                     </div>
                 </div>
             </div> `;
@@ -226,11 +226,15 @@ if (!defined('ABSPATH')) {
 
     function handleFavorite(id) {
         let a = getCookie("favorite");
-        const element = document.getElementById("heart");  
+        const element = document.getElementById("heart"+id);
+        console.log(element);  
         if (a.indexOf(id) == -1) {
             setCookie('favorite', id, 365, a);
+            console.log(id);
             element.classList.remove("border-heart"); 
             element.classList.add("selected-heart");
+            console.log(element[id]);
+
         } else {
             let ind = a.indexOf(id);
             deleteCookie('favorite', 365, a, ind);
