@@ -4,6 +4,7 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_co
 class Gm_Application_Controller extends Abstract_Template_Controller
 {
     public $account_attr_records = [];
+    public $account_other = false;
 
     protected function setting()
     {
@@ -79,10 +80,12 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         if ($params['account_attr_id'] == '9') {
             $validation->required([
                 ['key' => 'account_attr_other', 'name' => 'アカウント属性その他',],
-             ]);
+            ]);
             $validation->length([
                 ['key' => 'account_attr_other', 'name' => 'アカウント属性その他', 'len' => 255],
-              ]);
+            ]);
+            
+            $this->account_other = true;
         }
 
         $errors = $validation->errors();

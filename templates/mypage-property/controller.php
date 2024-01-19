@@ -7,6 +7,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
     public $edit_data_from_db = [];
     public $param_id = "";
     public $param_type = "";
+    public $check_box = [];
     protected function setting()
     {
         parent::setting();
@@ -21,7 +22,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
     public function action()
     {
-
+        session_start();
         if (isset($_GET['id'])) {
             $this->param_id = sanitize_key($_GET['id']);
         }
@@ -36,20 +37,55 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
         if ($this->param_type == "add") {
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
-
+                
+                $_SESSION['checkbox'] = $_POST['facility_id'];
+                // var_dump($_SESSION['checkbox']);
+                
                 $this->check($_POST);
+                exit();
             }
         } else {
             $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
-                var_dump($_FILES['imgs']);
+            
                 $this->check($_POST);
             }
         }
 
         if (isset($_POST['process']) && $_POST['process'] == 'regist') {
 
+            // File upload start
+
+            $extensionA = pathinfo($_FILES["imageA"]["name"], PATHINFO_EXTENSION);
+            $extensionB = pathinfo($_FILES["imageB"]["name"], PATHINFO_EXTENSION);
+            $extensionC = pathinfo($_FILES["imageC"]["name"], PATHINFO_EXTENSION);
+
+            $upload_dir = wp_upload_dir();
+            $upload_dir_url = $upload_dir['url'];
+            
+            $current_date = date('d'); 
+            $new_upload_dir = $upload_dir['path'].'/'.$current_date.'/'.'image'; // Create a new directory with the current date
+            var_dump($new_upload_dir);
+            if (!file_exists($new_upload_dir)) {
+                mkdir($new_upload_dir, 0777, true); // Create the directory if it doesn't exist
+            }
+            
+            $imageA_path = $new_upload_dir. '/'. $_FILES["imageA"]["name"] .'.'. $extensionA; // Create the image path
+            move_uploaded_file($_FILES["imageA"]['tmp_name'], $imageA_path);
+            update_option('imageA_path', $imageA_path);
+
+            $imageB_path = $new_upload_dir. '/'. $_FILES["imageB"]["name"] .'.'. $extensionB; // Create the image path
+            move_uploaded_file($_FILES["imageB"]['tmp_name'], $imageB_path);
+            update_option('imageB_path', $imageB_path);
+
+            $imageC_path = $new_upload_dir. '/'. $_FILES["imageC"]["name"] .'.'. $extensionC; // Create the image path
+            move_uploaded_file($_FILES["imageC"]['tmp_name'], $imageC_path);
+            update_option('imageC_path', $imageC_path);
+
+             // File Upload End
+
             $this->regist($this->url_params());
+            exit();
         }
 
         // -------------------

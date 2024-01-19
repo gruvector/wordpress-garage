@@ -36,7 +36,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="tel" name="account_tel" value="<?php echo $this->get_input_param('account_tel') ?>"  
-                            data-gm-required>
+                            data-gm-required data-gm-phone>
                         </div>
                     </td>
                 </tr>
@@ -163,6 +163,10 @@ if (! defined('ABSPATH')) {
             お申し込み後2日以内にメールが届かない場合、迷惑メールフォルダをご確認いた
             だくか、お手数をおかけしますが再度お申し込みをお願いいたします。
         </div>
+        
     </div>
+    <div>
+        <a href="<?= home_url('mypage')?>" class="gm-input-button">マイペッジに行く >></a>
+        </div>
 <?php endif; ?>
 </div>

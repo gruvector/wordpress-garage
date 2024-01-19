@@ -4,6 +4,7 @@ if (! defined('ABSPATH')) {
 }
 ?>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+
 <div class="gm-custom-wrap">
 <?php if($this->mode == '') :?>
     <form id="gm-page-form" method="POST">
@@ -51,11 +52,8 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input2" type="text" maxlength="3" name="postal_code1" value="<?php echo $this->get_input_param('postal_code1') ?>"  
-                            data-gm-required >
-                            &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;
-                            <input class="gm-input2" type="text" maxlength="4" name="postal_code2" value="<?php echo $this->get_input_param('postal_code2') ?>"  
-                            data-gm-required onKeyUp="AjaxZip3.zip2addr('postal_code1','postal_code2','address_1','address_2','address_3');">
+                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
                         </div>
                     </td>
                 </tr>
@@ -100,17 +98,20 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div class="gm-radio-wrap">
                             <?php
-                            foreach ($this->account_attr_records as $i => $record) {
-                                $checked = '';
-                                if ($this->get_input_param('account_attr_id') == $record->ID || (empty($this->get_input_param('account_attr_id')) && $i == 0)){
-                                    $checked = 'checked';
-                                }
-                                echo '<label><input type="radio" name="account_attr_id" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
+                                foreach ($this->account_attr_records as $i => $record) {
+                                    $checked = '';
+                                    if ($this->get_input_param('account_attr_id') == $record->ID || (empty($this->get_input_param('account_attr_id')) && $i == 0)){
+                                        $checked = 'checked';
+                                    }
+                                    echo '<label><input type="radio" name="account_attr_id" onchange="account_add()" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
                                 }
                             ?>
-                            <label><input type="radio" name="account_attr_id" value="9" >その他</label>
-                            
+                            <div style="display: flex;">
+                                <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other" onchange="account_other(this)">その他</label>
+                            </div>
                         </div>
+                        <input class="gm-input-other" type="text" name="account_attr_other" id="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
+
                     </td>
                 </tr>
                 <tr>
@@ -164,9 +165,9 @@ if (! defined('ABSPATH')) {
                 <tr>
                     <th><div>電話番号</div></th>
                     <td>
-                        <div>
-                            <input class="gm-input" type="text" name="phone" value="<?php echo $this->get_input_param('phone') ?>" disabled
-                            >
+                        <div class="gm-zipcode-part">
+                            <input class="gm-input" type="text" name="phone" value="<?php echo $this->get_input_param('phone') ?>"  
+                            data-gm-required data-gm-phone>
                         </div>
                     </td>
                 </tr>
@@ -175,9 +176,8 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input2" type="text" name="postal_code1" value="<?php echo $this->get_input_param('postal_code1') ?>" disabled >
-                            &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;
-                            <input class="gm-input2" type="text" name="postal_code2" value="<?php echo $this->get_input_param('postal_code2') ?>" disabled >
+                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            data-gm-required>
                         </div>
                     </td>
                 </tr>
@@ -230,12 +230,13 @@ if (! defined('ABSPATH')) {
                                 echo '<label><input type="radio" name="account_attr_id" value="' . $record->ID . '" ' . $checked . '  disabled>' . $record->nm . '</label>';
                                 }
                             ?>
-                            <label>
-                                <input type="radio" name="account_attr_id" value="9" disabled>その他
-                                <input class="gm-input" type="text" name="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled
-                                >
-                            </label>
+                            <div style="display: flex;">
+                                <label><input type="radio" name="account_attr_id" value="9" disabled checked=<?= $this->account_other; ?>>その他</label>
+                            </div>
+
                         </div>
+                        <input class="gm-input" type="text" name="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
+
                     </td>
                 </tr>
                 <tr>
@@ -255,5 +256,20 @@ if (! defined('ABSPATH')) {
     </form>
 <?php elseif($this->mode == 'completed') :?>
     完了
+    <br /><br />
+
+    <a href="<?= home_url('')?>" class="gm-input-button">トップページに行く >></a>
 <?php endif; ?>
 </div>
+
+<script>
+    function account_other() {
+        document.getElementById("account_attr_other").disabled = false;
+    }
+
+    function account_add() {
+        document.getElementById("account_attr_other").disabled = true;
+    }
+    
+    
+</script>

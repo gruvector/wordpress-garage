@@ -53,14 +53,19 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
                 );
             };
         }
+        if(isset($_GET['pwd'])) {
+            if($_GET['pwd'] == "ok") {
+                echo "<script>alert('パスワードが正確に変更されました。');</script>";
+            }
+        }
 
         if(isset($_GET['propertyFilter'])){
-        $this->radio_value = $_GET['propertyFilter'] || 0;
+        $this->radio_value = $_GET['propertyFilter'];
         switch($this->radio_value) {
             case "1"; default : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");break;
-            case "2" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = \"1\"");break;
-            case "3" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = \"2\"");break;
-            case "4" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = \"3\"");break;
+            case "2" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '1'");break;
+            case "3" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '2'");break;
+            case "4" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '3'");break;
         }} else {
             $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");
         }

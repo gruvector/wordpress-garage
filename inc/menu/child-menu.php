@@ -69,7 +69,7 @@ final class Gm_Menu
 
         add_menu_page(
             'アカウント管理[編集]',
-            '[A]アカウント',
+            '[G]アカウント',
             'manage_options',
             'menu_gm_account',
             'Gm_Menu::show_account',
@@ -96,7 +96,7 @@ final class Gm_Menu
 
         add_menu_page(
             '物件管理[編集]',
-            '[A]物件',
+            '[G]物件',
             'manage_options',
             'menu_gm_property',
             'Gm_Menu::show_property',
@@ -123,7 +123,7 @@ final class Gm_Menu
 
         add_menu_page(
             '料金[編集]',
-            '[A]料金',
+            '[G]料金',
             'manage_options',
             'menu_gm_price',
             'Gm_Menu::show_price',

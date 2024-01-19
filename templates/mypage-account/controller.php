@@ -76,16 +76,16 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // データ登録
         // -----------------
-        $this->wpdb->insert(
-            $this->wpdb->prefix.'gmt_account_tmp',
+        $this->wpdb->update(
+            $this->wpdb->prefix.'gmt_account',
             [
                 'nm' => $params['account_nm'],
                 'email' => $params['account_email'],
                 'phone' => $params['account_tel'],
-                'address' => $params['account_'],
+                'address' => $params['account_address'],
                 'nm' => $params['account_nm'],
                 'nm' => $params['account_nm'],
-            ]
+            ], ['ID' => $_SESSION['account_id']]
         );
 
         
