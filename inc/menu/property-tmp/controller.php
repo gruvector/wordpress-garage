@@ -71,14 +71,40 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
     {
         $columns = array(
             'ID' => 'ID',
+            'account_id' => 'アカウントID',
+            'property_id' => '物件ID',
             'nm' => '名前',
-            'imgs' => '画像',
-            'property' => '物件',
-            'size' => 'サイズ',
-            'fee_monthly' => '月額費用',
-            'fee_contract' => '契約費用',
-            'other' => 'その他',
-            'created_at' => '申請日時',
+            'section_nm' => '区画名称',
+            'imgs' => '画像リスト',
+            'availability_id' => '空き状況',
+            'handover_date' => '引き渡し可能日',
+            'min_period' => '最低契約期間',
+            'min_period_unit' => '最低契約期間単位',
+            'size_w' => '横幅',
+            'size_h' => '高さ',
+            'size_d' => '奥行',
+            'fee_monthly_rent' => '賃料',
+            'fee_monthly_common_service' => '共益費',
+            'fee_monthly_others' => 'その他',
+            'fee_contract_security' => '敷金',
+            'fee_contract_security_amortization' => '敷金償却',
+            'fee_contract_deposit' => '保証金',
+            'fee_contract_deposit_amortization' => '保証金償却',
+            'fee_contract_key_money' => '礼金',
+            'fee_contract_guarantee_charge' => '保証料',
+            'fee_contract_other' => 'その他',
+            'facility_ids' => '設備情報',
+            'other_description' => 'その他紹介',
+            'appeal_description' => 'アピールポイント',
+            'address_1' => '都道府県',
+            'address_1' => '市区町村',
+            'address_1' => '地番',
+            'address_1' => '建物名',
+            'status' => 'ステータス',
+            'created_at' => '登録日時',
+            'updated_at' => '更新日時',
+
+
         );
         return $columns;
     }
@@ -112,12 +138,65 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             </div>
             EOM;
     }
+    public function column_property_id($item)
+    {
+        return $item->get_property_id();
+    }
 
+    public function column_account_id($item)
+    {
+        return $item->get_account_id();
+    }
+    
     public function column_nm($item)
     {
         return $item->get_nm();
     }
 
+    public function column_section_nm($item)
+    {
+        return $item->get_section_nm();
+    }
+
+    public function column_imgs($item)
+    {
+        return $item->get_imgs();
+    }
+
+    public function column_availability_id($item)
+    {
+        return $item->get_availability_id();
+    }
+    
+    public function column_property($item)
+    {
+        return $item->get_property();
+    }
+
+    public function column_size($item)
+    {
+        return $item->get_size();
+    }
+
+    public function column_fee_monthly($item)
+    {
+        return $item->get_fee_monthly();
+    }
+
+    public function column_fee_contract($item)
+    {
+        return $item->get_fee_contract();
+    }
+
+    public function column_other($item)
+    {
+        return $item->get_other();
+    }
+
+    public function column_created_at($item)
+    {
+        return $item->get_created_at();
+    }
 
 }
 

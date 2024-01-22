@@ -7,7 +7,7 @@ if (! defined('ABSPATH')) {
   <h1 class="wp-heading-inline"><?php echo $GLOBALS['title'] ?></h1>
   <hr class="wp-header-end">
   <form id="gm-admin-form" method="post">
-    <input type="text" style="display:none" palceholder="Enter対策">
+    <input type="text" style="display:none" placeholder="Enter対策">
     <input type="hidden" name="page" value="<?php echo esc_attr(isset($_GET['page']) ? (string)$_GET['page'] : '');?>" />
 
     <input type="hidden" name="process"/>

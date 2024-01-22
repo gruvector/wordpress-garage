@@ -35,8 +35,6 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
         }
         $record = $records[0];
 
-        $password = Gm_Util::get_rand_str(8);
-
         $wpdb->insert(
             $wpdb->prefix.'gmt_property',
             [
