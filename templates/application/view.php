@@ -107,10 +107,10 @@ if (! defined('ABSPATH')) {
                                 }
                             ?>
                             <div style="display: flex;">
-                                <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other" onchange="account_other(this)">その他</label>
+                                <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
                             </div>
                         </div>
-                        <input class="gm-input-other" type="text" name="account_attr_other" id="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
+                        <input class="gm-input-other" type="text" name="account_attr_other" id="account_attr_other1" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
 
                     </td>
                 </tr>
@@ -166,7 +166,7 @@ if (! defined('ABSPATH')) {
                     <th><div>電話番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input" type="text" name="phone" value="<?php echo $this->get_input_param('phone') ?>"  
+                            <input class="gm-input" type="text" name="phone" value="<?php echo $this->get_input_param('phone') ?>"  disabled
                             data-gm-required data-gm-phone>
                         </div>
                     </td>
@@ -176,7 +176,7 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>" disabled 
                             data-gm-required>
                         </div>
                     </td>
@@ -222,16 +222,24 @@ if (! defined('ABSPATH')) {
                     <td>
                     <div class="gm-radio-wrap">
                             <?php
-                            foreach ($this->account_attr_records as $i => $record) {
-                                $checked = '';
-                                if ($this->get_input_param('account_attr_id') == $record->ID || (empty($this->get_input_param('account_attr_id')) && $i == 0)){
-                                    $checked = 'checked';
+                                foreach ($this->account_attr_records as $i => $record) {
+                                    $checked = '';
+                                    if ($this->get_input_param('account_attr_id') == $record->ID || (empty($this->get_input_param('account_attr_id')) && $i == 0)){
+                                        $checked = 'checked';
+                                    }
+                                    echo '<label><input type="radio" name="account_attr_id" value="' . $record->ID . '" ' . $checked . '  disabled>' . $record->nm . '</label>';
                                 }
-                                echo '<label><input type="radio" name="account_attr_id" value="' . $record->ID . '" ' . $checked . '  disabled>' . $record->nm . '</label>';
+
+                                if ($_GET['attr_id'] == "1") {
+                                    $checked1 = 'checked';
+                                } else {
+                                    $checked1 = "";
                                 }
+                            
                             ?>
+                            
                             <div style="display: flex;">
-                                <label><input type="radio" name="account_attr_id" value="9" disabled checked=<?= $this->account_other; ?>>その他</label>
+                                <label><input type="radio" name="account_attr_id" value="9" disabled <?= $checked1 ?>>その他</label>
                             </div>
 
                         </div>
@@ -264,12 +272,13 @@ if (! defined('ABSPATH')) {
 
 <script>
     function account_other() {
-        document.getElementById("account_attr_other").disabled = false;
+        document.getElementById("account_attr_other1").disabled = false;
     }
 
     function account_add() {
-        document.getElementById("account_attr_other").disabled = true;
+        document.getElementById("account_attr_other1").disabled = true;
     }
     
+
     
 </script>

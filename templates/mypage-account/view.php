@@ -230,9 +230,17 @@ if (! defined('ABSPATH')) {
                                 }
                                 echo '<label><input type="radio" name="account_attr_id" value="' . $record->ID . '" ' . $checked . '  disabled>' . $record->nm . '</label>';
                                 }
+
+                                if ($_GET['attr_id'] == "1") {
+                                    $checked1 = 'checked';
+                                } else {
+                                    $checked1 = "";
+                                }
+                            
                             ?>
+                            
                             <div style="display: flex;">
-                                <label><input type="radio" name="account_attr_id" value="9" disabled checked=<?= $this->account_other; ?>>その他</label>
+                                <label><input type="radio" name="account_attr_id" value="9" disabled <?= $checked1 ?>>その他</label>
                             </div>
 
                         </div>

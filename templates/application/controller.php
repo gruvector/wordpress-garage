@@ -4,7 +4,7 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_co
 class Gm_Application_Controller extends Abstract_Template_Controller
 {
     public $account_attr_records = [];
-    public $account_other = false;
+    public $account_other1 = false;
 
     protected function setting()
     {
@@ -24,6 +24,7 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // メイン処理
         // -------------------
         if (isset($_POST['process']) && $_POST['process'] == 'check') {
+    
             $this->check($_POST);
         }
         if (isset($_POST['process']) && $_POST['process'] == 'regist') {
@@ -53,7 +54,7 @@ class Gm_Application_Controller extends Abstract_Template_Controller
             ['key' => 'kana', 'name' => 'カナ',],
             ['key' => 'email', 'name' => 'メールアドレス',],
             ['key' => 'phone', 'name' => '電話番号',],
-            ['key' => 'postal_code1', 'name' => '郵便番号',],
+            ['key' => 'postal_code', 'name' => '郵便番号',],
             ['key' => 'address_1', 'name' => '都道府県',],
             ['key' => 'address_2', 'name' => '市区町村',],
             ['key' => 'address_3', 'name' => '地番',],
@@ -84,17 +85,15 @@ class Gm_Application_Controller extends Abstract_Template_Controller
             $validation->length([
                 ['key' => 'account_attr_other', 'name' => 'アカウント属性その他', 'len' => 255],
             ]);
-            
-            $this->account_other = true;
+            $this->account_other1 = true;
         }
-
         $errors = $validation->errors();
         if (!empty($errors)) {
             $this->set_input_params($params);
             $this->set_common_error($errors);
             return;
         }
-
+        // var_dump()
         // -----------------
         // 画面遷移
         // -----------------
@@ -103,10 +102,11 @@ class Gm_Application_Controller extends Abstract_Template_Controller
             if (isset($params['process'])) {
                 unset($params['process']);
             }
-            $url = $url . '?mode=confirm&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
+            $url = $url . '?mode=confirm&attr_id='.$this->account_other1.'&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
         }
         // 画面遷移
         header('Location: ' . $url);
+
     }
 
     private function regist($params)
@@ -114,7 +114,8 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // -----------------
         // データ登録
         // -----------------
-        $postal_code = $params['postal_code1'] ."-". $params['postal_code2'];
+        $postal_code = $params['postal_code'];
+        var_dump($params['account_attr_id']);
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_account_tmp',
             [

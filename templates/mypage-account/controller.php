@@ -104,12 +104,11 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
             if (isset($params['process'])) {
                 unset($params['process']);
             }
-            $url = $url . '?mode=confirm&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
+            $url = $url . '?mode=confirm&attr_id='.$this->account_other.'&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
         }
-
-        var_dump($url);
         // 画面遷移
         header('Location: ' . $url);
+
     }
 
     private function regist($params)
@@ -117,9 +116,10 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // データ登録
         // -----------------
-        $postal_code = $params['postal_code1'] ."-". $params['postal_code2'];
+        var_dump($_SESSION['account_id']);
+        $postal_code = $params['postal_code'];
         $this->wpdb->update(
-            $this->wpdb->prefix.'gmt_account_tmp',
+            $this->wpdb->prefix.'gmt_account',
             [
                 'nm' => $params['nm'],
                 'kana' => $params['kana'],

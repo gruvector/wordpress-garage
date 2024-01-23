@@ -29,7 +29,7 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
                 $this->wpdb->update(
                     $this->wpdb->prefix.'gmt_property',
                     [
-                        'availability_id' => 2,
+                        'availability_id' => 1,
                     ],
                     [
                         'account_id' => $account_id,
@@ -43,7 +43,7 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
                 $this->wpdb->update(
                     $this->wpdb->prefix.'gmt_property',
                     [
-                        'availability_id' => 3,
+                        'availability_id' => 0,
                     ],
                     [
                         'account_id' => $account_id,
@@ -62,16 +62,15 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
         if(isset($_GET['propertyFilter'])){
         $this->radio_value = $_GET['propertyFilter'];
         switch($this->radio_value) {
-            case "1"; default : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");break;
-            case "2" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '1'");break;
-            case "3" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '2'");break;
-            case "4" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '3'");break;
+            case "1"; default : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, status1  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");break;
+            case "2" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, status1  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND status1 = '1'");break;
+            case "3" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, status1  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND availability_id = '2'");break;
+            case "4" : $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, status1  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND status1 = '0'");break;
         }} else {
-            $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, availability_id, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");
+            $this->records1 = $this->wpdb->get_results( "SELECT ID, nm, status1, section_nm  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");
         }
         $this->records2 = $this->wpdb->get_results( "SELECT * FROM {$this->wpdb->prefix}gmt_property_publish");
-
-
+        
         
         
         // 画面描画

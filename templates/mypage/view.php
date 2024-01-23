@@ -42,7 +42,7 @@ if (!$_SESSION['account_id']) {
             <div class="gm-property-list">
             <div class="gm-property-list-header">ガレージ名: <?= $record1->nm ?></div>
                 物件番号: <?= $i+1 ?> <br>
-                掲載状況: <?php if($record1->availability_id == 1) {echo "公開済";} else {echo "非公開";}?> <br>
+                掲載状況: <?php if($record1->status1 == "1") {echo "公開済";} else {echo "非公開";}?> <br>
                 区画名  : <?= $record1->section_nm ?> <br>
                 <?php  
                     foreach ($this->records2 as $i => $record2) {
@@ -56,9 +56,9 @@ if (!$_SESSION['account_id']) {
                 ?>
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
-                <input type="hidden" name="public_private" value="<?= $record1->availability_id == 3 ? "public" : "private" ?>">
+                <input type="hidden" name="public_private" value="<?= $record1->status1 == '0' ? "public" : "private" ?>">
                 <input type="hidden" name="property_id_num" value="<?= $record1->ID ?>">
-                <button class="gm-property-list-private_publicbutton" type="submit"><?= $record1->availability_id == 3 ? ">>公開申請" : ">>非公開" ?></button>
+                <button class="gm-property-list-private_publicbutton" type="submit"><?= $record1->status1 == '0' ? ">>公開申請" : ">>非公開" ?></button>
 
             </form>
             </div> 
