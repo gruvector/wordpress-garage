@@ -35,30 +35,57 @@ if (!$_SESSION['account_id']) {
     </script>
     <div class="gm-mypage-list-area">
 
-
-        
         <?php  
-            foreach ($this->records1 as $i => $record1) {?>
+            $real_i = 0;
+            foreach ($this->records1_1 as $i => $record1_1) { $real_i = $i+1;?>
             <div class="gm-property-list">
-            <div class="gm-property-list-header">ガレージ名: <?= $record1->nm ?></div>
+            <div class="gm-property-list-header">ガレージ名: <?= $record1_1->nm ?></div>
                 物件番号: <?= $i+1 ?> <br>
-                掲載状況: <?php if($record1->status1 == "1") {echo "公開済";} else {echo "非公開";}?> <br>
-                区画名  : <?= $record1->section_nm ?> <br>
+                掲載状況: <?php if($record1_1->status1 == "1") {echo "公開済";} else {echo "非公開";}?> <br>
+                区画名  : <?= $record1_1->section_nm ?> <br>
                 <?php  
                     foreach ($this->records2 as $i => $record2) {
-                        if($record2->property_id == $record1->ID) { echo "掲載期間: ".$record2->publish_from." - <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$record2->publish_to; }
+                        if($record2->property_id == $record1_1->property_id) { echo "掲載期間: ".$record2->publish_from." - <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$record2->publish_to; }
                     } 
                 ?>
             <form class="gm-property-list-button" method="post">
                 <?php
-                    $param = array('type'=>'edit', 'id'=>$record1->ID);
+                    $param = array('type'=>'edit', 'id'=>$record1_1->property_id);
                     $link = add_query_arg($param, home_url('mypage-property'));
                 ?>
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
-                <input type="hidden" name="public_private" value="<?= $record1->status1 == '0' ? "public" : "private" ?>">
-                <input type="hidden" name="property_id_num" value="<?= $record1->ID ?>">
-                <button class="gm-property-list-private_publicbutton" type="submit"><?= $record1->status1 == '0' ? ">>公開申請" : ">>非公開" ?></button>
+                <input type="hidden" name="public_private" value="<?= $record1_1->status1 == '9' ? "public" : "private" ?>">
+                <input type="hidden" name="property_id_num" value="<?= $record1_1->ID ?>">
+                <button class="gm-property-list-private_publicbutton" type="submit"><?= $record1_1->status1 == '9' ? ">>公開申請" : ">>非公開" ?></button>
+
+            </form>
+            </div> 
+        <?php
+            }
+        ?>
+
+        <?php  
+            foreach ($this->records1_2 as $i => $record1_2) {?>
+            <div class="gm-property-list">
+            <div class="gm-property-list-header">ガレージ名: <?= $record1_2->nm ?></div>
+                物件番号: <?= $real_i+$i ?> <br>
+                掲載状況:  <br>
+                区画名  : <?= $record1_1->section_nm ?> <br>
+                <?php  
+                    foreach ($this->records2 as $i => $record2) {
+                        if($record2->property_id == $record1_2->property_id) { echo "掲載期間: ".$record2->publish_from." - <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$record2->publish_to; }
+                    } 
+                ?>
+            <form class="gm-property-list-button" method="post">
+                <?php
+                    $param = array('type'=>'edit', 'id'=>$record1_2->property_id);
+                    $link = add_query_arg($param, home_url('mypage-property'));
+                ?>
+                <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
+
+                <input type="hidden" name="property_id_num" value="<?= $record1_1->property_id ?>">
+                <button class="gm-property-list-private_publicbutton" type="submit" disabled>公開申請</button>
 
             </form>
             </div> 

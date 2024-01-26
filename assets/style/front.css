@@ -327,12 +327,13 @@
   font-weight: bold;
 }
 .gm-property-list {
-  width: 350px;
+  width: 330px;
   border: 1px solid black;
   border-radius: 7px;
   box-shadow: lightgray 5px 3px;
   padding: 20px;
   margin-left: 20px;
+  margin-bottom: 20px;
 }
 .gm-property-table {
   border: none;
@@ -622,4 +623,16 @@
 
 .gm-input-other {
   width: 50px;
+}
+
+.gm-input-short {
+  width: 90% !important;
+}
+.gm-meter {
+  display: flex;
+  align-items: center;
+}
+
+.gm-select-year {
+  border: 0.5px solid lightgray;
 }

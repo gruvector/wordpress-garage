@@ -5,7 +5,8 @@ abstract class Abstract_Template_Mypage_Controller extends Abstract_Template_Con
     protected $_account_record = [];
     protected $availability_records = [];
     protected $facility_records = [];
-    protected $records1 = [];
+    protected $records1_1 = [];
+    protected $records1_2 = [];
     protected $records2 = [];
 
     protected function pre_action()

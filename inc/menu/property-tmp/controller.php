@@ -100,7 +100,8 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             'address_1' => '市区町村',
             'address_1' => '地番',
             'address_1' => '建物名',
-            'status' => 'ステータス',
+            'remand_flg' => '差戻フラグ',
+            'remand_comment' => '差戻コメント',
             'created_at' => '登録日時',
             'updated_at' => '更新日時',
 
@@ -168,29 +169,134 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
         return $item->get_availability_id();
     }
     
-    public function column_property($item)
+    public function column_handover_date($item)
     {
-        return $item->get_property();
+        return $item->get_handover_date();
+    }
+    
+    public function column_min_period($item)
+    {
+        return $item->get_min_period();
+    }
+    
+    public function column_min_period_unit($item)
+    {
+        return $item->get_min_period_unit();
+    }
+    
+    public function column_size_w($item)
+    {
+        return $item->get_size_w();
+    }
+    
+    public function column_size_h($item)
+    {
+        return $item->get_size_h();
+    }
+    
+    public function column_size_d($item)
+    {
+        return $item->get_size_d();
+    }
+    
+    public function column_fee_monthly_rent($item)
+    {
+        return $item->get_fee_monthly_rent();
+    }
+ 
+    public function column_fee_monthly_common_service($item)
+    {
+        return $item->get_fee_monthly_common_service();
+    }
+ 
+    public function column_fee_monthly_others($item)
+    {
+        return $item->get_fee_monthly_others();
+    }
+ 
+    public function column_fee_contract_security($item)
+    {
+        return $item->get_fee_contract_security();
     }
 
-    public function column_size($item)
+    public function column_fee_contract_deposit($item)
     {
-        return $item->get_size();
+        return $item->get_fee_contract_deposit();
+    }
+ 
+    public function column_fee_contract_security_amortization($item)
+    {
+        return $item->get_fee_contract_security_amortization();
     }
 
-    public function column_fee_monthly($item)
+    public function column_fee_contract_deposit_amortization($item)
     {
-        return $item->get_fee_monthly();
+        return $item->get_fee_contract_deposit_amortization();
+    }
+ 
+    public function column_fee_contract_key_money($item)
+    {
+        return $item->get_fee_contract_key_money();
     }
 
-    public function column_fee_contract($item)
+    public function column_fee_contract_guarantee_charge($item)
     {
-        return $item->get_fee_contract();
+        return $item->get_fee_contract_guarantee_charge();
     }
 
-    public function column_other($item)
+    public function column_fee_contract_other($item)
     {
-        return $item->get_other();
+        return $item->get_fee_contract_other();
+    }
+
+    public function column_facility_ids($item)
+    {
+        return $item->get_facility_ids();
+    }
+
+    public function column_other_description($item)
+    {
+        return $item->get_other_description();
+    }
+
+    public function column_appeal_description($item)
+    {
+        return $item->get_appeal_description();
+    }
+
+    public function column_postal_code($item)
+    {
+        return $item->get_postal_code();
+    }
+
+    public function column_address_1($item)
+    {
+        return $item->get_address_1();
+    }
+
+    public function column_address_2($item)
+    {
+        return $item->get_address_2();
+    }
+
+    public function column_address_3($item)
+    {
+        return $item->get_address_3();
+    }
+
+    public function column_address_4($item)
+    {
+        return $item->get_address_4();
+    }
+
+    public function column_remand_flg($item)
+    {
+        return $item->get_remand_flg();
+    }
+
+    public function column_remand_comment($item)
+    {
+        return $item->get_remand_comment();
     }
 
     public function column_created_at($item)
@@ -206,6 +312,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     {
         $this->ID = $record->ID;
         $this->property_id = $record->property_id;
+        $this->account_id = $record->account_id;
         $this->nm = $record->nm;
         $this->section_nm = $record->section_nm;
         $this->imgs = $record->imgs;
@@ -236,11 +343,13 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
         $this->address_4 = $record->address_4;
         $this->remand_flg = $record->remand_flg;
         $this->remand_comment = $record->remand_comment;
+        $this->created_at = $record->created_at;
         
     }
 
     protected $ID;
     protected $property_id;
+    protected $account_id;
     protected $nm;
     protected $section_nm;
     protected $imgs;
@@ -271,10 +380,12 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     protected $address_4;
     protected $remand_flg;
     protected $remand_comment;
+    protected $created_at;
     
 
     public function get_ID(){return $this->ID;}
     public function get_property_id(){return $this->property_id;}
+    public function get_account_id() {return $this->account_id;}
     public function get_nm(){return $this->nm;}
     public function get_section_nm(){return $this->section_nm;}
     public function get_imgs(){return $this->imgs;}
@@ -305,6 +416,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_address_4(){return $this->address_4;}
     public function get_remand_flg(){return $this->remand_flg;}
     public function get_remand_comment(){return $this->remand_comment;}
+    public function get_created_at () {return $this->created_at;}
 
 
 }

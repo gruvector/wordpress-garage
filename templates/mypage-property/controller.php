@@ -8,6 +8,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
     public $param_id = "";
     public $param_type = "";
     public $check_box = [];
+    public $image_folder = 0;
+    public $bool_tmp = false;
     protected function setting()
     {
         parent::setting();
@@ -45,7 +47,11 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 exit();
             }
         } else {
-            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $this->param_id");
+            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE property_id = $this->param_id");
+            if($this->edit_data_from_db == []) {
+                $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property_tmp WHERE property_id = $this->param_id");
+                $this->bool_tmp = true;
+            }
             if (isset($_POST['process']) && $_POST['process'] == 'check') {
             
                 $this->check($_POST);
@@ -64,12 +70,11 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             $upload_dir_url = $upload_dir['url'];
             
             $current_date = date('d'); 
-            $new_upload_dir = $upload_dir['path'].'/'.$current_date.'/'.'image'; // Create a new directory with the current date
-            var_dump($new_upload_dir);
+            $new_upload_dir = $upload_dir['path'].'/'.$current_date.'/'.$this->image_folder.'/'.'image'; // Create a new directory with the current date
             if (!file_exists($new_upload_dir)) {
                 mkdir($new_upload_dir, 0777, true); // Create the directory if it doesn't exist
             }
-            
+            $this->image_folder += 1;
             $imageA_path = $new_upload_dir. '/'. $_FILES["imageA"]["name"] .'.'. $extensionA; // Create the image path
             move_uploaded_file($_FILES["imageA"]['tmp_name'], $imageA_path);
             update_option('imageA_path', $imageA_path);
@@ -130,7 +135,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             }
 
 
-            $url = $url . '?mode=confirm&type=edit&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
+            $url = $url . '?mode=confirm&type=edit&param='.$this->param_id.'&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
         }
 
         
@@ -158,8 +163,10 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         // end to get lat and long
         // ----------------------
         // 
-        $postal_code = $params['postal_code1'] ."-". $params['postal_code2'];
-
+        if($this->param_type == "add") {
+        $property_id_tmp = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
+        $property_id = (int) $property_id_tmp + 1;
+        var_dump($property_id);
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_property_tmp',
             [
@@ -169,6 +176,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'handover_date' => $params['handover_date'],
                 'min_period' => $params['min_period'],
                 'min_period_unit' => $params['min_period_unit'],
+                'property_id' => (string)$property_id,
                 'account_id' => $_SESSION['account_id'],
                 'size_w' => (int) $params['size_w'],
                 'size_h' => (int) $params['size_h'],
@@ -185,13 +193,92 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 'fee_contract_other' => (int) $params['fee_contract_other'],
                 'other_description' => $params['other_description'],
                 'appeal_description' => $params['appeal_description'],
-                'postal_code' => $postal_code,
+                'postal_code' => $params['postal_code'],
                 'address_1' => $params['address_1'],
                 'address_2' => $params['address_2'],
                 'address_3' => $params['address_3'],
                 'address_4' => $params['address_4'],
             ]
-        );
+        );}
+
+        if ($this->param_type == "edit") {
+            // var_dump($_GET['param']);
+            if($this->bool_tmp) {
+                $this->wpdb->update(
+                    $this->wpdb->prefix.'gmt_property_tmp',
+                    [
+                        'nm' => $params['nm'],
+                        'section_nm' => $params['section_nm'],
+                        'availability_id' => $params['availability_id'],
+                        'handover_date' => $params['handover_date'],
+                        'min_period' => $params['min_period'],
+                        'min_period_unit' => $params['min_period_unit'],
+                        'property_id' => $_GET['param'],
+                        'account_id' => $_SESSION['account_id'],
+                        'size_w' => (int) $params['size_w'],
+                        'size_h' => (int) $params['size_h'],
+                        'size_d' => (int) $params['size_d'],
+                        'fee_monthly_rent' => (int) $params['fee_monthly_rent'],
+                        'fee_monthly_common_service' => (int) $params['fee_monthly_common_service'],
+                        'fee_monthly_others' => $params['fee_monthly_others'],
+                        'fee_contract_security' => (int) $params['fee_contract_security'],
+                        'fee_contract_security_amortization' => (int) $params['fee_contract_security_amortization'],
+                        'fee_contract_deposit' => (int) $params['fee_contract_deposit'],
+                        'fee_contract_deposit_amortization' => (int) $params['fee_contract_deposit_amortization'],
+                        'fee_contract_key_money' => (int) $params['fee_contract_key_money'],
+                        'fee_contract_guarantee_charge' => (int) $params['fee_contract_guarantee_charge'],
+                        'fee_contract_other' => (int) $params['fee_contract_other'],
+                        'other_description' => $params['other_description'],
+                        'appeal_description' => $params['appeal_description'],
+                        'postal_code' => $params['postal_code'],
+                        'address_1' => $params['address_1'],
+                        'address_2' => $params['address_2'],
+                        'address_3' => $params['address_3'],
+                        'address_4' => $params['address_4'],
+                    ],
+                    [
+                        'property_id' => $_GET['param'],
+                    ]
+                );
+            } else {
+                $this->wpdb->update(
+                    $this->wpdb->prefix.'gmt_property',
+                    [
+                        'nm' => $params['nm'],
+                        'section_nm' => $params['section_nm'],
+                        'availability_id' => $params['availability_id'],
+                        'handover_date' => $params['handover_date'],
+                        'min_period' => $params['min_period'],
+                        'min_period_unit' => $params['min_period_unit'],
+                        'property_id' => $_GET['param'],
+                        'account_id' => $_SESSION['account_id'],
+                        'size_w' => (int) $params['size_w'],
+                        'size_h' => (int) $params['size_h'],
+                        'size_d' => (int) $params['size_d'],
+                        'fee_monthly_rent' => (int) $params['fee_monthly_rent'],
+                        'fee_monthly_common_service' => (int) $params['fee_monthly_common_service'],
+                        'fee_monthly_others' => $params['fee_monthly_others'],
+                        'fee_contract_security' => (int) $params['fee_contract_security'],
+                        'fee_contract_security_amortization' => (int) $params['fee_contract_security_amortization'],
+                        'fee_contract_deposit' => (int) $params['fee_contract_deposit'],
+                        'fee_contract_deposit_amortization' => (int) $params['fee_contract_deposit_amortization'],
+                        'fee_contract_key_money' => (int) $params['fee_contract_key_money'],
+                        'fee_contract_guarantee_charge' => (int) $params['fee_contract_guarantee_charge'],
+                        'fee_contract_other' => (int) $params['fee_contract_other'],
+                        'other_description' => $params['other_description'],
+                        'appeal_description' => $params['appeal_description'],
+                        'postal_code' => $params['postal_code'],
+                        'address_1' => $params['address_1'],
+                        'address_2' => $params['address_2'],
+                        'address_3' => $params['address_3'],
+                        'address_4' => $params['address_4'],
+                    ],
+                    [
+                        'property_id' => $_GET['param'],
+                    ]
+                );
+            }
+        }
         $url = explode('?', Gm_Util::get_url())[0];
         header('Location: ' . $url . '?mode=completed');
         exit();

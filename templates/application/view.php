@@ -273,10 +273,16 @@ if (! defined('ABSPATH')) {
 <script>
     function account_other() {
         document.getElementById("account_attr_other1").disabled = false;
+        document.getElementById("account_attr_other1").style.backgroundColor = "#fff";
+        document.getElementById("account_attr_other1").style.border = "0.5px solid lightgray";
+        
     }
 
     function account_add() {
         document.getElementById("account_attr_other1").disabled = true;
+        document.getElementById("account_attr_other1").style.backgroundColor = "#eee";
+        document.getElementById("account_attr_other1").style.border = "none";
+
     }
     
 

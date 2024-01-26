@@ -113,6 +113,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 <<<EOM
 SELECT
   	  property_tmp.ID
+    , property_tmp.account_id
 	, property_tmp.property_id
 	, property_tmp.nm
 	, property_tmp.section_nm
