@@ -119,14 +119,14 @@ if (! defined('ABSPATH')) {
                       <th><div>アカウント属性</div></th>
                       <td>
                           <div class="gm-radio-wrap">
-                            <label><input type="radio" name="account_attr_id" value="1" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
-                            <label><input type="radio" name="account_attr_id" value="2" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
-                            <label><input type="radio" name="account_attr_id" value="3" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
+                            <label><input type="radio" name="account_attr_id" value="1" id="account_attr_id_other1" onchange="account_other(this)">貸主</label>
+                            <label><input type="radio" name="account_attr_id" value="2" id="account_attr_id_other1" onchange="account_other(this)">管理会社</label>
+                            <label><input type="radio" name="account_attr_id" value="3" id="account_attr_id_other1" onchange="account_other(this)">仲介業者</label>
                             <div style="display: flex;">
                                 <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
                             </div>
                           </div>
-                          <input class="gm-input-other" type="text" name="account_attr_other" id="account_attr_other1" value="<?= $this->show_data->account_attr_other?>" disabled>
+                          <input class="gm-input-other gm-input" type="text" name="account_attr_other" id="account_attr_other1" value="<?= $this->show_data->account_attr_other?>" disabled>
 
                       </td>
                   </tr>
@@ -134,7 +134,7 @@ if (! defined('ABSPATH')) {
                       <th><div>連絡事項</div></th>
                       <td>
                           <div>
-                          <textarea class="gm-input" name="apply_memo" 
+                          <textarea class="gm-input gm-width-80" name="apply_memo" 
                               ><?= $this->show_data->apply_memo?></textarea>
                           </div>
                       </td>
@@ -148,9 +148,7 @@ if (! defined('ABSPATH')) {
             
 
         </div>
-        <div class="modal-footer">
-          <h3>Modal Footer</h3>
-        </div>
+
       </div>
     </div>
   </form>
