@@ -14,10 +14,9 @@ if (! defined('ABSPATH')) {
 <?php if($this->mode == '') :?>
     <form id="gm-page-form" method="POST" enctype="multipart/form-data">
         <input type="text" style="display:none" placeholder="Enter対策">
-        <input type="hidden" name="process" value="check">
+        <input type="hidden" name="process" value="regist">
         <?php if(!($this->edit_data_from_db == []))
              foreach ($this->edit_data_from_db as $i => $record_edit) { ?>
-
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
                 <tr>
@@ -27,14 +26,16 @@ if (! defined('ABSPATH')) {
                             <!-- <input class="gm-input" type="file" name="imgs0" value="" >
                             <input class="gm-input" type="file" name="imgs1" value="" >
                             <input class="gm-input" type="file" name="imgs2" value="" > -->
-
+                            <?php 
+                                $img_path_display = explode(',', $record_edit->imgs);
+                            ?>
                             <div class="item">
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapA">
                                             <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" > 
                                         </div>
                                         <div class="file-upload-content upload-contentA">
-                                            <img class="file-upload-image" id="upload-imageA" src="#" alt="your image" />
+                                            <img class="file-upload-image" id="upload-imageA" src="<?= $img_path_display[0]  ?>" alt="your image" />
                                         <div class="image-title-wrap">
                                             <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
                                         </div>
@@ -45,7 +46,7 @@ if (! defined('ABSPATH')) {
                                             <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
                                         </div>
                                         <div class="file-upload-content upload-contentC">
-                                            <img class="file-upload-image" id="upload-imageC" src="#" alt="your image" />
+                                            <img class="file-upload-image" id="upload-imageC" src="<?= $img_path_display[1]  ?>" alt="your image" />
                                         <div class="image-title-wrap">
                                             <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
                                         </div>
@@ -56,7 +57,7 @@ if (! defined('ABSPATH')) {
                                             <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" > 
                                         </div>
                                         <div class="file-upload-content upload-contentB">
-                                            <img class="file-upload-image" id="upload-imageB" src="#" alt="your image" />
+                                            <img class="file-upload-image" id="upload-imageB" src="<?= $img_path_display[2]  ?>" alt="your image" />
                                         <div class="image-title-wrap">
                                             <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
                                         </div>
@@ -68,7 +69,7 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
             </table>
-            <div>
+            <div class="gm-desc">
                 ※左端の写真が、地図上で料金ボタンをクリックした際に表示される写真となります。また、この写真の並び順通りに写真は掲載されます。<br> <br>
                 ※写真のデータが大きすぎてアップロードできない方向はこちらのサイトをどうぞ 写真データサイズ圧縮ツール https://tinypng.com/ <br> <br>
             </div>
@@ -119,7 +120,7 @@ if (! defined('ABSPATH')) {
                         <div style="display:flex;gap:10px">
                             <input class="gm-input" style="width:150px;" type="text" name="min_period" value="<?= $record_edit->min_period ?>" data-gm-required data-gm-number>
 
-                            <select class="gm-select-input" style="width:100px;"  name="min_period_unit">
+                            <select class="gm-select-year" style="width:100px;"  name="min_period_unit">
                                 <option value="1">年</option>
                                 <option value="2">月</option>
                                 <option value="3">日</option>
@@ -311,11 +312,14 @@ if (! defined('ABSPATH')) {
                             <?php
                             foreach ($this->facility_records as $i => $record) {
                                 $checked = '';
-                                if ($this->get_input_param('facility_id['.$i.']') == $record->ID || (empty($this->get_input_param('facility_id')) && $i == 0)){
-                                    $checked = 'checked';
+                                $facility = explode(',', $record_edit->facility_ids);
+                                for ($j = 0; $j < count($facility); $j++) { 
+                                    if ($facility[$j] == $record->ID){
+                                        $checked = 'checked';
+                                    }
                                 }
                                 echo '<label><input type="checkbox" name="facility_id['.$i.']" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
-                                }
+                            }
                             ?>
                         </div>
                     </td>
@@ -343,8 +347,7 @@ if (! defined('ABSPATH')) {
             </table>
         </div>
         <?php        
-            }
-        else {
+            } else {
         ?>
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
@@ -446,7 +449,7 @@ if (! defined('ABSPATH')) {
                         <div style="display:flex;gap:10px">
                             <input class="gm-input" style="width:150px;" type="text" name="min_period" value="" data-gm-required data-gm-number>
 
-                            <select class="gm-select-input" style="width:100px;"  name="min_period_unit">
+                            <select class="gm-select-year" style="width:100px;"  name="min_period_unit">
                                 <option value="1">年</option>
                                 <option value="2">月</option>
                                 <option value="3">日</option>

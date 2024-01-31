@@ -75,7 +75,6 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             'property_id' => '物件ID',
             'nm' => '名前',
             'section_nm' => '区画名称',
-            'imgs' => '画像リスト',
             'availability_id' => '空き状況',
             'handover_date' => '引き渡し可能日',
             'min_period' => '最低契約期間',
@@ -157,11 +156,6 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
     public function column_section_nm($item)
     {
         return $item->get_section_nm();
-    }
-
-    public function column_imgs($item)
-    {
-        return $item->get_imgs();
     }
 
     public function column_availability_id($item)
@@ -315,7 +309,6 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
         $this->account_id = $record->account_id;
         $this->nm = $record->nm;
         $this->section_nm = $record->section_nm;
-        $this->imgs = $record->imgs;
         $this->availability_id = $record->availability_id;
         $this->handover_date = $record->handover_date;
         $this->min_period = $record->min_period;
@@ -388,7 +381,6 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_account_id() {return $this->account_id;}
     public function get_nm(){return $this->nm;}
     public function get_section_nm(){return $this->section_nm;}
-    public function get_imgs(){return $this->imgs;}
     public function get_availability_id(){return $this->availability_id;}
     public function get_handover_date(){return $this->handover_date;}
     public function get_min_period(){return $this->min_period;}

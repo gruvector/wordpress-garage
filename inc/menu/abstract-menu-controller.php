@@ -6,7 +6,6 @@ if (! defined('ABSPATH')) {
 abstract class Gm_Abstract_Menu_Controller
 {
     public $messages = '';
-
     /** メッセージ追加 */
     public function set_message($message, $error = false)
     {

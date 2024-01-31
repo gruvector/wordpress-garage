@@ -112,7 +112,7 @@ class Gm_Account_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             <div>{$item->get_ID()}</div>
             <div class="gm-admin-button-wrap">
             <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
-            <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
+            <button type="button" class="gm-admin-button-deny " onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
             </div>
             EOM;
     }
@@ -281,7 +281,9 @@ class Gm_Account_Tmp_Menu_Info extends Gm_Abstract_Menu_Info
         $items = [];
         if (is_array($records)) {
             foreach ($records as $record) {
-                $items[] = new Gm_Account_Tmp_Menu_Item($record);
+                    $items[] = new Gm_Account_Tmp_Menu_Item($record);
+            
+                
             }
         }
         return new Gm_Account_Tmp_Menu_Info($GLOBALS['title'], $items);

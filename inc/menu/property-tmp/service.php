@@ -41,7 +41,6 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                 // 'property_id' => $record->property_id,
                 'nm' => $record->nm,
                 'section_nm' => $record->section_nm,
-                'imgs' => $record->imgs,
                 'availability_id' => $record->availability_id,
                 'handover_date' => $record->handover_date,
                 'min_period' => $record->min_period,
@@ -87,9 +86,8 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 
         $wpdb->update(
             $wpdb->prefix . 'gmt_property_tmp',
-            ['del_flg' => 1,],
+            ['remand_flg' => 1,],
             ['ID' => $ID],
-            ['%d'],
             ['%d'],
         );
 
@@ -117,7 +115,6 @@ SELECT
 	, property_tmp.property_id
 	, property_tmp.nm
 	, property_tmp.section_nm
-	, property_tmp.imgs
 	, property_tmp.availability_id
 	, property_tmp.handover_date
 	, property_tmp.min_period

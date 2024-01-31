@@ -7,6 +7,7 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/inc/menu/abst
 class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
 {
     public $show_mode;
+    
 
     public function __construct()
     {
@@ -21,6 +22,22 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
     // -----------------------------------------------
     // 更新系
     // -----------------------------------------------
+
+    public function edit($ID)
+    {
+        if (empty($ID)) {
+            return;
+        }
+
+        global $wpdb;
+        $records = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_account WHERE ID = {$ID}");
+        if (empty($records)){
+            return;
+        }
+        $record = $records[0];
+        return $record;
+
+    }
 
     public function apply($ID)
     {
@@ -92,7 +109,7 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
             $sql_order = $order;
         }
 
-        $add_cond .= ' AND account.del_flg = ' . (($this->show_mode == '9') ? '1' : 0);
+        $add_cond .= ' AND account.del_flg = ' . (($this->show_mode == '9') ? '1' : '0');
 
         global $wpdb;
         $sql =

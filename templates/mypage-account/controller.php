@@ -6,6 +6,7 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
 {
     public $account_attr_records = [];
     public $account_other = false;
+    public $display_data = [];
 
     protected function setting()
     {
@@ -39,7 +40,7 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
             $this->set_input_params($this->url_params());
         }
         $this->account_attr_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_account_attr order by priority");
-
+        $this->display_data = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_account WHERE ID = {$_SESSION['account_id']}");
         $this->render();
     }
 

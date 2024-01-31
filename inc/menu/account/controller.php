@@ -9,6 +9,8 @@ class Gm_Account_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     public $area_list = [];
     public $service;
     public $show_mode;
+    public $show_modal = 'none';
+    public $show_data;
 
     /** コンストラクタ */
     public function __construct()
@@ -27,10 +29,14 @@ class Gm_Account_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     public function action()
     {
         if (isset($_POST['process'])) {
-            if ($_POST['process'] == 'apply') {
-                $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+            if ($_POST['process'] == 'edit') {
+                $this->show_data = $this->service->edit(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+                var_dump($this->show_data);
+                $this->show_modal = 'block';
             } elseif ($_POST['process'] == 'deny') {
                 $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+            } elseif ($_POST['process'] == 'apply') {
+                $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
             }
         }
 
@@ -111,8 +117,8 @@ class Gm_Account_Menu_Table extends Gm_Abstract_Menu_Table
         return <<<EOM
             <div>{$item->get_ID()}</div>
             <div class="gm-admin-button-wrap">
-            <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
-            <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
+            <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
+            <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='ban';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
             </div>
             EOM;
     }

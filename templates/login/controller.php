@@ -60,7 +60,7 @@ class Gm_Login_Controller extends Abstract_Template_Controller
         // ログイン情報チェック
         // -----------------
         $records = $this->wpdb->get_results(
-            $this->wpdb->prepare("SELECT ID FROM {$this->wpdb->prefix}gmt_account WHERE email = %s AND password = %s", $params['user_id'], $params['user_password'])
+            $this->wpdb->prepare("SELECT ID FROM {$this->wpdb->prefix}gmt_account WHERE email = %s AND password = %s AND del_flg = %s", $params['user_id'], $params['user_password'], "0")
         );
         if (empty($records)) {
             $this->set_common_error('IDまたはパスワードが違います。');
