@@ -26,19 +26,20 @@ if (! defined('ABSPATH')) {
       <div class="modal-content">
         <div class="modal-header">
           <span class="close">&times;</span>
-          <h2>Modal Header</h2>
+          <h2>編集ウィンドウ</h2>
         </div>
         <div class="modal-body">
           
         <form id="gm-page-form" method="POST">
-          <input type="text" style="display:none" placeholder="Enter対策">
+          <input type="hidden" name="process1" value="apply">
+          <input type="hidden" name="ID1" value="<?= $this->show_data[0]->ID ?>">
           <div class="gm-input-table-wrap">
               <table class="gm-input-table">
                   <tr>
                       <th><div class="table_label">名前</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="nm" value="<?= $this->show_data->nm?>" 
+                              <input class="gm-input" type="text" name="nm" value="<?= $this->show_data[0]->nm?>" 
                               data-gm-required data-gm-length="255">
                           </div>
                       </td>
@@ -47,7 +48,7 @@ if (! defined('ABSPATH')) {
                       <th><div>カナ</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="kana" value="<?= $this->show_data->nm?>" 
+                              <input class="gm-input" type="text" name="kana" value="<?= $this->show_data[0]->kana?>" 
                               data-gm-required data-gm-length="255" data-gm-zen-katakana>
                           </div>
                       </td>
@@ -56,7 +57,7 @@ if (! defined('ABSPATH')) {
                       <th><div>メールアドレス</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="email" value="<?= $this->show_data->email?>"  
+                              <input class="gm-input" type="text" name="email" value="<?= $this->show_data[0]->email?>"  
                               data-gm-required data-gm-email>
                           </div>
                       </td>
@@ -65,7 +66,7 @@ if (! defined('ABSPATH')) {
                       <th><div>電話番号</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="phone" value="<?= $this->show_data->phone?>"  
+                              <input class="gm-input" type="text" name="phone" value="<?= $this->show_data[0]->phone?>"  
                               data-gm-required data-gm-phone>
                           </div>
                       </td>
@@ -74,7 +75,7 @@ if (! defined('ABSPATH')) {
                       <th><div>郵便番号</div></th>
                       <td>
                           <div class="gm-zipcode-part">
-                              <input class="gm-input2" type="text" name="postal_code" value="<?= $this->show_data->postal_code?>"  
+                              <input class="gm-input2" type="text" name="postal_code" value="<?= $this->show_data[0]->postal_code?>"  
                               data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
                           </div>
                       </td>
@@ -83,7 +84,7 @@ if (! defined('ABSPATH')) {
                       <th><div>都道府県</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="address_1" value="<?= $this->show_data->address_1?>"  
+                              <input class="gm-input" type="text" name="address_1" value="<?= $this->show_data[0]->address_1?>"  
                               data-gm-required>
                           </div>
                       </td>
@@ -92,7 +93,7 @@ if (! defined('ABSPATH')) {
                       <th><div>市区町村</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="address_2" value="<?= $this->show_data->address_2?>"  
+                              <input class="gm-input" type="text" name="address_2" value="<?= $this->show_data[0]->address_2?>"  
                               data-gm-required>
                           </div>
                       </td>
@@ -101,7 +102,7 @@ if (! defined('ABSPATH')) {
                       <th><div>地番</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="address_3" value="<?= $this->show_data->address_3?>"  
+                              <input class="gm-input" type="text" name="address_3" value="<?= $this->show_data[0]->address_3?>"  
                               data-gm-required>
                           </div>
                       </td>
@@ -110,7 +111,7 @@ if (! defined('ABSPATH')) {
                       <th><div>建物名・部屋番号</div></th>
                       <td>
                           <div>
-                              <input class="gm-input" type="text" name="address_4" value="<?= $this->show_data->address_4?>"  
+                              <input class="gm-input" type="text" name="address_4" value="<?= $this->show_data[0]->address_4?>"  
                               >
                           </div>
                       </td>
@@ -119,15 +120,28 @@ if (! defined('ABSPATH')) {
                       <th><div>アカウント属性</div></th>
                       <td>
                           <div class="gm-radio-wrap">
-                            <label><input type="radio" name="account_attr_id" value="1" id="account_attr_id_other1" onchange="account_other(this)">貸主</label>
-                            <label><input type="radio" name="account_attr_id" value="2" id="account_attr_id_other1" onchange="account_other(this)">管理会社</label>
-                            <label><input type="radio" name="account_attr_id" value="3" id="account_attr_id_other1" onchange="account_other(this)">仲介業者</label>
-                            <div style="display: flex;">
-                                <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
-                            </div>
+                            <?php
+                              // var_dump($this->show_data[1]);
+                              for ($i = 0; $i < 3; $i++) {
+                                $checked = '';
+                                if ($this->show_data[0]->account_attr_id == $this->show_data[1][$i]->ID || ($this->show_data[0]->account_attr_id && $i == 0)){
+                                    $checked = 'checked';
+                                }
+                                echo '<label><input type="radio" name="account_attr_id" onchange="account_add()" value="' . $this->show_data[1][$i]->ID . '" ' . $checked . ' >' . $this->show_data[1][$i]->nm . '</label>';
+                              }
+                            ?>
+                            <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
                           </div>
-                          <input class="gm-input-other gm-input" type="text" name="account_attr_other" id="account_attr_other1" value="<?= $this->show_data->account_attr_other?>" disabled>
-
+                          <input class="gm-input-other gm-input" type="text" name="account_attr_other" id="account_attr_other1" value="<?= isset($this->show_data[0]->account_attr_other) ? $this->show_data[0]->account_attr_other : ''  ?>" disabled>
+                      </td>
+                  </tr>
+                  <tr>
+                      <th><div>パスワード</div></th>
+                      <td>
+                          <div>
+                              <input class="gm-input" type="text" name="password" value="<?= $this->show_data[0]->password ?>"  
+                              >
+                          </div>
                       </td>
                   </tr>
                   <tr>
@@ -135,20 +149,19 @@ if (! defined('ABSPATH')) {
                       <td>
                           <div>
                           <textarea class="gm-input gm-width-80" name="apply_memo" 
-                              ><?= $this->show_data->apply_memo?></textarea>
+                              ><?= $this->show_data[0]->apply_memo; ?></textarea>
                           </div>
                       </td>
                   </tr>
+                  
               </table>
           </div>
           <div class="gm-input-button-wrap">
-              <input type="submit" class="gm-input-button" value="確認画面へ">
+              <input type="submit" class="gm-input-button" value="確認">
           </div>
         </form>
             
-
         </div>
-
       </div>
     </div>
   </form>
@@ -158,17 +171,8 @@ if (! defined('ABSPATH')) {
   // Get the modal
   var modal = document.getElementById("myModal");
 
-  // Get the button that opens the modal
-  var btn = document.getElementsByClassName("myBtn");
-
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
-
-  // When the user clicks the button, open the modal 
-  btn.onclick = function() {
-    console.log("fe");
-    modal.style.display = "block";
-  }
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
@@ -181,5 +185,18 @@ if (! defined('ABSPATH')) {
       modal.style.display = "none";
     }
   }
+
+  function account_other() {
+        document.getElementById("account_attr_other1").disabled = false;
+        document.getElementById("account_attr_other1").style.backgroundColor = "#fff";
+        document.getElementById("account_attr_other1").style.border = "0.5px solid lightgray";
+        
+    }
+
+    function account_add() {
+        document.getElementById("account_attr_other1").disabled = true;
+        document.getElementById("account_attr_other1").style.backgroundColor = "#eee";
+        document.getElementById("account_attr_other1").style.border = "none";
+    }
 </script>
 

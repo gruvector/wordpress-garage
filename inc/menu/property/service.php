@@ -7,6 +7,9 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/inc/menu/abst
 class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
 {
     public $show_mode;
+    public $data_show;
+    public $check_box = [];
+    
 
     public function __construct()
     {
@@ -22,61 +25,77 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
     // 更新系
     // -----------------------------------------------
 
+    public function edit($ID)
+    {
+        if (empty($ID)) {
+            return;
+        }
+        $record = [];
+        global $wpdb;
+        $records1 = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_property WHERE ID = {$ID}");
+        $records2 = $wpdb->get_results("SELECT ID, nm FROM {$wpdb->prefix}gmm_availability order by priority");
+        $records3 = $wpdb->get_results("SELECT ID, nm FROM {$wpdb->prefix}gmm_facility order by priority");
+        if (empty($records1) || empty($records2)){
+            return;
+        }
+        $record[0] = $records1[0];
+        $record[1] = $records2;
+        $record[2] = $records3;
+        return $record;
+
+    }
+
     public function apply($ID)
     {
         if (empty($ID)) {
             return;
         }
-
+        $this->data_show = $_POST;
         global $wpdb;
-        $records = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_property WHERE ID = {$ID}");
-        if (empty($records)){
-            return;
+        var_dump($this->data_show['facility_id']);
+        for ($i = 0; $i < 12 ; $i++) { 
+            if(isset($this->data_show['facility_id'][$i])) {
+                array_push($this->check_box, $this->data_show['facility_id'][$i]);
+           }
         }
-        $record = $records[0];
-
-        $password = Gm_Util::get_rand_str(8);
-
+        $a = implode(",", $this->check_box);
         $wpdb->update(
             $wpdb->prefix.'gmt_property',
             [
-                // 'property_id' => $record->property_id,
-                'nm' => $record->nm,
-                'section_nm' => $record->section_nm,
-                'imgs' => $record->imgs,
-                'availability_id' => $record->availability_id,
-                'handover_date' => $record->handover_date,
-                'min_period' => $record->min_period,
-                'min_period_unit' => $record->min_period_unit,
-                'size_w' => $record->size_w,
-                'size_h' => $record->size_h,
-                'size_d' => $record->size_d,
-                'fee_monthly_rent' => $record->fee_monthly_rent,
-                'fee_monthly_common_service' => $record->fee_monthly_common_service,
-                'fee_monthly_others' => $record->fee_monthly_others,
-                'fee_contract_security' => $record->fee_contract_security,
-                'fee_contract_security_amortization' => $record->fee_contract_security_amortization,
-                'fee_contract_deposit' => $record->fee_contract_deposit,
-                'fee_contract_deposit_amortization' => $record->fee_contract_deposit_amortization,
-                'fee_contract_key_money' => $record->fee_contract_key_money,
-                'fee_contract_guarantee_charge' => $record->fee_contract_guarantee_charge,
-                'fee_contract_other' => $record->fee_contract_other,
-                'facility_ids' => $record->facility_ids,
-                'other_description' => $record->other_description,
-                'appeal_description' => $record->appeal_description,
-                'postal_code' => $record->postal_code,
-                'address_1' => $record->address_1,
-                'address_2' => $record->address_2,
-                'address_3' => $record->address_3,
-                'address_4' => $record->address_4,
+                'property_id' => $this->data_show['property_id'],
+                'nm' => $this->data_show['nm'],
+                'section_nm' => $this->data_show['section_nm'],
+                'availability_id' => $this->data_show['availability_id'],
+                'handover_date' => $this->data_show['handover_date'],
+                'min_period' => $this->data_show['min_period'],
+                'min_period_unit' => $this->data_show['min_period_unit'],
+                'size_w' => $this->data_show['size_w'],
+                'size_h' => $this->data_show['size_h'],
+                'size_d' => $this->data_show['size_d'],
+                'fee_monthly_rent' => $this->data_show['fee_monthly_rent'],
+                'fee_monthly_common_service' => $this->data_show['fee_monthly_common_service'],
+                'fee_monthly_others' => $this->data_show['fee_monthly_others'],
+                'fee_contract_security' => $this->data_show['fee_contract_security'],
+                'fee_contract_security_amortization' => $this->data_show['fee_contract_security_amortization'],
+                'fee_contract_deposit' => $this->data_show['fee_contract_deposit'],
+                'fee_contract_deposit_amortization' => $this->data_show['fee_contract_deposit_amortization'],
+                'fee_contract_key_money' => $this->data_show['fee_contract_key_money'],
+                'fee_contract_guarantee_charge' => $this->data_show['fee_contract_guarantee_charge'],
+                'fee_contract_other' => $this->data_show['fee_contract_other'],
+                'facility_ids' => $a,
+                'other_description' => $this->data_show['other_description'],
+                'appeal_description' => $this->data_show['appeal_description'],
+                'postal_code' => $this->data_show['postal_code'],
+                'address_1' => $this->data_show['address_1'],
+                'address_2' => $this->data_show['address_2'],
+                'address_3' => $this->data_show['address_3'],
+                'address_4' => $this->data_show['address_4'],
+            ],
+            [
+                'ID' => $this->data_show['ID1'],
             ]
         );
-        
-        $wpdb->delete(
-            $wpdb->prefix.'gmt_property',
-            ['ID' => $ID],
-            ['%d'],
-        );
+
     }
 
     public function deny($ID)
@@ -84,17 +103,27 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         if (empty($ID)) {
             return;
         }
-
         global $wpdb;
-
         $wpdb->update(
             $wpdb->prefix . 'gmt_property',
-            ['del_flg' => 1,],
+            ['status1' => '0',],
             ['ID' => $ID],
             ['%d'],
+        );
+    }
+
+    public function recover($ID)
+    {
+        if (empty($ID)) {
+            return;
+        }
+        global $wpdb;
+        $wpdb->update(
+            $wpdb->prefix . 'gmt_property',
+            ['status1' => '1',],
+            ['ID' => $ID],
             ['%d'],
         );
-
     }
 
     // -----------------------------------------------
@@ -108,17 +137,17 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
             $sql_order = $order;
         }
 
-        $add_cond .= ' AND property.remand_flg = ' . (($this->show_mode == '9') ? '1' : 0);
+        $add_cond .= ' AND property.status1 = ' . (($this->show_mode == '9') ? '0' : '1');
 
         global $wpdb;
         $sql =
         <<<EOM
         SELECT
             property.ID
+            , property.account_id
             , property.property_id
             , property.nm
             , property.section_nm
-            , property.imgs
             , property.availability_id
             , property.handover_date
             , property.min_period
@@ -144,17 +173,22 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
             , property.address_2
             , property.address_3
             , property.address_4
-            , property.remand_flg
-            , property.remand_comment
+            , property.status1
             , property.created_at
         FROM
             {$wpdb->prefix}gmt_property AS property
+            LEFT JOIN {$wpdb->prefix}gmm_availability AS availability
+                ON property.availability_id = availability.ID
+            LEFT JOIN {$wpdb->prefix}gmm_facility AS facility
+                ON property.facility_ids = facility.ID
         WHERE 1 = 1 {$add_cond}
         ORDER BY {$sql_order};
         EOM;
 
         $records = $wpdb->get_results($sql);
         return $records;
+  
+    
     }
 
 }

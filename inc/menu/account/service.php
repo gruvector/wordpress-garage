@@ -7,6 +7,7 @@ require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/inc/menu/abst
 class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
 {
     public $show_mode;
+    public $data_show;
     
 
     public function __construct()
@@ -28,13 +29,15 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
         if (empty($ID)) {
             return;
         }
-
+        $record = [];
         global $wpdb;
-        $records = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_account WHERE ID = {$ID}");
-        if (empty($records)){
+        $records1 = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_account WHERE ID = {$ID}");
+        $records2 = $wpdb->get_results("SELECT ID, nm FROM {$wpdb->prefix}gmm_account_attr order by priority");
+        if (empty($records1) || empty($records2)){
             return;
         }
-        $record = $records[0];
+        $record[0] = $records1[0];
+        $record[1] = $records2;
         return $record;
 
     }
@@ -44,40 +47,31 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
         if (empty($ID)) {
             return;
         }
-
+        $this->data_show = $_POST;
         global $wpdb;
-        $records = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_account WHERE ID = {$ID}");
-        if (empty($records)){
-            return;
-        }
-        $record = $records[0];
-
-        $password = Gm_Util::get_rand_str(8);
 
         $wpdb->update(
             $wpdb->prefix.'gmt_account',
             [
-                'nm' => $record->nm,
-                'kana' => $record->kana,
-                'email' => $record->email,
-                'phone' => $record->phone,
-                'postal_code' => $record->postal_code,
-                'address_1' => $record->address_1,
-                'address_2' => $record->address_2,
-                'address_3' => $record->address_3,
-                'address_4' => $record->address_4,
-                'account_attr_id' => $record->account_attr_id,
-                'account_attr_other' => $record->account_attr_other,
-                'apply_memo' => $record->apply_memo,
-                'password' => $password,
+                'nm' => $this->data_show['nm'],
+                'kana' => $this->data_show['kana'],
+                'email' => $this->data_show['email'],
+                'phone' => $this->data_show['phone'],
+                'postal_code' => $this->data_show['postal_code'],
+                'address_1' => $this->data_show['address_1'],
+                'address_2' => $this->data_show['address_2'],
+                'address_3' => $this->data_show['address_3'],
+                'address_4' => $this->data_show['address_4'],
+                'account_attr_id' => $this->data_show['account_attr_id'],
+                'account_attr_other' => (isset($this->data_show['account_attr_other'])?$this->data_show['account_attr_other']:""),
+                'apply_memo' => $this->data_show['apply_memo'],
+                'password' => $this->data_show['password'],
+            ],
+            [
+                'ID' => $this->data_show['ID1'],
             ]
         );
 
-        $wpdb->delete(
-            $wpdb->prefix.'gmt_account',
-            ['ID' => $ID],
-            ['%d'],
-        );
     }
 
     public function deny($ID)
@@ -85,17 +79,27 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
         if (empty($ID)) {
             return;
         }
-
         global $wpdb;
-
         $wpdb->update(
             $wpdb->prefix . 'gmt_account',
-            ['del_flg' => 1,],
+            ['del_flg' => '1',],
             ['ID' => $ID],
             ['%d'],
+        );
+    }
+
+    public function recover($ID)
+    {
+        if (empty($ID)) {
+            return;
+        }
+        global $wpdb;
+        $wpdb->update(
+            $wpdb->prefix . 'gmt_account',
+            ['del_flg' => '0',],
+            ['ID' => $ID],
             ['%d'],
         );
-
     }
 
     // -----------------------------------------------
@@ -130,6 +134,7 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
             , account.account_attr_other
             , account.apply_memo
             , account.created_at
+            , account.del_flg
         FROM
             {$wpdb->prefix}gmt_account AS account
             LEFT JOIN {$wpdb->prefix}gmm_account_attr AS account_attr

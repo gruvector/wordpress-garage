@@ -172,7 +172,7 @@ if (! defined('ABSPATH')) {
                     <th><div>電話番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input" type="text" name="phone" value="<?php echo $this->get_input_param('phone') ?>"  
+                            <input class="gm-input" type="text" name="phone" value="<?php echo $this->get_input_param('phone') ?>"  disabled
                             data-gm-required data-gm-phone>
                         </div>
                     </td>
@@ -182,7 +182,7 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            <input class="gm-input3" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>" disabled 
                             data-gm-required>
                         </div>
                     </td>
@@ -238,8 +238,10 @@ if (! defined('ABSPATH')) {
 
                                 if ($_GET['attr_id'] == "1") {
                                     $checked1 = 'checked';
+                                    $disp = "block";
                                 } else {
                                     $checked1 = "";
+                                    $disp = "none";
                                 }
                             
                             ?>
@@ -249,7 +251,7 @@ if (! defined('ABSPATH')) {
                             </div>
 
                         </div>
-                        <input class="gm-input" type="text" name="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
+                        <input class="gm-input" type="text" name="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" style=<?= "display:".$disp ?> ?>
 
                     </td>
                 </tr>
@@ -287,11 +289,11 @@ if (! defined('ABSPATH')) {
 
 <script>
     function account_other() {
-        document.getElementById("account_attr_other").disabled = false;
+        document.getElementById("account_attr_other").style.display = "block";
     }
 
     function account_add() {
-        document.getElementById("account_attr_other").disabled = true;
+        document.getElementById("account_attr_other").style.display  = "none";
     }
     
     

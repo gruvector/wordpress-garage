@@ -38,7 +38,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
         $wpdb->insert(
             $wpdb->prefix.'gmt_property',
             [
-                // 'property_id' => $record->property_id,
+                'property_id' => $record->property_id,
                 'nm' => $record->nm,
                 'section_nm' => $record->section_nm,
                 'availability_id' => $record->availability_id,

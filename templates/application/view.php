@@ -110,7 +110,7 @@ if (! defined('ABSPATH')) {
                                 <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other1" onchange="account_other(this)">その他</label>
                             </div>
                         </div>
-                        <input class="gm-input-other" type="text" name="account_attr_other" id="account_attr_other1" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
+                        <input class="gm-input-other" type="text" name="account_attr_other" id="account_attr_other1" value="<?php echo $this->get_input_param('account_attr_other') ?>" style="display: none;">
 
                     </td>
                 </tr>
@@ -231,9 +231,11 @@ if (! defined('ABSPATH')) {
                                 }
 
                                 if ($_GET['attr_id'] == "1") {
-                                    $checked1 = 'checked';
+                                    $checked1 = "checked";
+                                    $disp = "block";
                                 } else {
                                     $checked1 = "";
+                                    $disp = "none";
                                 }
                             
                             ?>
@@ -243,7 +245,7 @@ if (! defined('ABSPATH')) {
                             </div>
 
                         </div>
-                        <input class="gm-input" type="text" name="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
+                        <input class="gm-input" style=<?= "display:".$disp ?> type="text" name="account_attr_other" value="<?php echo $this->get_input_param('account_attr_other') ?>" disabled>
 
                     </td>
                 </tr>
@@ -266,25 +268,26 @@ if (! defined('ABSPATH')) {
     完了
     <br /><br />
 
+    <?php 
+        
+
+    ?>
+
     <a href="<?= home_url('')?>" class="gm-input-button">トップページに行く >></a>
 <?php endif; ?>
 </div>
 
 <script>
     function account_other() {
-        document.getElementById("account_attr_other1").disabled = false;
+        document.getElementById("account_attr_other1").style.display = "block";
         document.getElementById("account_attr_other1").style.backgroundColor = "#fff";
         document.getElementById("account_attr_other1").style.border = "0.5px solid lightgray";
         
     }
 
     function account_add() {
-        document.getElementById("account_attr_other1").disabled = true;
+        document.getElementById("account_attr_other1").style.display = "none";
         document.getElementById("account_attr_other1").style.backgroundColor = "#eee";
-        document.getElementById("account_attr_other1").style.border = "none";
-
     }
-    
-
     
 </script>

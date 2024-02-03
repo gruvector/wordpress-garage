@@ -1,3 +1,5 @@
+
+
 .gm-admin-button-wrap{display:flex;justify-content:space-between;margin-top:10px}
 .gm-admin-button-wrap>button{display:inline-block;text-decoration:none;font-size:13px;line-height:2.15384615;min-height:30px;margin:0;padding:0 10px;cursor:pointer;border-width:1px;border-style:solid;-webkit-appearance:none;border-radius:3px;white-space:nowrap;box-sizing:border-box}
 .gm-admin-button-wrap .gm-admin-button-apply{border:1px solid #393 !important;color:#393 !important;background:#dfd !important}
@@ -11,7 +13,7 @@
     z-index: 1; /* Sit on top */
     padding-top: 30px; /* Location of the box */
     left: 0;
-    top: 0;
+    top: 10px;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
@@ -31,7 +33,8 @@
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    margin-bottom: 30px;
   }
   
   /* Add Animation */
@@ -77,12 +80,14 @@
   .gm-input {
     border: solid 1px #ccc !important;
     background: #fff !important;
-    margin-bottom: 20px !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
   }
   .gm-input2 {
     border: solid 1px #ccc !important;
     background: #fff !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
     width: 60% !important;
   }
   .gm-input[disabled] {
@@ -128,4 +133,17 @@
   
   .gm-input-table-wrap {
     margin-top: 30px;
+  }
+
+  .gm-checkbox-group-wrap {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 10px;
+    row-gap: 20px;
+  }
+
+  .gm-select-year {
+    border: 1px solid black;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }

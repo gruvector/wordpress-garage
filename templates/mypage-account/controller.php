@@ -146,7 +146,8 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // 画面遷移
         $url = explode('?', Gm_Util::get_url())[0];
-        header('Location: ' . $url . '?mode=completed');
+        header('Location: /mypage');
+        
         exit();
     }
 }

@@ -31,13 +31,14 @@ class Gm_Account_Menu_Controller extends Gm_Abstract_List_Menu_Controller
         if (isset($_POST['process'])) {
             if ($_POST['process'] == 'edit') {
                 $this->show_data = $this->service->edit(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-                var_dump($this->show_data);
                 $this->show_modal = 'block';
-            } elseif ($_POST['process'] == 'deny') {
+            } elseif ($_POST['process'] == 'ban') {
                 $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-            } elseif ($_POST['process'] == 'apply') {
-                $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-            }
+            } elseif ($_POST['process'] == 'recover') {
+                $this->service->recover(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+            } elseif ($_POST['process1'] == 'apply') {
+                $this->service->apply(isset($_POST) ? $_POST : null);
+            } 
         }
 
         $param_s = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
@@ -88,6 +89,7 @@ class Gm_Account_Menu_Table extends Gm_Abstract_Menu_Table
             'address_4' => '建物名・部屋番号',
             'account_attr_id' => 'アカウント属性',
             'apply_memo' => '申請時メモ',
+            'password' => 'パスワード',
             'created_at' => '申請日時',
         );
         return $columns;
@@ -114,13 +116,23 @@ class Gm_Account_Menu_Table extends Gm_Abstract_Menu_Table
     ********************/
     public function column_ID($item)
     {
-        return <<<EOM
-            <div>{$item->get_ID()}</div>
-            <div class="gm-admin-button-wrap">
-            <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
-            <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='ban';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
-            </div>
-            EOM;
+        if ( $item->get_del_flg() == 0 ) {
+            return <<<EOM
+                <div>{$item->get_ID()}</div>
+                <div class="gm-admin-button-wrap">
+                <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
+                <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='ban';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
+                </div>
+                EOM;
+        } else {
+            return <<<EOM
+                <div>{$item->get_ID()}</div>
+                <div class="gm-admin-button-wrap">
+                <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
+                <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='recover';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">RECOVER</button>
+                </div>
+                EOM;
+        }
     }
 
     public function column_nm($item)
@@ -175,6 +187,10 @@ class Gm_Account_Menu_Table extends Gm_Abstract_Menu_Table
     {
         return $item->get_created_at();
     }
+    public function column_password($item)
+    {
+        return $item->get_password();
+    }
 
 
 }
@@ -198,6 +214,8 @@ class Gm_Account_Menu_Item extends Gm_Abstract_Menu_Item
         $this->account_attr_other = $record->account_attr_other;
         $this->apply_memo = $record->apply_memo;
         $this->created_at = $record->created_at;
+        $this->del_flg = $record->del_flg;
+        $this->password = $record->password;
     }
 
     protected $ID;
@@ -205,7 +223,7 @@ class Gm_Account_Menu_Item extends Gm_Abstract_Menu_Item
     protected $kana;
     protected $email;
     protected $phone;
-    protected $postal_code;
+    protected $postal_code;                                                                       
     protected $address_1;
     protected $address_2;
     protected $address_3;
@@ -215,6 +233,8 @@ class Gm_Account_Menu_Item extends Gm_Abstract_Menu_Item
     protected $account_attr_other;
     protected $apply_memo;
     protected $created_at;
+    protected $del_flg;
+    protected $password;
 
 
     public function get_ID()
@@ -276,7 +296,18 @@ class Gm_Account_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_created_at()
     {
         return $this->created_at;
+
     }
+    public function get_del_flg()
+    {
+        return $this->del_flg;
+    }
+    public function get_password()
+    {
+        return $this->password
+        ;
+    }
+    
 
 }
 

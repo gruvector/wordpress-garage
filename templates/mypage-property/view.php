@@ -32,7 +32,7 @@ if (! defined('ABSPATH')) {
                             <div class="item">
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapA">
-                                            <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" > 
+                                            <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" data-gm-required> 
                                         </div>
                                         <div class="file-upload-content upload-contentA">
                                             <img class="file-upload-image" id="upload-imageA" src="<?= $img_path_display[0]  ?>" alt="your image" />
@@ -43,7 +43,7 @@ if (! defined('ABSPATH')) {
                                 </div>
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapC">
-                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
+                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" data-gm-required> 
                                         </div>
                                         <div class="file-upload-content upload-contentC">
                                             <img class="file-upload-image" id="upload-imageC" src="<?= $img_path_display[1]  ?>" alt="your image" />
@@ -54,7 +54,7 @@ if (! defined('ABSPATH')) {
                                 </div>
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapB">
-                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" > 
+                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" data-gm-required> 
                                         </div>
                                         <div class="file-upload-content upload-contentB">
                                             <img class="file-upload-image" id="upload-imageB" src="<?= $img_path_display[2]  ?>" alt="your image" />
@@ -362,7 +362,7 @@ if (! defined('ABSPATH')) {
                             <div class="item">
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapA">
-                                            <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" > 
+                                            <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" data-gm-required> 
                                         </div>
                                         <div class="file-upload-content upload-contentA">
                                             <img class="file-upload-image" id="upload-imageA" src="#" alt="your image" />
@@ -373,7 +373,7 @@ if (! defined('ABSPATH')) {
                                 </div>
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapC">
-                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
+                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" data-gm-required> 
                                         </div>
                                         <div class="file-upload-content upload-contentC">
                                             <img class="file-upload-image" id="upload-imageC" src="#" alt="your image" />
@@ -384,7 +384,7 @@ if (! defined('ABSPATH')) {
                                 </div>
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapB">
-                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" > 
+                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" data-gm-required> 
                                         </div>
                                         <div class="file-upload-content upload-contentB">
                                             <img class="file-upload-image" id="upload-imageB" src="#" alt="your image" />

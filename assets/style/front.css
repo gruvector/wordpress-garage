@@ -3,13 +3,13 @@
   background: #fff !important;
   margin-bottom: 0 !important;
 }
-.gm-input2 {
+.gm-input2,.gm-input3 {
   border: solid 1px #ccc !important;
   background: #fff !important;
   margin-bottom: 0.5rem !important;
   width: 46% !important;
 }
-.gm-input[disabled] {
+.gm-input[disabled], .gm-input2[disabled] {
   background: #eee !important;
 }
 .gm-zipcode-part {

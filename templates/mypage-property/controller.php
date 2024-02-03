@@ -281,8 +281,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 );
             }
         }
-        $url = explode('?', Gm_Util::get_url())[0];
-        // header('Location: ' . $url . '?mode=completed');
+        // $url = explode('?', Gm_Util::get_url())[0];
+        header('Location: /mypage');
         exit();
     }
 
