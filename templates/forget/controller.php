@@ -22,21 +22,23 @@ class Gm_Forget_Controller extends Abstract_Template_Controller
         // -------------------
         // メイン処理
         // -------------------.
-        // echo($_POST['process']);
-
+        if (isset($_GET['forget'])) {
+            if ($_GET['forget'] == "wrong") {
+                echo("<script>alert('申し訳ありませんが、メールが正確に配信されていません。もう一度お試しください。')</script>");
+            }
+        }
         if (isset($_POST['process']) && $_POST['process'] == 'forget') {
             $this->forget($_POST);
         }
         // -------------------
         // 画面描画
         // -------------------
-        // $this->mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 
         $this->render();
     }
 
     function gdpr_delay_script_execution( $ms ) {
-        return 5000; // 5000 ms = 5 seconds.
+        return 5000; 
     }
     private function forget($params)
     {
@@ -67,7 +69,7 @@ class Gm_Forget_Controller extends Abstract_Template_Controller
         );
         if (empty($records)) {
             $this->set_common_error('IDが違います。');
-            echo("<script>alert(\"IDが違います。\")</script>");
+            echo("<script>alert('入力された電子メールは存在しません。メールを正確に入力してください。')</script>");
             return;
         }
 
@@ -89,11 +91,10 @@ class Gm_Forget_Controller extends Abstract_Template_Controller
 
         if ($success) {
             
-            echo("<script>confirm(\"あなたのEメール情報が正確に配信されました。もし二日間返事が来ない場合は申し訳ありませんが、再度お問い合わせいただくと幸いです。\")</script>");
-            header('Location: /login');
+            header('Location: /login?forget=ok');
         } else {
-            header('Location: /forget');
-            echo("<script>confirm(\"申し訳ありませんが、メールが正確に配信されていません。もう一度お試しください。\")</script>");
+            header('Location: /forget?forget=wrong');
+            
         };
 
         // -----------------

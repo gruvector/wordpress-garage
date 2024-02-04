@@ -23,6 +23,12 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // -------------------
         // メイン処理
         // -------------------
+        if (isset($_GET['email_double'])) {
+            if ($_GET['email_double'] == "ok") {
+                echo '<script>alert("あなたのメールは今も繰り返されています。 メールアドレスをもう一度入力してください。")</script>';
+            }
+        }
+
         if (isset($_POST['process']) && $_POST['process'] == 'check') {
     
             $this->check($_POST);
@@ -115,7 +121,16 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // データ登録
         // -----------------
         $postal_code = $params['postal_code'];
-        var_dump($params['account_attr_id']);
+        $email_object = $this->wpdb->get_results("SELECT email FROM {$this->wpdb->prefix}gmt_account");
+        $email_array = [];
+        for ($i=0; $i < count($email_object); $i++) { 
+            array_push($email_array, $email_object[$i]->email);
+        }
+        if(array_search($params['email'], $email_array)) {
+            header('Location: /application?email_double=ok');
+            exit();
+            
+        }
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_account_tmp',
             [
@@ -134,6 +149,12 @@ class Gm_Application_Controller extends Abstract_Template_Controller
             ]
         );
 
+        $to = 'info@ar-garage.com';
+        $subject = 'アカウント申請リクエスト';
+        $body = '名前が'.$params['nm'].'、メールアドレスが'.$params['email'].'のユーザーがアカウント申請をリクエストします。';
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        
+        wp_mail( $to, $subject, $body, $headers );
 
         // -----------------
         // 画面遷移

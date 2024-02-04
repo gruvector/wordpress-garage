@@ -265,13 +265,12 @@ if (! defined('ABSPATH')) {
         </div>
     </form>
 <?php elseif($this->mode == 'completed') :?>
-    完了
-    <br /><br />
-
-    <?php 
-        
-
-    ?>
+    
+    <div class="application_complete__div">
+        お申込みありがとうございました。<br>
+        info@ar-garage.comより、料金お支払いおよび物件登録のご案内を送付させて頂 きます。<br>
+        お申し込み後2日以内にメールが届かない場合、迷惑メールフォルダをご確認いた だくか、お手数をおかけしますが再度お申し込みをお願いいたします。
+    </div>
 
     <a href="<?= home_url('')?>" class="gm-input-button">トップページに行く >></a>
 <?php endif; ?>

@@ -22,6 +22,11 @@ class Gm_Login_Controller extends Abstract_Template_Controller
         // -------------------
         // メイン処理
         // -------------------
+        if (isset($_GET['forget'])) {
+            if ($_GET['forget'] == "ok") {
+                echo("<script>alert(\"あなたのEメール情報が正確に配信されました。もし二日間返事が来ない場合は申し訳ありませんが、再度お問い合わせいただくと幸いです。\")</script>");
+            }
+        }
         if (isset($_POST['process']) && $_POST['process'] == 'login') {
             $this->login($_POST);
         }

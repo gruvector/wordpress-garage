@@ -18,13 +18,17 @@ if (! defined('ABSPATH')) {
 
         <div class="gm-forget-input">
             <label class="width_100" for="user_id">メールアドレス<br>
-            <input class="gm-input" type="text" name="user_id" value="<?php echo $this->get_input_param('user_id') ?>" 
-                placeholder="ユーザーID"
-                data-gm-required>
-        </label>
+                <input 
+                    class="gm-input" 
+                    type="text" 
+                    name="user_id" 
+                    value="<?php echo $this->get_input_param('user_id') ?>" 
+                    placeholder="ユーザーID"
+                    data-gm-required 
+                />
+            </label>
         </div>
 
-        
         <div class="gm-input-button-wrap">
             <input type="submit" class="gm-input-button" value="リクエスト送信">
         </div>

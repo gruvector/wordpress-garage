@@ -641,4 +641,9 @@
   margin-top: 30px;
 }
 
-
+.application_complete__div {
+  margin: 70px auto;
+  border: 1px solid #222;
+  font-size: 18px;
+  padding: 20px;
+}
