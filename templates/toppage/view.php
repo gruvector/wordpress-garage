@@ -210,6 +210,7 @@ if (!defined('ABSPATH')) {
                     <div class="gm-map-info">
                         <div class="gm-card-info__div">車庫名: ${property.nm}</div>
                         <div class="gm-card-info__div">価格: ${property.postal_code}</div>
+
                     </div>
                     
                     <div class="gm-map-favorite">

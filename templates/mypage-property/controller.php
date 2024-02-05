@@ -55,14 +55,12 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             $extensionC = pathinfo($_FILES["imageC"]["name"], PATHINFO_EXTENSION);
 
             $upload_dir = wp_upload_dir();
-            $upload_dir_url = $upload_dir['url'];
+            $upload_dir_url = $upload_dir['baseurl'];
             
-            $current_date = date('d'); 
-            $new_upload_dir = $upload_dir['path'].'/'.$current_date.'/'.$this->image_folder.'/'.'image'; // Create a new directory with the current date
+            $new_upload_dir = $upload_dir['baseurl'].'/image'; // Create a new directory with the current date
             if (!file_exists($new_upload_dir)) {
                 mkdir($new_upload_dir, 0777, true); // Create the directory if it doesn't exist
             }
-            $this->image_folder += 1;
             $imageA_path = $new_upload_dir. '/'. $_FILES["imageA"]["name"]; // Create the image path
             move_uploaded_file($_FILES["imageA"]['tmp_name'], $imageA_path);
             update_option('imageA_path', $imageA_path);
@@ -75,9 +73,9 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             move_uploaded_file($_FILES["imageC"]['tmp_name'], $imageC_path);
             update_option('imageC_path', $imageC_path);
 
-            var_dump($imageA_path);
-             // File Upload End
-            array_push($this->img_path, $imageA_path, $imageB_path, $imageC_path);
+            // var_dump($imageA_path);
+            // File Upload End
+            array_push($this->img_path, $_FILES["imageA"]["name"], $_FILES["imageB"]["name"], $_FILES["imageC"]["name"]);
             $img_path_str = implode(',', $this->img_path);
             $this->regist($_POST, $img_path_str);
             exit();
