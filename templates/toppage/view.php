@@ -33,7 +33,7 @@ if (!defined('ABSPATH')) {
                 }));
             d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
         })({
-            key: "AIzaSyAb8pareaW9BgBJF52KiPbsyoljqKO9_C0",
+            key: "AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8",
             v: "weekly"
         });
     </script>
@@ -194,7 +194,8 @@ if (!defined('ABSPATH')) {
 
     function buildContent(property) {
         const content = document.createElement("div");
-
+        const img_path = property.imgs.split(',');
+        console.log(img_path[0]);
         content.classList.add("property");
         content.innerHTML = `
             <div class="icon">
@@ -205,17 +206,14 @@ if (!defined('ABSPATH')) {
                 
                 <div class="gm-map-item">
                     <div class="gm-card-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/library/images/${property.imgs}.jpg" alt="img" >
+                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/image/${img_path[0]}" alt="img" >
                     </div>
                     <div class="gm-map-info">
                         <div class="gm-card-info__div">車庫名: ${property.nm}</div>
-                        <div class="gm-card-info__div">価格: ${property.postal_code}</div>
+                        <div class="gm-card-info__div">価格: ${property.fee_monthly_rent}</div>
 
                     </div>
-                    
-                    <div class="gm-map-favorite">
-                        <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart border-heart" id="heart${property.ID}"></i></button>
-                    </div>
+                    <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart border-heart" id="heart${property.ID}"></i></button>
                 </div>
             </div> `;
         

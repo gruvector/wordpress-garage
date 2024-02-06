@@ -12,7 +12,6 @@ if (! defined('ABSPATH')) {
 </style>
 <div class="gm-custom-wrap">
     <form id="gm-page-form" method="POST">
-        <input type="text" style="display:none" placeholder="Enter対策">
         <input type="hidden" name="process" value="regist">
         <div class="gm-input-table-wrap">
             

@@ -55,7 +55,7 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
                 'password' => $params['new_pwd'],
             ], 
             [
-                'account_attr_id' => $_SESSION['account_id'],
+                'ID' => $_SESSION['account_id'],
                 'password' => $params['old_pwd']
             ]
         );

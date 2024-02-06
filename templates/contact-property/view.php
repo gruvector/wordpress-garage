@@ -9,7 +9,26 @@ if (! defined('ABSPATH')) {
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
                 <tr>
-                    <th><div>お名前</div></th>
+                    <th><div class="pl-3">ガレージ名</div></th>
+                    <td>
+                        <div>
+                            <input class="gm-input" type="text" name="section_nm" disabled value="<?= $this->property_section_nm->section_nm; ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div class="pl-3">住所</div></th>
+                    <td>
+                        <div>
+                            <?php 
+                                $this->address = $this->property_section_nm->address_1.' '.$this->property_section_nm->address_2.' '.$this->property_section_nm->address_3.' '.$this->property_section_nm->address_4
+                            ?>
+                            <input class="gm-input" type="text" name="address" disabled value="<?= $address ?>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><div class="pl-3">お名前 <small>(必須)</small></div></th>
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="nm" data-gm-required data-gm-length="255">
@@ -17,7 +36,7 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
                 <tr>
-                    <th><div>メールアドレス</div></th>
+                    <th><div class="pl-3">メールアドレス <small>(必須)</small></div></th>
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="email" data-gm-required data-gm-email>
@@ -25,25 +44,30 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
                 <tr>
-                    <th><div>ご利用者様の属性</div></th>
+                    <th><div class="pl-3">電話番号 <small>(必須)</small></div></th>
                     <td>
-                        <div class="gm-radio-wrap">
-                            <?php
-                            foreach ($this->account_attr_records as $i => $record) {
-                                $checked = '';
-                                if ($this->get_input_param('account_attr_id') == $record->ID || (empty($this->get_input_param('account_attr_id')) && $i == 0)){
-                                    $checked = 'checked';
-                                }
-                                echo '<label><input type="radio" name="account_attr_id" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
-                                }
-                            ?>
-                            <label><input type="radio" name="account_attr_id" value="9" >その他</label>
-                            
+                        <div>
+                            <input class="gm-input" type="text" name="phone" data-gm-required data-gm-phone>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <th><div>ご不明な点</div></th>
+                    <th><div class="pl-3 mt-2">ご希望の連絡方法 <small>(必須)</small></div></th>
+                    <td>
+                        <input type="checkbox" name="contact_way[]" value="電話" class="ml-2 mt-2" data-gm-required>電話
+                        <input type="checkbox" name="contact_way[]" value="メール" class="ml-5" data-gm-required>メール
+                    </td>
+                </tr>
+                <tr>
+                    <th><div class="pl-3 mt-2">お問合せ内容 <small>(必須)</small></div></th>
+                    <td>
+                        <input type="checkbox" name="contact_content[]" value="借りたい" class="ml-2 mt-2" data-gm-required>借りたい
+                        <input type="checkbox" name="contact_content[]" value="内覧したい" class="ml-3" data-gm-required>内覧したい
+                        <input type="checkbox" name="contact_content[]" value="質問したい" class="ml-3" data-gm-required>質問したい
+                    </td>
+                </tr>
+                <tr>
+                    <th><div class="pl-3">その他</div></th>
                     <td>
                         <div>
                         <textarea class="gm-input" name="apply_memo" value=""></textarea>
@@ -66,5 +90,22 @@ if (! defined('ABSPATH')) {
         くか、お手数をおかけしますが再度お申し込みをお願いいたします。
         </div>
     </div>
+    <a href="<?= home_url('favorite')?>" class="gm-input-button mt-5">マイペッジに行く >></a>
 <?php endif; ?>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        $(function(){
+            var requiredCheckboxes = $('.options :checkbox[required]');
+            requiredCheckboxes.change(function(){
+                if(requiredCheckboxes.is(':checked')) {
+                    requiredCheckboxes.removeAttr('required');
+                } else {
+                    requiredCheckboxes.attr('required', 'required');
+                }
+            });
+        });
+    })
+</script>

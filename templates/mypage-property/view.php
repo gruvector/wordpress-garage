@@ -22,50 +22,45 @@ if (! defined('ABSPATH')) {
                 <tr>
                     <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
-                        <div>
-                            <!-- <input class="gm-input" type="file" name="imgs0" value="" >
-                            <input class="gm-input" type="file" name="imgs1" value="" >
-                            <input class="gm-input" type="file" name="imgs2" value="" > -->
-                            <?php 
-                                $img_path_display = explode(',', $record_edit->imgs);
-                            ?>
-                            <div class="item">
-                                <div class="item-upload">
-                                        <div class="image-upload-wrap upload-wrapA">
-                                            <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" data-gm-required> 
-                                        </div>
-                                        <div class="file-upload-content upload-contentA">
-                                            <img class="file-upload-image" id="upload-imageA" src="<?= $img_path_display[0]  ?>" alt="your image" />
+                        <?php 
+                            $img_path_display = explode(',', $record_edit->imgs);
+                        ?>
+                        <div class="item">
+                            <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapA">
+                                        <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentA">
+                                        <img class="file-upload-image1" id="upload-imageA" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[0]  ?>" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
+                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">Remove</span></button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="item-upload">
-                                        <div class="image-upload-wrap upload-wrapC">
-                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" data-gm-required> 
-                                        </div>
-                                        <div class="file-upload-content upload-contentC">
-                                            <img class="file-upload-image" id="upload-imageC" src="<?= $img_path_display[1]  ?>" alt="your image" />
-                                        <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
-                                        </div>
+                            </div>
+                            <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapC">
+                                        <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
                                     </div>
-                                </div>
-                                <div class="item-upload">
-                                        <div class="image-upload-wrap upload-wrapB">
-                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" data-gm-required> 
-                                        </div>
-                                        <div class="file-upload-content upload-contentB">
-                                            <img class="file-upload-image" id="upload-imageB" src="<?= $img_path_display[2]  ?>" alt="your image" />
-                                        <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
-                                        </div>
+                                    <div class="file-upload-content1 upload-contentC">
+                                        <img class="file-upload-image1" id="upload-imageC" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[1]  ?>" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">Remove</span></button>
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapB">
+                                        <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);"    > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentB">
+                                        <img class="file-upload-image1" id="upload-imageB" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[2]  ?>" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">Remove</span></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                            
                     </td>
                 </tr>
             </table>
@@ -78,7 +73,7 @@ if (! defined('ABSPATH')) {
                     <th><div>名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="nm" value="<?= $record_edit->nm || "" ?>" data-gm-required>
+                            <input class="gm-input" type="text" name="nm" value="<?= $record_edit->nm ?>" data-gm-required>
                         </div>
                     </td>
                 </tr>
@@ -179,8 +174,8 @@ if (! defined('ABSPATH')) {
                     <th><div>サイズ：横幅</div></th>
                     <td>
                         <div class="gm-meter">
-                            <input class="gm-input" type="text" name="size_w" value="<?= $record_edit->size_w ?> m" 
-                            data-gm-required data-gm-number data-min="0" data-max="999999999">m
+                            <input class="gm-input" type="text" name="size_w" value="<?= $record_edit->size_w ?>" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999"> &nbsp;&nbsp;m
                         </div>
                     </td>
                 </tr>
@@ -188,8 +183,8 @@ if (! defined('ABSPATH')) {
                     <th><div>サイズ：高さ</div></th>
                     <td>
                         <div class="gm-meter">
-                            <input class="gm-input" type="text" name="size_h" value="<?= $record_edit->size_h ?> m" 
-                            data-gm-required data-gm-number data-min="0" data-max="999999999">m
+                            <input class="gm-input" type="text" name="size_h" value="<?= $record_edit->size_h ?>" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999"> &nbsp;&nbsp;m
                         </div>
                     </td>
                 </tr>
@@ -197,8 +192,8 @@ if (! defined('ABSPATH')) {
                     <th><div>サイズ：奥行</div></th>
                     <td>
                         <div class="gm-meter">
-                            <input class="gm-input" type="text" name="size_d" value="<?= $record_edit->size_d ?> m" 
-                            data-gm-required data-gm-number data-min="0" data-max="999999999">m
+                            <input class="gm-input" type="text" name="size_d" value="<?= $record_edit->size_d ?>" 
+                            data-gm-required data-gm-number data-min="0" data-max="999999999"> &nbsp;&nbsp;m
                         </div>
                     </td>
                 </tr>
@@ -355,9 +350,6 @@ if (! defined('ABSPATH')) {
                     <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
                         <div>
-                            <!-- <input class="gm-input" type="file" name="imgs0" value="" >
-                            <input class="gm-input" type="file" name="imgs1" value="" >
-                            <input class="gm-input" type="file" name="imgs2" value="" > -->
 
                             <div class="item">
                                 <div class="item-upload">
@@ -367,29 +359,29 @@ if (! defined('ABSPATH')) {
                                         <div class="file-upload-content upload-contentA">
                                             <img class="file-upload-image" id="upload-imageA" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
+                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">Remove</span></button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapC">
-                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" data-gm-required> 
+                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
                                         </div>
                                         <div class="file-upload-content upload-contentC">
                                             <img class="file-upload-image" id="upload-imageC" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
+                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">Remove</span></button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="item-upload">
                                         <div class="image-upload-wrap upload-wrapB">
-                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" data-gm-required> 
+                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" > 
                                         </div>
                                         <div class="file-upload-content upload-contentB">
                                             <img class="file-upload-image" id="upload-imageB" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
+                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">Remove</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -726,7 +718,6 @@ if (! defined('ABSPATH')) {
 			  $('.upload-contentA').show();
 			  var fileName = input.files[0].name;
 			  var fileExtension = fileName.split('.').pop();
-			  $('.titleA').html("Remove A." + fileExtension);
 		  };
 		reader.readAsDataURL(input.files[0]);
 
@@ -751,7 +742,6 @@ if (! defined('ABSPATH')) {
 		  $('.upload-contentB').show();
 		  var fileName = input.files[0].name;
 		  var fileExtension = fileName.split('.').pop();
-		  $('.titleB').html("Remove C." + fileExtension);
 		};
 
 		reader.readAsDataURL(input.files[0]);
@@ -778,7 +768,6 @@ if (! defined('ABSPATH')) {
           $('#upload-imageC').show();
 	      var fileName = input.files[0].name;
 		  var fileExtension = fileName.split('.').pop();
-		  $('.titleC').html("Remove B." + fileExtension);
 		};
 
 		reader.readAsDataURL(input.files[0]);

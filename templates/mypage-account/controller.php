@@ -132,7 +132,7 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
                 'address_3' => $params['address_3'],
                 'address_4' => $params['address_4'],
                 'account_attr_id' => $params['account_attr_id'],
-                'account_attr_other' => isset($params['account_attr_other']) ? $params['account_attr_other'] : null,
+                'account_attr_other' => $params['account_attr_other'] ? $params['account_attr_other'] : null,
                 'apply_memo' => $params['apply_memo'],
             ],
             [

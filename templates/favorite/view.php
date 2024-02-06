@@ -16,14 +16,14 @@ if (! defined('ABSPATH')) {
                 ?>
                     <div class="carousel-item">
                         <div class="col-lg-5 col-md-4 gm-card">
-                            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/image/<?php echo $img[2] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
+                            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/image/<?php echo $img[1     ] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
                             <div class="gm-card-info__div">車庫名: <?php echo $record[0]->nm ?></div>
                             <div class="gm-card-info__div">価格: <?php echo $record[0]->fee_monthly_rent ?></div>
                             <?php
                                 $param = array('id'=>$record[0]->ID);
                                 $link = add_query_arg($param, home_url('propertys'));
                             ?>
-                            <a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a>
+                            <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
                         </div>
                     </div>
                 <?php      
@@ -48,7 +48,7 @@ if (! defined('ABSPATH')) {
 <script>
     $(document).ready(function(){
         $('#gallery').carousel({
-            interval: 5000
+            interval: 500000
         })
 
         // Modify each slide to contain five columns of images
