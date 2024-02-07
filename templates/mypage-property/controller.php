@@ -131,13 +131,20 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         }
 
         $a = implode(",", $this->check_box);
+
+        switch($params['min_period_unit']) {
+            case '1': $add_date = '+'.$params['min_period'].' years'; break;
+            case '2': $add_date = '+'.$params['min_period'].' months'; break;
+            case '3': $add_date = '+'.$params['min_period'].' days'; break;
+            default: break;
+        }
+        var_dump($add_date);
+        $publish_date = date($params['handover_date'], strtotime($add_date));
+        var_dump($publish_date);
         if($this->param_type == "add") {
             $property_id_tmp = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
             $property_id = (int) $property_id_tmp + 1;
             
-            
-
-
             $this->wpdb->insert(
                 $this->wpdb->prefix.'gmt_property_tmp',
                 [
@@ -257,7 +264,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 );
             }
         }
-        header('Location: /mypage');
+        // header('Location: /mypage');
         exit();
     }
 

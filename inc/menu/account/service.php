@@ -133,6 +133,7 @@ class Gm_Account_Menu_Service extends Gm_Abstract_Menu_Service
             , account_attr.nm                AS account_attr_nm
             , account.account_attr_other
             , account.apply_memo
+            , account.password
             , account.created_at
             , account.del_flg
         FROM
