@@ -183,6 +183,13 @@ final class Gm_Menu
         $contoroller->action();
     }
 
+    public static function show_price()
+    {
+        require_once plugin_dir_path(__FILE__) . '/price/controller.php';
+        $contoroller = new Gm_Price_Menu_Controller();
+        $contoroller->action();
+    }
+
 
     public static function request_ajax()
     {
