@@ -129,8 +129,16 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 array_push($this->check_box, $params['facility_id'][$i]);
         }
         }
-
         $a = implode(",", $this->check_box);
+
+        /***** 
+         *
+         *   start to get publish_to date.
+         */
+
+        
+        $format_date = str_replace('/', '-', $params['handover_date']);
+        var_dump(strtotime($format_date));
 
         switch($params['min_period_unit']) {
             case '1': $add_date = '+'.$params['min_period'].' years'; break;
@@ -138,9 +146,13 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             case '3': $add_date = '+'.$params['min_period'].' days'; break;
             default: break;
         }
-        var_dump($add_date);
-        $publish_date = date($params['handover_date'], strtotime($add_date));
+        $publish_date = date("Y-m-d", strtotime($add_date, strtotime($format_date)));
         var_dump($publish_date);
+        /****
+         * 
+         * end to get publish_to date
+         */
+
         if($this->param_type == "add") {
             $property_id_tmp = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
             $property_id = (int) $property_id_tmp + 1;
@@ -182,10 +194,31 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                     'facility_ids' => $a,
                 ]
             );
+
+            $this->wpdb->insert(
+                $this->wpdb->prefix.'gmt_property_publish',
+                [
+                    'property_id' => (string)$property_id,
+                    'publish_from' => $params['handover_date'],
+                    'publish_to' => $publish_date
+                ]
+            );
         }
 
         if ($this->param_type == "edit") {
             // var_dump($_GET['param']);
+            
+            $this->wpdb->update(
+                $this->wpdb->prefix.'gmt_property_publish',
+                [
+                    'publish_from' => $params['handover_date'],
+                    'publish_to' => $publish_date
+                ],
+                [
+                    'property_id' => $this->param_id
+                ]
+            );
+
             if($this->bool_tmp) {
                 $this->wpdb->update(
                     $this->wpdb->prefix.'gmt_property_tmp',
@@ -264,7 +297,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 );
             }
         }
-        // header('Location: /mypage');
+        header('Location: /mypage');
         exit();
     }
 

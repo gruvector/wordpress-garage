@@ -132,6 +132,14 @@ final class Gm_Menu
         );
         add_submenu_page(
             'menu_gm_price',
+            '料金[新規作成]',
+            '新規作成 ',
+            'manage_options',
+            'menu_gm_price',
+            'Gm_Menu::show_price'
+        );
+        add_submenu_page(
+            'menu_gm_price',
             '料金[編集]',
             '編集 ',
             'manage_options',
