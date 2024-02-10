@@ -3,6 +3,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 ?>
+
 <div class="gm-custom-wrap">
 <?php if($this->mode == '') :?>
     <form id="gm-page-form" method="POST">
