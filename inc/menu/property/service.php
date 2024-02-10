@@ -52,7 +52,6 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         }
         $this->data_show = $_POST;
         global $wpdb;
-        var_dump($this->data_show['facility_id']);
         for ($i = 0; $i < 12 ; $i++) { 
             if(isset($this->data_show['facility_id'][$i])) {
                 array_push($this->check_box, $this->data_show['facility_id'][$i]);
@@ -62,7 +61,6 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         $wpdb->update(
             $wpdb->prefix.'gmt_property',
             [
-                'property_id' => $this->data_show['property_id'],
                 'nm' => $this->data_show['nm'],
                 'section_nm' => $this->data_show['section_nm'],
                 'availability_id' => $this->data_show['availability_id'],

@@ -21,9 +21,9 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <?php 
-                                $this->address = $this->property_section_nm->address_1.' '.$this->property_section_nm->address_2.' '.$this->property_section_nm->address_3.' '.$this->property_section_nm->address_4
+                                $this->address = $this->property_section_nm->address_1.' '.$this->property_section_nm->address_2.' '.$this->property_section_nm->address_3.' '.$this->property_section_nm->address_4;
                             ?>
-                            <input class="gm-input" type="text" name="address" disabled value="<?= $address ?>">
+                            <input class="gm-input" type="text" name="address" value="<?= $this->address ?>" disabled >
                         </div>
                     </td>
                 </tr>

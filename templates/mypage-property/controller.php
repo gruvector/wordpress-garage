@@ -54,10 +54,9 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $extensionB = pathinfo($_FILES["imageB"]["name"], PATHINFO_EXTENSION);
                 $extensionC = pathinfo($_FILES["imageC"]["name"], PATHINFO_EXTENSION);
 
-                $upload_dir = wp_upload_dir();
-                $upload_dir_url = $upload_dir['baseurl'];
-                
-                $new_upload_dir = $upload_dir['baseurl'].'/image'; // Create a new directory with the current date
+
+                $upload_dir_url = $_SERVER['DOCUMENT_ROOT'];
+                $new_upload_dir = $upload_dir_url.'/wp-content/uploads/image'; // Create a new directory with the current date
                 if (!file_exists($new_upload_dir)) {
                     mkdir($new_upload_dir, 0777, true); // Create the directory if it doesn't exist
                 }
@@ -76,6 +75,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 // var_dump($imageA_path);
                 // File Upload End
                 array_push($this->img_path, $_FILES["imageA"]["name"], $_FILES["imageB"]["name"], $_FILES["imageC"]["name"]);
+                
                 $img_path_str = implode(',', $this->img_path);
             } else {
                 $img_path_str = "";
@@ -117,13 +117,12 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         $result_string = $this->getLnt($params['postal_code']);
 
-        var_dump($result_string);
+        var_dump($img_path_str);
         
         // ---------------------
         // end to get lat and long
         // ----------------------
         // 
-        var_dump($params);
         for ($i = 0; $i < 12 ; $i++) { 
             if(isset($params['facility_id'][$i])) {
                 array_push($this->check_box, $params['facility_id'][$i]);
@@ -138,7 +137,6 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
         
         $format_date = str_replace('/', '-', $params['handover_date']);
-        var_dump(strtotime($format_date));
 
         switch($params['min_period_unit']) {
             case '1': $add_date = '+'.$params['min_period'].' years'; break;
@@ -147,7 +145,6 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             default: break;
         }
         $publish_date = date("Y-m-d", strtotime($add_date, strtotime($format_date)));
-        var_dump($publish_date);
         /****
          * 
          * end to get publish_to date
@@ -227,6 +224,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'section_nm' => $params['section_nm'],
                         'availability_id' => $params['availability_id'],
                         'handover_date' => $params['handover_date'],
+                        'imgs' => $img_path_str,
                         'min_period' => $params['min_period'],
                         'min_period_unit' => $params['min_period_unit'],
                         'size_w' => (int) $params['size_w'],
@@ -267,6 +265,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'handover_date' => $params['handover_date'],
                         'min_period' => $params['min_period'],
                         'min_period_unit' => $params['min_period_unit'],
+                        'imgs' => $img_path_str,
                         'size_w' => (int) $params['size_w'],
                         'size_h' => (int) $params['size_h'],
                         'size_d' => (int) $params['size_d'],

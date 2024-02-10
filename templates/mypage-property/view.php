@@ -33,7 +33,7 @@ if (! defined('ABSPATH')) {
                                     <div class="file-upload-content1 upload-contentA">
                                         <img class="file-upload-image1" id="upload-imageA" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[0]  ?>" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">Remove</span></button>
+                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
                                         </div>
                                     </div>
                             </div>
@@ -44,7 +44,7 @@ if (! defined('ABSPATH')) {
                                     <div class="file-upload-content1 upload-contentC">
                                         <img class="file-upload-image1" id="upload-imageC" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[1]  ?>" alt="your image" />
                                     <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">Remove</span></button>
+                                        <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@ if (! defined('ABSPATH')) {
                                     <div class="file-upload-content1 upload-contentB">
                                         <img class="file-upload-image1" id="upload-imageB" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[2]  ?>" alt="your image" />
                                     <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">Remove</span></button>
+                                        <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@ if (! defined('ABSPATH')) {
                     <th><div>郵便番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
+                            <input class="gm-input2" type="text" name="postal_code" value="<?= $record_edit->postal_code ?>"  
                             data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
                         </div>
                     </td>
@@ -359,7 +359,7 @@ if (! defined('ABSPATH')) {
                                         <div class="file-upload-content upload-contentA">
                                             <img class="file-upload-image" id="upload-imageA" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">Remove</span></button>
+                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -370,7 +370,7 @@ if (! defined('ABSPATH')) {
                                         <div class="file-upload-content upload-contentC">
                                             <img class="file-upload-image" id="upload-imageC" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">Remove</span></button>
+                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -381,7 +381,7 @@ if (! defined('ABSPATH')) {
                                         <div class="file-upload-content upload-contentB">
                                             <img class="file-upload-image" id="upload-imageB" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">Remove</span></button>
+                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -718,6 +718,7 @@ if (! defined('ABSPATH')) {
 			  $('.upload-contentA').show();
 			  var fileName = input.files[0].name;
 			  var fileExtension = fileName.split('.').pop();
+			  $('.titleA').html("Remove");
 		  };
 		reader.readAsDataURL(input.files[0]);
 
@@ -742,6 +743,7 @@ if (! defined('ABSPATH')) {
 		  $('.upload-contentB').show();
 		  var fileName = input.files[0].name;
 		  var fileExtension = fileName.split('.').pop();
+		  $('.titleB').html("Remove");
 		};
 
 		reader.readAsDataURL(input.files[0]);
@@ -768,6 +770,7 @@ if (! defined('ABSPATH')) {
           $('#upload-imageC').show();
 	      var fileName = input.files[0].name;
 		  var fileExtension = fileName.split('.').pop();
+		  $('.titleC').html("Remove" + fileExtension);
 		};
 
 		reader.readAsDataURL(input.files[0]);

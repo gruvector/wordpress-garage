@@ -11,11 +11,12 @@ class Gm_Price_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     public $show_mode;
     public $show_modal = 'none';
     public $show_data;
+    public $add_edit = "";
 
     /** コンストラクタ */
     public function __construct()
     {
-        require_once plugin_dir_path(__FILE__) . 'service.php';
+        require_once plugin_dir_path(__FILE__).'service.php';
         $this->service = new Gm_Price_Menu_Service();
         $table = new Gm_Price_Menu_Table();
         $keys = array('ID');
@@ -32,9 +33,11 @@ class Gm_Price_Menu_Controller extends Gm_Abstract_List_Menu_Controller
             if ($_POST['process'] == 'edit') {
                 $this->show_data = $this->service->edit(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
                 $this->show_modal = 'block';
+                $this->add_edit = "apply";
             } elseif ($_POST['process'] == 'show') {
                 $this->show_modal = 'block';
-            } elseif ($_POST['process'] == 'add') {
+                $this->add_edit = "add";
+            } elseif ($_POST['process1'] == 'add') {
                 $this->service->add();
             } elseif ($_POST['process1'] == 'apply') {
                 $this->service->apply(isset($_POST) ? $_POST : null);
@@ -78,15 +81,15 @@ class Gm_Price_Menu_Table extends Gm_Abstract_Menu_Table
     {
         $columns = array(
             'ID' => 'ID',
-            'nm' => 'アカウントID',
-            'description' => '物件ID',
-            'expiry_days' => '名前',
-            'price' => '区画名称',
-            'campaign_price' => '空き状況',
-            'campaign_from' => '引き渡し可能日',
-            'campaign_to' => '最低契約期間',
-            'recommend_flg' => '最低契約期間単位',
-            'priority' => '横幅',
+            'nm' => '名称',
+            'description' => '説明',
+            'expiry_days' => '有効期限日',
+            'price' => '価格',
+            'campaign_price' => 'キャンペーン価格',
+            'campaign_from' => 'からのキャンペーン',
+            'campaign_to' => 'へのキャンペーン',
+            'recommend_flg' => '推奨フラグ',
+            'priority' => '優先度',
         );
         return $columns;
     }

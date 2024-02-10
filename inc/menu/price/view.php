@@ -29,79 +29,79 @@ if (! defined('ABSPATH')) {
         <div class="modal-body">
           
         <form id="gm-page-form" method="POST">
-            <input type="hidden" name="process1" value="apply">
-            <input type="hidden" name="ID1" value="<?= $this->show_data[0]->ID ?>">
+            <input type="hidden" name="process1" value="<?= $this->add_edit; ?>">
+            <input type="hidden" name="ID1" value="<?= isset($this->show_data[0]->ID) ? $this->show_data[0]->ID : "" ?>" onchange="show_date()">
             <div class="gm-input-table-wrap">
                 <table class="gm-input-table">
                     <tr>
                         <th><div>名称</div></th>
                         <td>
                             <div>
-                                <input class="gm-input" type="text" name="nm" value="<?= $this->show_data[0]->nm ?>" data-gm-required>
+                                <input class="gm-input" type="text" name="nm" value="<?= isset($this->show_data[0]->nm) ? $this->show_data[0]->nm : null ?>" required>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>区画名称</div></th>
+                        <th><div>説明</div></th>
                         <td>
                             <div>
-                                <input class="gm-input" type="text" name="description" value="<?= $this->show_data[0]->description ?>" data-gm-required>   
+                                <input class="gm-input" type="text" name="description" value="<?= isset($this->show_data[0]->description) ? $this->show_data[0]->description : null ?>" required>   
                             </div>
                         </td>
                     </tr>            
                     <tr>
-                        <th><div>都道府県</div></th>
+                        <th><div>有効期限日</div></th>
                         <td>
                             <div>
-                                <input class="gm-input" type="text" name="expiry_days" value="<?= $this->show_data[0]->expiry_days ?>"  data-gm-required>
+                                <input class="gm-input" type="number" name="expiry_days" value="<?= isset($this->show_data[0]->expiry_days) ? $this->show_data[0]->expiry_days : null ?>"  required min="0" max="999999999">
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>市区町村</div></th>
+                        <th><div>価格</div></th>
                         <td>
                             <div>
-                                <input class="gm-input" type="text" name="price" value="<?= $this->show_data[0]->price ?>"  data-gm-required>
+                                <input class="gm-input" type="number" name="price" value="<?= isset($this->show_data[0]->price) ? $this->show_data[0]->price : null ?>"  required min="0" max="999999999">
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>地番</div></th>
+                        <th><div>キャンペーン価格</div></th>
                         <td>
                             <div>
-                                <input class="gm-input" type="text" name="campaign_price" value="<?= $this->show_data[0]->campaign_price ?>"  data-gm-required>
+                                <input class="gm-input" type="number" name="campaign_price" value="<?= isset($this->show_data[0]->campaign_price) ? $this->show_data[0]->campaign_price : null ?>"  required min="0" max="999999999">
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>建物名・部屋番号</div></th>
+                        <th><div>からのキャンペーン</div></th>
                         <td>
                             <div>
-                                <input class="gm-input" type="text" name="campaign_from" value="<?= $this->show_data[0]->campaign_from ?>"  >
+                                <input class="gm-input" type="date" name="campaign_from" id="campaign_from" value="<?= isset($this->show_data[0]->campaign_from) ? $this->show_data[0]->campaign_from : null ?>"  required >
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>サイズ：横幅</div></th>
+                        <th><div>へのキャンペーン</div></th>
                         <td>
-                            <div class="gm-meter">
-                                <input class="gm-input" type="text" name="campaign_to" value="<?= $this->show_data[0]->campaign_to ?> " >
+                            <div>
+                                <input class="gm-input" type="date" name="campaign_to" id="campaign_to" value="<?= isset($this->show_data[0]->campaign_to) ? $this->show_data[0]->campaign_to : null ?> " required >
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>サイズ：横幅</div></th>
+                        <th><div>推奨フラグ</div></th>
                         <td>
-                            <div class="gm-meter">
-                                <input class="gm-input" type="text" name="recommend_flg" value="<?= $this->show_data[0]->recommend_flg ?> " >
+                            <div>
+                                <input class="gm-input" type="text" name="recommend_flg" value="<?= isset($this->show_data[0]->recommend_flg) ? $this->show_data[0]->recommend_flg : null ?> " required>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><div>サイズ：横幅</div></th>
+                        <th><div>優先度</div></th>
                         <td>
-                            <div class="gm-meter">
-                                <input class="gm-input" type="text" name="priority" value="<?= $this->show_data[0]->priority ?> " >
+                            <div>
+                                <input class="gm-input" type="text" name="priority" value="<?= isset($this->show_data[0]->priority) ? $this->show_data[0]->priority : null ?> " required >
                             </div>
                         </td>
                     </tr>
@@ -120,25 +120,32 @@ if (! defined('ABSPATH')) {
 </div>
 
 <script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
 
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+    // function show_date() {
+        document.getElementById("campaign_from").value("<?= isset($this->show_data[0]->campaign_from) ? $this->show_data[0]->campaign_from : null ?>");
+    //     console.log('ffef');
+    // }
 
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
+    
+    // Get the modal
+    var modal = document.getElementById("myModal");
 
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
     }
-  }
 
-  function account_other() {
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+        modal.style.display = "none";
+        }
+    }
+
+    function account_other() {
         document.getElementById("account_attr_other1").disabled = false;
         document.getElementById("account_attr_other1").style.backgroundColor = "#fff";
         document.getElementById("account_attr_other1").style.border = "0.5px solid lightgray";
@@ -150,5 +157,7 @@ if (! defined('ABSPATH')) {
         document.getElementById("account_attr_other1").style.backgroundColor = "#eee";
         document.getElementById("account_attr_other1").style.border = "none";
     }
+
+
 </script>
 

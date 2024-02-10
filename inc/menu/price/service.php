@@ -32,7 +32,7 @@ class Gm_Price_Menu_Service extends Gm_Abstract_Menu_Service
         }
         $record = [];
         global $wpdb;
-        $records = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmm_price WHERE ID = {$ID}");
+        $record = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmm_price WHERE ID = {$ID}");
 
         return $record;
 
@@ -107,18 +107,15 @@ class Gm_Price_Menu_Service extends Gm_Abstract_Menu_Service
         <<<EOM
         SELECT
             price.ID
-            , price.account_id
-            , price.property_id
             , price.nm
-            , price.section_nm
-            , price.availability_id
-            , price.handover_date
-            , price.min_period
-            , price.min_period_unit
-            , price.size_w
-            , price.size_h
-            , price.size_d
-            , price.fee_monthly_rent
+            , price.description
+            , price.expiry_days
+            , price.price
+            , price.campaign_price
+            , price.campaign_from
+            , price.campaign_to
+            , price.recommend_flg
+            , price.priority
 
         FROM
             {$wpdb->prefix}gmm_price AS price

@@ -70,7 +70,7 @@ if (! defined('ABSPATH')) {
                     <th><div>引き渡し可能日</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="handover_date" value="<?= $this->show_data[0]->handover_date ?>" data-gm-required data-gm-date="yyyy/MM/dd">
+                            <input class="gm-input" type="date" name="handover_date" value="<?= $this->show_data[0]->handover_date ?>" data-gm-required data-gm-date="yyyy/MM/dd">
                         </div>
                     </td>
                 </tr>
