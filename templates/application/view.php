@@ -66,8 +66,6 @@ if (! defined('ABSPATH')) {
                         </div>
                     </td>
                 </tr>
-
-                
                 <tr>
                     <th><div>市区町村</div></th>
                     <td>
