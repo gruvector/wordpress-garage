@@ -28,8 +28,12 @@ class Gm_Property_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     {
         if (isset($_POST['process'])) {
             if ($_POST['process'] == 'apply') {
-                $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+                $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null, isset($_GET['show_mode'])?$_GET['show_mode']:"1");
             } elseif ($_POST['process'] == 'deny') {
+
+                echo("<script type='text/javascript'> var answer = prompt('Please type your name.'); </script>");
+                echo("<script type='text/javascript'> document.cookie = 'userInput='+answer; </script>");   
+                
                 $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
             }
         }
@@ -37,7 +41,7 @@ class Gm_Property_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
         $param_s = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
         $param_orderby = (isset($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : false;
         $param_order = (isset($_REQUEST['order'])) ? $_REQUEST['order'] : '';
-        $this->show_mode = $this->service->show_mode = (isset($_REQUEST['show_mode'])) ? $_REQUEST['show_mode'] : '';
+        $this->show_mode = $this->service->show_mode = (isset($_GET['show_mode'])) ? $_GET['show_mode'] : '';
 
         $records = $this->service->get_list($param_s, $param_orderby, $param_order);
         $this->table->prepare_items($records);
@@ -99,7 +103,6 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             'address_1' => '市区町村',
             'address_1' => '地番',
             'address_1' => '建物名',
-            'remand_flg' => '差戻フラグ',
             'remand_comment' => '差戻コメント',
             'created_at' => '登録日時',
             'updated_at' => '更新日時',
@@ -130,13 +133,23 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
     ********************/
     public function column_ID($item)
     {
-        return <<<EOM
+        if ($item->get_remand_flg() == "0") {
+            return <<<EOM
             <div>{$item->get_ID()}</div>
             <div class="gm-admin-button-wrap">
             <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
             <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
             </div>
             EOM;
+        } else {
+            return <<<EOM
+            <div>{$item->get_ID()}</div>
+            <div class="gm-admin-button-wrap">
+            <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
+            </div>
+            EOM;
+        }
+        
     }
     public function column_property_id($item)
     {
@@ -283,10 +296,10 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
         return $item->get_address_4();
     }
 
-    public function column_remand_flg($item)
-    {
-        return $item->get_remand_flg();
-    }
+    // public function column_remand_flg($item)
+    // {
+    //     return $item->get_remand_flg();
+    // }
 
     public function column_remand_comment($item)
     {

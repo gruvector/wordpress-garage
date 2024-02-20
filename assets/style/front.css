@@ -96,6 +96,7 @@
   flex-direction: column;
   margin: 20px auto 80px auto;
   overflow: auto;
+  padding-bottom: 100px;
 }
 
 .gm-custom-wrap > form {
@@ -289,15 +290,47 @@
   font-size: 25px;
   font-weight: bold;
 }
-.gm-property-list {
+.gm-property-list1_1 {
   width: 330px;
-  border: 1px solid black;
+  border: 1px solid lightgray;
   border-radius: 7px;
   box-shadow: lightgray 5px 3px;
   padding: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
 }
+.gm-property-list1_2 {
+  width: 330px;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  box-shadow: lightgray 5px 3px;
+  padding: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background-color: gray;
+}
+
+.gm-property-list2_1 {
+  width: 330px;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  box-shadow: lightgray 5px 3px;
+  padding: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background-color: lightcoral;
+}
+.gm-property-list2_2 {
+  width: 330px;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  box-shadow: gray 5px 3px;
+  padding: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background-color: lightskyblue;
+}
+
 .gm-property-table {
   border: none;
   outline: white;
@@ -339,7 +372,7 @@
 
 #mySidenav a {
   position: absolute; /* Position them relative to the browser window */
-  left: -150px; /* Position them outside of the screen */
+  left: 0px; /* Position them outside of the screen */
   transition: 0.3s; /* Add transition on hover */
   padding: 15px; /* 15px padding */
   width: 200px; /* Set a specific width */
@@ -375,8 +408,8 @@
  */
 .property {
   align-items: center;
-  background-color: #222;
-  border-radius: 50%;
+  background-color: white;
+  border-radius: 15px;
   color: #263238;
   display: flex;
   font-size: 14px;
@@ -387,7 +420,9 @@
   position: relative;
   position: relative;
   transition: all 0.3s ease-out;
-  width: 30px;
+  width: 100px;
+  border: 1px solid black;
+  box-shadow: #999 2px 2px 1px 1px;
 }
 
 .property::after {
@@ -409,10 +444,11 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  color: #FFFFFF;
+  color: black;
+  background-color: white;
 }
 
-.property::after > .icon {
+.property::after .icon {
   display: none;
 }
 
@@ -421,6 +457,7 @@
   display: none;
   flex-direction: column;
   flex: 1;
+  
 }
 
 .property .address {
@@ -490,28 +527,34 @@
   border-top: 9px solid var(--house-color);
 }
 
-.gm-map-item {
+.property > .details > .gm-map-item {
   display: flex;
   flex-direction: column;
   width: 200px;
   height: auto;
+  border-radius: 30px;
 }
 
 .gm-card-img {
   width: 100%;
   height: 200px;
+  border-radius: 30px;
 }
 
 .gm-card-img > img {
   width: 100%;
   height: 100%;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
 }
 
 .gm-map-info {
-  background-color: #eee;
-  padding: 20px;
+  background-color: white;
+  padding: 15px;
   font-size: 15;
   font-weight: bold;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
 }
 
 .gm-map-favorite {
@@ -520,21 +563,26 @@
   right: 10px;
   width: 25px;
   height: auto;
+
 }
 
 .border-heart{
   color: #999;
-  font-size: 21px;
+  font-size: 19px;
+  padding: 5px;
+  border-radius: 50%;
 }
 .selected-heart{
   color: red;
-  font-size: 22px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 50%;
 }
 .heart {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: rgba(0,0,0,0);
+  background-color: white;
   border: none;
 }
 
@@ -544,22 +592,20 @@
 
 .item {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   column-gap: 10px ;
   width: 100%;
   height: auto;
 }
 
 .item > .item-upload > .image-upload-wrap {
-  border: 1px solid #5A378F;
   border-radius: 10px;
   position: relative;
 }
 
 .item > .item-upload > .image-upload-wrap1 {
   margin-bottom: 20px;
-  border: 1px solid #5A378F;
-  border-radius: 10px;
+
   position: relative;
 }
 
@@ -851,3 +897,28 @@ button .fas{
   padding-left: 10px;
 }
 
+.general__fileupload {
+  cursor: pointer;
+  background-color: #ddd;
+  color: #007bff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+#upload-photoAC,
+#upload-photoBC, 
+#upload-photoCC, 
+#upload-photoDC, 
+#upload-photoEC {
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  margin-left: -120px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.item > .item-upload >.img-display-none {
+  display: none;
+}

@@ -133,6 +133,7 @@ if (!defined('ABSPATH')) {
             ID: "",
             imgs: "",
             nm: "",
+            fee_monthly_rent: 0,
             position: {
                 lat: 1.01,
                 lng: 1.01
@@ -141,6 +142,7 @@ if (!defined('ABSPATH')) {
         a.ID = element.ID;
         a.imgs = element.imgs;
         a.nm = element.nm;
+        a.fee_monthly_rent = element.fee_monthly_rent;
         a.position.lat = parseFloat(element.lat);
         a.position.lng = parseFloat(element.lng);
         properties.push(a);
@@ -178,12 +180,14 @@ if (!defined('ABSPATH')) {
             AdvancedMarkerElement.addListener("click", () => {
                 toggleHighlight(AdvancedMarkerElement, property);
             });
+
+        
         }
-        console.log("efe");
     }
 
     function toggleHighlight(markerView, property) {
         if (markerView.content.classList.contains("highlight")) {
+            handleDblClick(property.ID);
             markerView.content.classList.remove("highlight");
             markerView.zIndex = null;
         } else {
@@ -195,12 +199,10 @@ if (!defined('ABSPATH')) {
     function buildContent(property) {
         const content = document.createElement("div");
         const img_path = property.imgs.split(',');
-        console.log(img_path[0]);
         content.classList.add("property");
         content.innerHTML = `
             <div class="icon">
-                <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
-                <span class="fa-sr-only">home</span>
+                ¥ ${property.fee_monthly_rent}
             </div>
             <div class="details">
                 
@@ -211,7 +213,6 @@ if (!defined('ABSPATH')) {
                     <div class="gm-map-info">
                         <div class="gm-card-info__div">車庫名: ${property.nm}</div>
                         <div class="gm-card-info__div">価格: ${property.fee_monthly_rent}</div>
-
                     </div>
                     <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart border-heart" id="heart${property.ID}"></i></button>
                 </div>
@@ -228,7 +229,7 @@ if (!defined('ABSPATH')) {
         const element = document.getElementById("heart"+id);
         console.log(element);  
         if (a.indexOf(id) == -1) {
-            setCookie('favorite', id, 365, a);
+            setCookie('favorite', id, 1, a);
             console.log(id);
             element.classList.remove("border-heart"); 
             element.classList.add("selected-heart");
@@ -243,9 +244,17 @@ if (!defined('ABSPATH')) {
         
     }
     
-    function setCookie(cname, cvalue, expires, value) {
+    function handleDblClick(id) {
+        var href = window.location.href;
+        window.location.assign(href+'/propertys/?id='+id);
+    }
+
+    function setCookie(cname, cvalue, exdays, value) {
         value.push(cvalue);
         let b = value.toString();
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires="+d.toUTCString();
         document.cookie = cname + "=" + b + ";" + expires + ";path=/";
         console.log(document.cookie);
     }
@@ -282,6 +291,8 @@ if (!defined('ABSPATH')) {
         }
         return "";
     }
+
+
 
 
 </script>

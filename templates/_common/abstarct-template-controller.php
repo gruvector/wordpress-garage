@@ -58,7 +58,6 @@ abstract class Abstract_Template_Controller
         wp_enqueue_script('gm_jquery_toast', get_stylesheet_directory_uri(). '/assets/lib/jquery.toast/jquery.toast.js', array('jquery-core', 'jquery-migrate'));
         wp_enqueue_script('gm_ajaxzip3', get_stylesheet_directory_uri(). '/assets/lib/ajaxzip3/ajaxzip3.js', array('jquery-core', 'jquery-migrate'));
         wp_enqueue_script('gm_common', get_stylesheet_directory_uri(). '/assets/script/common.js', array('gm_jquery_plugin', 'gm_jquery_tipsy', 'gm_jquery_toast','jquery-core', 'jquery-migrate'), $version);
-
         wp_enqueue_style('gm_jquery_tipsy', get_stylesheet_directory_uri(). '/assets/lib/jquery.tipsy/stylesheets/tipsy.css', array());
         wp_enqueue_style('gm_jquery_ui', get_stylesheet_directory_uri(). '/assets/lib/jquery-ui/jquery-ui.min.css');
         wp_enqueue_style('gm_jquery_ui_timepicker', get_stylesheet_directory_uri(). '/assets/lib/jquery-ui-timepicker/jquery-ui-timepicker-addon.css');

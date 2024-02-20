@@ -63,9 +63,11 @@ class Gm_Account_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
         );
     }
 
+    
+
     public function deny($ID)
     {
-    
+        
 
         if (empty($ID)) {
             return;
@@ -75,9 +77,9 @@ class Gm_Account_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 
         $wpdb->update(
             $wpdb->prefix.'gmt_account_tmp',
-            ['del_flg' => 1,],
+            ['del_flg' => 1],
             ['ID' => $ID],
-            ['%d'],
+            ['%d']
         );
 
     }

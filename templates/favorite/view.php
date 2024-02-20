@@ -16,7 +16,7 @@ if (! defined('ABSPATH')) {
                 ?>
                     <div class="carousel-item">
                         <div class="col-lg-5 col-md-4 gm-card">
-                            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/image/<?php echo $img[1     ] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
+                            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/image/<?php echo $img[0] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
                             <div class="gm-card-info__div">車庫名: <?php echo $record[0]->nm ?></div>
                             <div class="gm-card-info__div">価格: <?php echo $record[0]->fee_monthly_rent ?></div>
                             <?php
@@ -24,6 +24,7 @@ if (! defined('ABSPATH')) {
                                 $link = add_query_arg($param, home_url('propertys'));
                             ?>
                             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
+                            <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart selected-heart" id="heart${property.ID}"></i></button>
                         </div>
                     </div>
                 <?php      
@@ -74,6 +75,27 @@ if (! defined('ABSPATH')) {
         $( ".carousel-item:first-of-type" ).addClass( "active" );
         $( ".carousel-indicators:first-child" ).addClass( "active" );
     });
+
+
+    function handleFavorite(id) {
+        let a = getCookie("favorite");
+        const element = document.getElementById("heart"+id);
+        console.log(element);  
+        if (a.indexOf(id) == -1) {
+            setCookie('favorite', id, 1, a);
+            console.log(id);
+            element.classList.remove("border-heart"); 
+            element.classList.add("selected-heart");
+            console.log(element[id]);
+
+        } else {
+            let ind = a.indexOf(id);
+            deleteCookie('favorite', 365, a, ind);
+            element.classList.remove("selected-heart"); 
+            element.classList.add("border-heart");
+        }
+        
+    }
 </script>
 
     

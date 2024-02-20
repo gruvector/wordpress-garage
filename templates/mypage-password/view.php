@@ -28,7 +28,7 @@ if (! defined('ABSPATH')) {
                     <th><div>新しいパスワード</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="password" name="new_pwd" data-gm-required>
+                            <input class="gm-input" type="password" name="new_pwd" data-gm-required minlength="8">
                         </div>
                     </td>
                 </tr>
@@ -36,7 +36,7 @@ if (! defined('ABSPATH')) {
                     <th><div>パスワードの確認</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="password" name="confirm" data-gm-required>
+                            <input class="gm-input" type="password" name="confirm" data-gm-required minlength="8">
                         </div>
                     </td>
                 </tr>

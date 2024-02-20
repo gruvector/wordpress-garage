@@ -20,7 +20,7 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
 
     public function action()
     {
-        $this->wpgomap = $this->wpdb->get_results("SELECT ID, nm, imgs, lat, lng, fee_monthly_rent FROM {$this->wpdb->prefix}gmt_property");
+        $this->wpgomap = $this->wpdb->get_results("SELECT ID, nm, imgs, lat, lng, fee_monthly_rent  FROM {$this->wpdb->prefix}gmt_property");
         // -------------------
         // 画面描画
         // -------------------

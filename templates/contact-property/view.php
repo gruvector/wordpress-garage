@@ -40,7 +40,7 @@ if (! defined('ABSPATH')) {
                     <th><div class="pl-3">メールアドレス <small>(必須)</small></div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="email" data-gm-required data-gm-email>
+                            <input class="gm-input" type="text" name="email" data-gm-required data-gm-email data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -48,7 +48,7 @@ if (! defined('ABSPATH')) {
                     <th><div class="pl-3">電話番号 <small>(必須)</small></div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="phone" data-gm-required data-gm-phone>
+                            <input class="gm-input" type="text" name="phone" data-gm-required data-gm-phone data-gm-length="12">
                         </div>
                     </td>
                 </tr>

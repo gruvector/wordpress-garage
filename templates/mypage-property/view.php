@@ -15,47 +15,80 @@ if (! defined('ABSPATH')) {
     <form id="gm-page-form" method="POST" enctype="multipart/form-data">
         <input type="text" style="display:none" placeholder="Enter対策">
         <input type="hidden" name="process" value="regist">
+        
         <?php if(!($this->edit_data_from_db == []))
              foreach ($this->edit_data_from_db as $i => $record_edit) { ?>
+             <input type="hidden" name="property_id" value="<?= $record_edit->property_id ?>">
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
                 <tr>
-                    <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
                         <?php 
                             $img_path_display = explode(',', $record_edit->imgs);
                         ?>
                         <div class="item">
                             <div class="item-upload">
-                                    <div class="image-upload-wrap1 upload-wrapA">
-                                        <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" > 
-                                    </div>
-                                    <div class="file-upload-content1 upload-contentA">
-                                        <img class="file-upload-image1" id="upload-imageA" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[0]  ?>" alt="your image" />
-                                        <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="item-upload">
-                                    <div class="image-upload-wrap1 upload-wrapC">
-                                        <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
-                                    </div>
-                                    <div class="file-upload-content1 upload-contentC">
-                                        <img class="file-upload-image1" id="upload-imageC" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[1]  ?>" alt="your image" />
+                                <div class="image-upload-wrap1 upload-wrapA">
+                                    <label htmlFor="upload-photoAC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageA" id="upload-photoAC" class="file-upload-input inputA" onchange="readURLA(this);"  >
+                                    <input type="hidden" name="hidden_photoA" value="<?= isset($img_path_display[0])?$img_path_display[0]:""  ?>"> 
+                                </div>
+                                <div class="file-upload-content1 upload-contentA">
+                                    <img class="file-upload-image1" id="upload-imageA" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[0]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
+                                        <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">削除</span></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="item-upload">
-                                    <div class="image-upload-wrap1 upload-wrapB">
-                                        <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);"    > 
-                                    </div>
-                                    <div class="file-upload-content1 upload-contentB">
-                                        <img class="file-upload-image1" id="upload-imageB" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[2]  ?>" alt="your image" />
+                                <div class="image-upload-wrap1 upload-wrapC">
+                                    <label htmlFor="upload-photoBC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageC" id="upload-photoBC" class="file-upload-input inputC" onchange="readURLC(this);" value="" > 
+                                    <input type="hidden" name="hidden_photoC" value="<?= isset($img_path_display[1])?$img_path_display[1]:""  ?>">
+                                </div>
+                                <div class="file-upload-content1 upload-contentC">
+                                    <img class="file-upload-image1" id="upload-imageC" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[1]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
+                                        <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapB">
+                                    <label htmlFor="upload-photoCC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageB" id="upload-photoCC" class="file-upload-input inputB" onchange="readURLB(this);" value="" > 
+                                    <input type="hidden" name="hidden_photoB" value="<?= isset($img_path_display[2])?$img_path_display[2]:""  ?>">
+                                </div>
+                                <div class="file-upload-content1 upload-contentB">
+                                        <img class="file-upload-image1" id="upload-imageB" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[2]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapD">
+                                    <label htmlFor="upload-photoDC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageD" id="upload-photoDC" class="file-upload-input inputD" onchange="readURLD(this);">
+                                    <input type="hidden" name="hidden_photoD" value="<?= isset($img_path_display[3])?$img_path_display[3]:""  ?>"> 
+                                </div>
+                                <div class="file-upload-content1 upload-contentD">
+                                    <img class="file-upload-image1" id="upload-imageD" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[3]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadD()" class="remove-image"><span class="image-title titleD">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapE">
+                                    <label htmlFor="upload-photoEC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageE" id="upload-photoEC" class="file-upload-input inputE" onchange="readURLE(this);"> 
+                                    <input type="hidden" name="hidden_photoE" value="<?= isset($img_path_display[4])?$img_path_display[4]:""  ?>">
+                                </div>
+                                <div class="file-upload-content1 upload-contentE">
+                                    <img class="file-upload-image1" id="upload-imageE" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[4]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadE()" class="remove-image"><span class="image-title titleE">削除</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -65,15 +98,15 @@ if (! defined('ABSPATH')) {
                 </tr>
             </table>
             <div class="gm-desc">
-                ※左端の写真が、地図上で料金ボタンをクリックした際に表示される写真となります。また、この写真の並び順通りに写真は掲載されます。<br> <br>
-                ※写真のデータが大きすぎてアップロードできない方向はこちらのサイトをどうぞ 写真データサイズ圧縮ツール https://tinypng.com/ <br> <br>
+                ※左端の写真が、地図上で料金ボタンをクリックした際に表示される写真となります。また、この写真の並び順通りに写真は掲載されます。<br> 
+                ※写真のデータが大きすぎてアップロードできない方向はこちらのサイトをどうぞ 写真データサイズ圧縮ツール https://tinypng.com/ <br> 
             </div>
             <table class="gm-input-table">
                 <tr>
                     <th><div>名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="nm" value="<?= $record_edit->nm ?>" data-gm-required>
+                            <input class="gm-input" type="text" name="nm" value="<?= $record_edit->nm ?>" data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -81,7 +114,7 @@ if (! defined('ABSPATH')) {
                     <th><div>区画名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="section_nm" value="<?= $record_edit->section_nm ?>" data-gm-required>   
+                            <input class="gm-input" type="text" name="section_nm" value="<?= $record_edit->section_nm ?>" data-gm-required data-gm-length="255">   
                         </div>
                     </td>
                 </tr>
@@ -105,7 +138,8 @@ if (! defined('ABSPATH')) {
                     <th><div>引き渡し可能日</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="handover_date" value="<?= $record_edit->handover_date ?>" data-gm-required data-gm-date="yyyy/MM/dd">
+                            <input class="gm-input" type="text" name="handover_date" value="<?= $record_edit->handover_date ?>" 
+                            data-gm-required data-gm-date="yyyy/MM/dd" data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -113,11 +147,12 @@ if (! defined('ABSPATH')) {
                     <th><div>最低契約期間</div></th>
                     <td>
                         <div style="display:flex;gap:10px">
-                            <input class="gm-input" style="width:150px;" type="text" name="min_period" value="<?= $record_edit->min_period ?>" data-gm-required data-gm-number>
+                            <input class="gm-input" style="width:150px;" type="text" name="min_period" value="<?= $record_edit->min_period ?>" 
+                            data-gm-required data-gm-number data-max="999999999">
 
                             <select class="gm-select-year" style="width:100px;"  name="min_period_unit">
                                 <option value="1">年</option>
-                                <option value="2">月</option>
+                                <option value="2">ヵ月</option>
                                 <option value="3">日</option>
                             </select>
                         </div>
@@ -128,7 +163,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div class="gm-zipcode-part">
                             <input class="gm-input2" type="text" name="postal_code" value="<?= $record_edit->postal_code ?>"  
-                            data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
+                            data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');" data-gm-postal-code data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -136,7 +171,7 @@ if (! defined('ABSPATH')) {
                     <th><div>都道府県</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_1" value="<?= $record_edit->address_1 ?>"  data-gm-required>
+                            <input class="gm-input" type="text" name="address_1" value="<?= $record_edit->address_1 ?>"  data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -144,7 +179,7 @@ if (! defined('ABSPATH')) {
                     <th><div>市区町村</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_2" value="<?= $record_edit->address_2 ?>"  data-gm-required>
+                            <input class="gm-input" type="text" name="address_2" value="<?= $record_edit->address_2 ?>"  data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -152,7 +187,7 @@ if (! defined('ABSPATH')) {
                     <th><div>地番</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_3" value="<?= $record_edit->address_3 ?>"  data-gm-required>
+                            <input class="gm-input" type="text" name="address_3" value="<?= $record_edit->address_3 ?>"  data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -160,7 +195,7 @@ if (! defined('ABSPATH')) {
                     <th><div>建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value="<?= $record_edit->address_4 ?>"  >
+                            <input class="gm-input" type="text" name="address_4" value="<?= $record_edit->address_4 ?>"  data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -225,7 +260,7 @@ if (! defined('ABSPATH')) {
                     <th><div>月額費用：その他</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="fee_monthly_others" ><?= $record_edit->fee_monthly_others ?></textarea>
+                            <textarea class="gm-input" name="fee_monthly_others" maxlength="255"><?= $record_edit->fee_monthly_others ?></textarea>
                         </div>
                     </td>
                 </tr>
@@ -293,7 +328,7 @@ if (! defined('ABSPATH')) {
                     <th><div>契約費用：その他</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="fee_contract_other" ><?= $record_edit->fee_contract_other ?></textarea>
+                            <textarea class="gm-input" name="fee_contract_other"  maxlength="255"><?= $record_edit->fee_contract_other ?></textarea>
                         </div>
                     </td>
                 </tr>
@@ -325,7 +360,7 @@ if (! defined('ABSPATH')) {
                     <th><div>その他紹介</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="other_description" ><?= $record_edit->other_description ?></textarea>
+                            <textarea class="gm-input" name="other_description"  maxlength="255"><?= $record_edit->other_description ?></textarea>
                         </div>
                     </td>
                 </tr>
@@ -335,7 +370,7 @@ if (! defined('ABSPATH')) {
                     <th><div>アピールポイント</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="appeal_description" ><?= $record_edit->appeal_description ?></textarea>
+                            <textarea class="gm-input" name="appeal_description"  maxlength="255"><?= $record_edit->appeal_description ?></textarea>
                         </div>
                     </td>
                 </tr>
@@ -347,44 +382,70 @@ if (! defined('ABSPATH')) {
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
                 <tr>
-                    <th><div>画像リスト <br/>TODO 画像選択</div></th>
                     <td>
                         <div>
 
                             <div class="item">
                                 <div class="item-upload">
-                                        <div class="image-upload-wrap upload-wrapA">
-                                            <input type="file" name="imageA" class="file-upload-input inputA" onchange="readURLA(this);" data-gm-required> 
-                                        </div>
-                                        <div class="file-upload-content upload-contentA">
-                                            <img class="file-upload-image" id="upload-imageA" src="#" alt="your image" />
+                                    <div class="image-upload-wrap1 upload-wrapA">
+                                        <label htmlFor="upload-photoAC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageA" class="file-upload-input inputA" id="upload-photoAC" onchange="readURLA(this);" data-gm-required> 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentA img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageA" src="#" alt="画像" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA"></span></button>
+                                            <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">削除</span></button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="item-upload">
-                                        <div class="image-upload-wrap upload-wrapC">
-                                            <input type="file" name="imageC" class="file-upload-input inputC" onchange="readURLC(this);" value="+" > 
-                                        </div>
-                                        <div class="file-upload-content upload-contentC">
-                                            <img class="file-upload-image" id="upload-imageC" src="#" alt="your image" />
+                                    <div class="image-upload-wrap1 upload-wrapC">
+                                        <label htmlFor="upload-photoCC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageC" id="upload-photoCC" class="file-upload-input inputC" onchange="readURLC(this);" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentC img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageC" src="#" alt="画像" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC"></span></button>
+                                            <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">削除</span></button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="item-upload">
-                                        <div class="image-upload-wrap upload-wrapB">
-                                            <input type="file" name="imageB" class="file-upload-input inputB" onchange="readURLB(this);" > 
-                                        </div>
-                                        <div class="file-upload-content upload-contentB">
-                                            <img class="file-upload-image" id="upload-imageB" src="#" alt="your image" />
+                                    <div class="image-upload-wrap1 upload-wrapB ">
+                                        <label htmlFor="upload-photoBC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageB" id="upload-photoBC" class="file-upload-input inputB" onchange="readURLB(this);" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentB img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageB" src="#" alt="画像" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB"></span></button>
+                                            <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">削除</span></button>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapD">
+                                        <label htmlFor="upload-photoDC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageD" id="upload-photoDC" class="file-upload-input inputD" onchange="readURLD(this);" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentD img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageD" src="#" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadD()" class="remove-image"><span class="image-title titleD">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapE">
+                                        <label htmlFor="upload-photoEC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageE" id="upload-photoEC" class="file-upload-input inputE" onchange="readURLE(this);" value="+" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentE img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageE" src="#" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadE()" class="remove-image"><span class="image-title titleE">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>  
                             </div>
                         </div>
                     </td>
@@ -399,7 +460,7 @@ if (! defined('ABSPATH')) {
                     <th><div>名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="nm" value="" data-gm-required>
+                            <input class="gm-input" type="text" name="nm" value="" data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -407,7 +468,7 @@ if (! defined('ABSPATH')) {
                     <th><div>区画名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="section_nm" value="" data-gm-required>   
+                            <input class="gm-input" type="text" name="section_nm" value="" data-gm-required data-gm-length="255">   
                         </div>
                     </td>
                 </tr>
@@ -439,11 +500,12 @@ if (! defined('ABSPATH')) {
                     <th><div>最低契約期間</div></th>
                     <td>
                         <div style="display:flex;gap:10px">
-                            <input class="gm-input" style="width:150px;" type="text" name="min_period" value="" data-gm-required data-gm-number>
+                            <input class="gm-input" style="width:150px;" type="text" name="min_period" value="" 
+                            data-gm-required data-gm-number data-max="999999999">
 
                             <select class="gm-select-year" style="width:100px;"  name="min_period_unit">
                                 <option value="1">年</option>
-                                <option value="2">月</option>
+                                <option value="2">ヵ月</option>
                                 <option value="3">日</option>
                             </select>
                         </div>
@@ -454,7 +516,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div class="gm-zipcode-part">
                             <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>"  
-                            data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
+                            data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');" data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -462,7 +524,7 @@ if (! defined('ABSPATH')) {
                     <th><div>都道府県</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_1" value=""  data-gm-required>
+                            <input class="gm-input" type="text" name="address_1" value=""  data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -470,7 +532,7 @@ if (! defined('ABSPATH')) {
                     <th><div>市区町村</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_2" value=""  data-gm-required>
+                            <input class="gm-input" type="text" name="address_2" value=""  data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -478,7 +540,7 @@ if (! defined('ABSPATH')) {
                     <th><div>地番</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_3" value="" data-gm-required>
+                            <input class="gm-input" type="text" name="address_3" value="" data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -486,7 +548,7 @@ if (! defined('ABSPATH')) {
                     <th><div>建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value=""  >
+                            <input class="gm-input" type="text" name="address_4" value=""  data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -551,7 +613,7 @@ if (! defined('ABSPATH')) {
                     <th><div>月額費用：その他</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="fee_monthly_others" ></textarea>
+                            <textarea class="gm-input" name="fee_monthly_others"  maxlength="255"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -619,7 +681,7 @@ if (! defined('ABSPATH')) {
                     <th><div>契約費用：その他</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="fee_contract_other" ></textarea>
+                            <textarea class="gm-input" name="fee_contract_other"  maxlength="255"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -648,7 +710,7 @@ if (! defined('ABSPATH')) {
                     <th><div>その他紹介</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="other_description" ></textarea>
+                            <textarea class="gm-input" name="other_description"  maxlength="255"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -658,7 +720,7 @@ if (! defined('ABSPATH')) {
                     <th><div>アピールポイント</div></th>
                     <td>
                         <div>
-                            <textarea class="gm-input" name="appeal_description" ></textarea>
+                            <textarea class="gm-input" name="appeal_description"  maxlength="255"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -709,75 +771,71 @@ if (! defined('ABSPATH')) {
 
 <script>
     function readURLA(input) {
-	  if (input.files && input.files[0]) {
-		  var reader = new FileReader();
-		  reader.onload = function(e) {
-			  $('.upload-wrapA').hide();
-			  $('#upload-imageA').attr('src', e.target.result);
-			  $('#upload-imageA').show();
-			  $('.upload-contentA').show();
-			  var fileName = input.files[0].name;
-			  var fileExtension = fileName.split('.').pop();
-			  $('.titleA').html("Remove");
-		  };
-		reader.readAsDataURL(input.files[0]);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // $('.upload-wrapA').hide();
+                $('#upload-imageA').attr('src', e.target.result);
+                $('#upload-imageA').show();
+                $('.upload-contentA').show();
+                $('.upload-contentA').removeClass("img-display-none");
 
-	  } else {
-		removeUploadA();
-	  }
-  }
+            };
+            reader.readAsDataURL(input.files[0]);
 
-  function removeUploadA() {
-	  $('.inputA').replaceWith($('.inputA').clone());
-	  $('.upload-contentA').hide();
-	  $('.upload-wrapA').show();
-  }
+        } else {
+            removeUploadA();
+        }
+    }
 
-  function readURLB(input) {
-		if (input.files && input.files[0]) {
-		var reader = new FileReader();
-		reader.onload = function(e) {
-		  $('.upload-wrapB').hide();
-          $('#upload-imageB').show();
-		  $('#upload-imageB').attr('src', e.target.result);
-		  $('.upload-contentB').show();
-		  var fileName = input.files[0].name;
-		  var fileExtension = fileName.split('.').pop();
-		  $('.titleB').html("Remove");
-		};
+    function removeUploadA() {
+        console.log("efef");
+        $('.inputA').replaceWith($('.inputA').clone());
+        $('.upload-contentA').hide();
+        $('.upload-wrapA').show();
+    }
 
-		reader.readAsDataURL(input.files[0]);
+    function readURLB(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapB').hide();
+            $('#upload-imageB').show();
+            $('#upload-imageB').attr('src', e.target.result);
+            $('.upload-contentB').show();
+            $('.upload-contentB').removeClass("img-display-none");
+            }
 
-	  } else {
-		removeUploadB();
-	  }
-  }
+            reader.readAsDataURL(input.files[0]);
 
-  function removeUploadB() {
-	  $('.inputB').replaceWith($('.inputB').clone());
-	  $('.upload-contentB').hide();
-	  $('.upload-wrapB').show();
-  }
+        } else {
+            removeUploadB();
+        }
+    }
+
+    function removeUploadB() {
+        $('.inputB').replaceWith($('.inputB').clone());
+        $('.upload-contentB').hide();
+        $('.upload-wrapB').show();
+    }
 
 
     function readURLC(input) {
 		if (input.files && input.files[0]) {
-		var reader = new FileReader();
-		reader.onload = function(e) {
-		  $('.upload-wrapC').hide();
-		  $('#upload-imageC').attr('src', e.target.result);
-		  $('.upload-contentC').show();
-          $('#upload-imageC').show();
-	      var fileName = input.files[0].name;
-		  var fileExtension = fileName.split('.').pop();
-		  $('.titleC').html("Remove" + fileExtension);
-		};
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapC').hide();
+            $('#upload-imageC').attr('src', e.target.result);
+            $('.upload-contentC').show();
+            $('#upload-imageC').show();
+            $('.upload-contentC').removeClass("img-display-none");
+            }
 
-		reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
 
-	  } else {
-		removeUploadC();
-	  }
+        } else {
+            removeUploadC();
+        }
     }
 
     function removeUploadC() {
@@ -786,10 +844,56 @@ if (! defined('ABSPATH')) {
         $('.upload-wrapC').show();
     }
 
+    function readURLD(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapD').hide();
+            $('#upload-imageD').attr('src', e.target.result);
+            $('.upload-contentD').show();
+            $('#upload-imageD').show();
+            $('.upload-contentD').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadD();
+        }
+    }
+
+    function removeUploadD() {
+        $('.inputD').replaceWith($('.inputD').clone());
+        $('.upload-contentD').hide();
+        $('.upload-wrapD').show();
+    }
+
+    function readURLE(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapE').hide();
+            $('#upload-imageE').attr('src', e.target.result);
+            $('.upload-contentE').show();
+            $('#upload-imageE').show();
+            $('.upload-contentE').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadE();
+        }
+    }
+
+    function removeUploadE() {
+        $('.inputE').replaceWith($('.inputE').clone());
+        $('.upload-contentE').hide();
+        $('.upload-wrapE').show();
+    }
+
     function autoFill() {
         let zip = document.querySelector("input[name='postal_code']").value;
-        
-        let c = 
         console.log(c);
     }
 </script>

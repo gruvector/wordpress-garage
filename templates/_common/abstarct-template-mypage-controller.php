@@ -15,7 +15,7 @@ abstract class Abstract_Template_Mypage_Controller extends Abstract_Template_Con
 
         session_start();
         if (!isset($_SESSION['account_id'])) {
-            header('Location: /login/');
+            header('Location: /');
             exit();
         }
 
@@ -26,7 +26,7 @@ abstract class Abstract_Template_Mypage_Controller extends Abstract_Template_Con
             $this->wpdb->prepare("SELECT * FROM {$this->wpdb->prefix}gmt_account WHERE ID = %d ", $_SESSION['account_id'])
         );
         if (empty($account_records)) {
-            header('Location: /login/');
+            header('Location: /');
             exit();
         }
         $this->_account_record = $account_records[0];

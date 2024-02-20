@@ -129,7 +129,7 @@ class Gm_Account_Menu_Table extends Gm_Abstract_Menu_Table
                 <div>{$item->get_ID()}</div>
                 <div class="gm-admin-button-wrap">
                 <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
-                <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='recover';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">RECOVER</button>
+                <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='recover';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN解除</button>
                 </div>
                 EOM;
         }

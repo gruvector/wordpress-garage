@@ -25,7 +25,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
     public function action()
     {
-        session_start();
+        // session_start();
         if (isset($_GET['id'])) {
             $this->param_id = sanitize_key($_GET['id']);
         }
@@ -49,37 +49,71 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         if (isset($_POST['process']) && $_POST['process'] == 'regist') {
 
             // File upload start
-            if($_FILES["imageA"]["name"] || $_FILES["imageB"]["name"] || $_FILES["imageC"]["name"]) {
+            // if($_FILES["imageA"]["name"] || $_FILES["imageB"]["name"] || $_FILES["imageC"]["name"] || $_FILES["imageD"]["name"] || $_FILES["imageE"]["name"]) {
                 $extensionA = pathinfo($_FILES["imageA"]["name"], PATHINFO_EXTENSION);
                 $extensionB = pathinfo($_FILES["imageB"]["name"], PATHINFO_EXTENSION);
                 $extensionC = pathinfo($_FILES["imageC"]["name"], PATHINFO_EXTENSION);
+                $extensionD = pathinfo($_FILES["imageD"]["name"], PATHINFO_EXTENSION);
+                $extensionE = pathinfo($_FILES["imageE"]["name"], PATHINFO_EXTENSION);
 
+                if ($this->param_type == "add") {
+                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
+                    $property_id_1 = (int) $property_id_tmp_1 + 1;
+                } else {
+                    $property_id_1 = $_POST['property_id'];
+                }
+
+                $fileNameA = base64_encode($_FILES["imageA"]["name"]).'.'.$extensionA;
+                $fileNameB = base64_encode($_FILES["imageB"]["name"]).'.'.$extensionB;
+                $fileNameC = base64_encode($_FILES["imageC"]["name"]).'.'.$extensionC;
+                $fileNameD = base64_encode($_FILES["imageD"]["name"]).'.'.$extensionD;
+                $fileNameE = base64_encode($_FILES["imageE"]["name"]).'.'.$extensionE;
 
                 $upload_dir_url = $_SERVER['DOCUMENT_ROOT'];
-                $new_upload_dir = $upload_dir_url.'/wp-content/uploads/image'; // Create a new directory with the current date
+                $new_upload_dir = $upload_dir_url.'/wp-content/uploads/gm-property/'.$property_id_1.'/'; // Create a new directory with the current date
                 if (!file_exists($new_upload_dir)) {
                     mkdir($new_upload_dir, 0777, true); // Create the directory if it doesn't exist
                 }
-                $imageA_path = $new_upload_dir. '/'. $_FILES["imageA"]["name"]; // Create the image path
+                $imageA_path = $new_upload_dir. $fileNameA; // Create the image path
                 move_uploaded_file($_FILES["imageA"]['tmp_name'], $imageA_path);
                 update_option('imageA_path', $imageA_path);
 
-                $imageB_path = $new_upload_dir. '/'. $_FILES["imageB"]["name"]; // Create the image path
+                $imageB_path = $new_upload_dir. $fileNameB; // Create the image path
                 move_uploaded_file($_FILES["imageB"]['tmp_name'], $imageB_path);
                 update_option('imageB_path', $imageB_path);
 
-                $imageC_path = $new_upload_dir. '/'. $_FILES["imageC"]["name"]; // Create the image path
+                $imageC_path = $new_upload_dir. $fileNameC; // Create the image path
                 move_uploaded_file($_FILES["imageC"]['tmp_name'], $imageC_path);
                 update_option('imageC_path', $imageC_path);
 
+                $imageD_path = $new_upload_dir. $fileNameD; // Create the image path
+                move_uploaded_file($_FILES["imageD"]['tmp_name'], $imageD_path);
+                update_option('imageD_path', $imageD_path);
+
+                $imageE_path = $new_upload_dir. $fileNameE; // Create the image path
+                move_uploaded_file($_FILES["imageE"]['tmp_name'], $imageE_path);
+                update_option('imageE_path', $imageE_path);
+
                 // var_dump($imageA_path);
                 // File Upload End
-                array_push($this->img_path, $_FILES["imageA"]["name"], $_FILES["imageB"]["name"], $_FILES["imageC"]["name"]);
-                
+                $img_path_array = explode(',', $this->edit_data_from_db[0]->imgs);
+                // var_dump($img_path_array);
+                // $hidden_photoA = $_FILES["imageA"]["name"] != "" ? '1' : $_POST['hidden_photoA'];
+                // $hidden_photoB = $_FILES["imageB"]["name"] != "" ? '2' : $_POST['hidden_photoB'];
+                // $hidden_photoC = $_FILES["imageC"]["name"] != "" ? '3' : $_POST['hidden_photoC'];
+                // $hidden_photoD = $_FILES["imageD"]["name"] != "" ? '4' : $_POST['hidden_photoD'];
+                // $hidden_photoE = $_FILES["imageE"]["name"] != "" ? '5' : $_POST['hidden_photoE'];
+
+                array_push($this->img_path, 
+                    $fileNameA, 
+                    $fileNameB, 
+                    $fileNameC, 
+                    $fileNameD, 
+                    $fileNameE,
+                );
                 $img_path_str = implode(',', $this->img_path);
-            } else {
-                $img_path_str = "";
-            }
+
+            // }
 
             // register the data
             $this->regist($_POST, $img_path_str);

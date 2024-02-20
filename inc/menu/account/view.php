@@ -157,7 +157,7 @@ if (! defined('ABSPATH')) {
               </table>
           </div>
           <div class="gm-input-button-wrap">
-              <input type="submit" class="gm-input-button" value="確認">
+              <input type="submit" class="gm-input-button" value="確認" onclick="confirmData()">
           </div>
         </form>
             
@@ -197,6 +197,16 @@ if (! defined('ABSPATH')) {
         document.getElementById("account_attr_other1").disabled = true;
         document.getElementById("account_attr_other1").style.backgroundColor = "#eee";
         document.getElementById("account_attr_other1").style.border = "none";
+    }
+
+    function confirmData() {
+        var txt;
+        if (confirm("本気ですか？")) {
+            
+        } else {
+            return
+        }
+        document.getElementById("demo").innerHTML = txt;
     }
 </script>
 

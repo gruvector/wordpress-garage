@@ -37,7 +37,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="email" value="<?= $record_account->email  ?>"  
-                            data-gm-required data-gm-email>
+                            data-gm-required data-gm-email data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -46,7 +46,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="phone" value="<?= $record_account->phone  ?>"  
-                            data-gm-required data-gm-phone>
+                            data-gm-required data-gm-phone data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -55,7 +55,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div class="gm-zipcode-part">
                             <input class="gm-input2" type="text" name="postal_code" value="<?= $record_account->postal_code  ?>"  
-                            data-gm-required onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
+                            data-gm-required data-gm-postal-code data-gm-length="255" onkeyup="AjaxZip3.zip2addr(this,'','address_1','address_2','address_3');">
                         </div>
                     </td>
                 </tr>
@@ -64,7 +64,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="address_1" value="<?= $record_account->address_1  ?>"  
-                            data-gm-required>
+                            data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -73,7 +73,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="address_2" value="<?= $record_account->address_2  ?>"  
-                            data-gm-required>
+                            data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -82,7 +82,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <div>
                             <input class="gm-input" type="text" name="address_3" value="<?= $record_account->address_3  ?>"  
-                            data-gm-required>
+                            data-gm-required data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -90,8 +90,7 @@ if (! defined('ABSPATH')) {
                     <th><div class="pl-3">建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value="<?= $record_account->address_4 ?>"  
-                            >
+                            <input class="gm-input" type="text" name="address_4" value="<?= $record_account->address_4 ?>"  data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -115,7 +114,7 @@ if (! defined('ABSPATH')) {
                                 <label><input type="radio" name="account_attr_id" value="9" id="account_attr_id_other" onchange="account_other(this)" <?= $checked1 ?>>その他</label>
                             </div>
                         </div>
-                        <input class="gm-input-other gm-input" type="text" name="account_attr_other" id="account_attr_other" value="<?= $record_account->account_attr_other ?>" style="<?= "display: ".$attr_other ?>" >
+                        <input class="gm-input-other gm-input" type="text" name="account_attr_other" id="account_attr_other" value="<?= $record_account->account_attr_other ?>" style="<?= "display: ".$attr_other ?>" data-gm-length="255">
 
                     </td>
                 </tr>
@@ -183,7 +182,7 @@ if (! defined('ABSPATH')) {
                     <th><div class="pl-3">郵便番号</div></th>
                     <td>
                         <div class="gm-zipcode-part">
-                            <input class="gm-input3" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>" disabled 
+                            <input class="gm-input2" type="text" name="postal_code" value="<?php echo $this->get_input_param('postal_code') ?>" disabled 
                             data-gm-required>
                         </div>
                     </td>

@@ -38,14 +38,18 @@ if (!$_SESSION['account_id']) {
         <?php  
             $real_i = 0;
             foreach ($this->records1_1 as $i => $record1_1) { $real_i = $i+1;?>
-            <div class="gm-property-list">
+            <?php if($record1_1->status1 == "1") {?>
+            <div class="gm-property-list1_1">
+            <?php } else { ?>
+            <div class="gm-property-list1_2">
+            <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_1->nm ?></div>
                 物件番号: <?= $record1_1->property_id ?> <br>
                 掲載状況: <?php if($record1_1->status1 == "1") {echo "公開済";} else {echo "非公開";}?> <br>
                 区画名  : <?= $record1_1->section_nm ?> <br>
-                <?php  
+                掲載期間:<?php  
                     foreach ($this->records2 as $i => $record2) {
-                        if($record2->property_id == $record1_1->property_id) { echo "掲載期間: ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
+                        if($record2->property_id == $record1_1->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
                     } 
                 ?>
             <form class="gm-property-list-button" method="post">
@@ -67,14 +71,18 @@ if (!$_SESSION['account_id']) {
 
         <?php  
             foreach ($this->records1_2 as $i => $record1_2) {?>
-            <div class="gm-property-list">
+            <?php if($record1_2->remand_flg == "1") {?>
+            <div class="gm-property-list2_1">
+            <?php } else { ?>
+            <div class="gm-property-list2_2">
+            <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_2->nm ?></div>
                 物件番号: <?= $record1_2->property_id ?> <br>
                 掲載状況:  <br>
                 区画名  : <?= $record1_2->section_nm ?> <br>
-                <?php  
+                掲載期間: <?php  
                     foreach ($this->records2 as $i => $record2) {
-                        if($record2->property_id == $record1_2->property_id) { echo "掲載期間: ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
+                        if($record2->property_id == $record1_2->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
                     } 
                 ?>
             <form class="gm-property-list-button" method="post">

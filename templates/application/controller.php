@@ -25,12 +25,12 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // -------------------
         if (isset($_GET['email_double'])) {
             if ($_GET['email_double'] == "ok") {
-                echo '<script>alert("あなたのメールは今も繰り返されています。 メールアドレスをもう一度入力してください。")</script>';
+                echo '<script>alert("入力したメールアドレスは、既に申請済みもしくは登録済みです。")</script>';
             }
         }
 
         if (isset($_POST['process']) && $_POST['process'] == 'check') {
-    
+            
             $this->check($_POST);
         }
         if (isset($_POST['process']) && $_POST['process'] == 'regist') {
@@ -69,6 +69,8 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         $validation->length([
            ['key' => 'nm', 'name' => '名前', 'len' => 255],
            ['key' => 'kana', 'name' => 'カナ', 'len' => 255],
+           ['key' => 'email', 'name' => 'メールアドレス', 'len' => 255],
+           ['key' => 'phone', 'name' => '電話番号', 'len' => 255],
          ]);
         $validation->zen_katakana([
            ['key' => 'kana', 'name' => 'カナ',],
@@ -103,19 +105,32 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // -----------------
         // 画面遷移
         // -----------------
+        $email_object = $this->wpdb->get_results("SELECT email FROM {$this->wpdb->prefix}gmt_account");
+        $email_array = [];
+        for ($i=0; $i < count($email_object); $i++) { 
+            array_push($email_array, $email_object[$i]->email);
+            // echo ($email_array);
+        }
+        if(array_search($params['email'], $email_array)) {
+            var_dump($this->double_url);
+            header('Location: /application?email_double=ok&v='.urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE))));
+            exit();
+        }
+
         $url = explode('?', Gm_Util::get_url())[0];
         if (!empty($params)) {
             if (isset($params['process'])) {
                 unset($params['process']);
             }
             $url = $url . '?mode=confirm&attr_id='.$this->account_other1.'&v=' . urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE)));
+            
         }
         // 画面遷移
         header('Location: ' . $url);
 
     }
 
-    private function regist($params)
+    public function regist($params)
     {
         // -----------------
         // データ登録
@@ -125,11 +140,12 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         $email_array = [];
         for ($i=0; $i < count($email_object); $i++) { 
             array_push($email_array, $email_object[$i]->email);
+            // echo ($email_array);
         }
         if(array_search($params['email'], $email_array)) {
-            header('Location: /application?email_double=ok');
+            var_dump($this->double_url);
+            header('Location: /application?email_double=ok&v='.urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE))));
             exit();
-            
         }
         $this->wpdb->insert(
             $this->wpdb->prefix.'gmt_account_tmp',
@@ -160,8 +176,19 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // 画面遷移
         // -----------------
         // 画面遷移
+        
         $url = explode('?', Gm_Util::get_url())[0];
-        header('Location: ' . $url . '?mode=completed');
+        if (!empty($params)) {
+            if (isset($params['process'])) {
+                unset($params['process']);
+            }
+            $url = $url . '?mode=completed';
+        }
+        // 画面遷移
+        header('Location: ' .$url);
         exit();
+        // $url = explode('?', Gm_Util::get_url())[0];
+        // header('Location: /');
+        // exit();
     }
 }
