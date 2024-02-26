@@ -5,6 +5,60 @@ if (!defined('ABSPATH')) {
 
 ?>
 <div class="gm-custom-wrap">
+    <div class="map-filter">
+        <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#demo">特徴で絞り込む +</button>
+        <div id="demo" class="gm-checkbox-group-wrap collapse">
+            <?php
+                foreach ($this->facility_records as $i => $record) {
+                    $checked = '';
+                    if (isset($this->filterDataArray[0])) {
+                        foreach($this->filterDataArray[0] as $item){
+                            if($item == $record->ID)
+                                $checked = 'checked';
+                        };
+                    }
+                               
+                    echo '<label><input type="checkbox" name="facility_id" value="' . $record->ID . '"'.$checked.'  >' . $record->nm . '</label>';
+                }
+            ?>
+            <div>
+                <button class="btn btn-success" onclick="filterMap()">地図に表示</button>
+                <button class="btn btn-warning" onclick="uncheckAll()">条件をクリアにする</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function uncheckAll() {
+            let allCheckbox = document.getElementsByName("facility_id");
+            for (let i = 0; i < allCheckbox.length; i++) {
+                if (allCheckbox[i].checked) {
+                    allCheckbox[i].checked = false;
+                }
+            }
+            let link = "<?= home_url('/')?>";
+            window.location.assign(link);
+        }
+
+        function filterMap() {
+            let filterList = [];
+            let allCheckbox = document.getElementsByName("facility_id");
+            for (let i = 0; i < allCheckbox.length; i++) {
+                if (allCheckbox[i].checked) {
+                    filterList.push(i+1);
+                }
+            }
+            let link = "<?= home_url('/')?>";
+            if (filterList == []) {
+                window.location.assign(link);
+            } else {
+                window.location.assign(link+"/?filterList="+filterList.toString());
+            }
+            
+        }
+    </script>
+
     <div id="map"></div>
 
     <!-- prettier-ignore -->
@@ -37,6 +91,61 @@ if (!defined('ABSPATH')) {
             v: "weekly"
         });
     </script>
+    <div class="post-garage-header">
+        新着ガレージ
+    </div>
+    <div class="post-garage">
+        <?php   
+            $active = "active";
+            foreach ($this->recentList as $i => $record) { 
+                $img = explode(',', $record->imgs);
+        ?>
+
+        <div class="gm-card-1 ">
+            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
+            <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
+            <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
+            <?php
+                $param = array('id'=>$record->ID);
+                $link = add_query_arg($param, home_url('propertys'));
+            ?>
+            <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
+        </div>
+
+        <?php
+            }
+        ?>
+    </div>
+
+    <div class="post-garage-header">
+        PickUp!
+    </div>
+    <div class="post-garage">
+        <?php   
+            $active = "active";
+            foreach ($this->recentList as $i => $record) { 
+                $img = explode(',', $record->imgs);
+        ?>
+
+        <div class="gm-card-1 ">
+            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
+            <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
+            <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
+            <?php
+                $param = array('id'=>$record->ID);
+                $link = add_query_arg($param, home_url('propertys'));
+            ?>
+            <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
+        </div>
+            
+
+        <?php
+            if ($i == 3) {
+                break;
+            }
+            }
+        ?>
+    </div>
 
     <div class="gm-help">
         <div class="gm-help1">
@@ -124,7 +233,7 @@ if (!defined('ABSPATH')) {
 
 <script>
     let data = [];
-    <?php foreach ($this->wpgomap as $i => $records_map) { ?>
+    <?php foreach ($this->filteredArray as $i => $records_map) { ?>
         data.push(<?= json_encode($records_map); ?>);
     <?php } ?>
     const properties = [];
@@ -143,6 +252,7 @@ if (!defined('ABSPATH')) {
         a.imgs = element.imgs;
         a.nm = element.nm;
         a.fee_monthly_rent = element.fee_monthly_rent;
+        a.property_id = element.property_id;
         a.position.lat = parseFloat(element.lat);
         a.position.lng = parseFloat(element.lng);
         properties.push(a);
@@ -163,6 +273,7 @@ if (!defined('ABSPATH')) {
             lat: 35.66,
             lng: 139.80
         };
+
         const map = new Map(document.getElementById("map"), {
             zoom: 11,
             center,
@@ -181,18 +292,30 @@ if (!defined('ABSPATH')) {
                 toggleHighlight(AdvancedMarkerElement, property);
             });
 
+            google.maps.event.addListener(map, "click", function(event) {
+                turnoffHighlight(AdvancedMarkerElement, property);
+            });
         
         }
     }
 
     function toggleHighlight(markerView, property) {
         if (markerView.content.classList.contains("highlight")) {
-            handleDblClick(property.ID);
-            markerView.content.classList.remove("highlight");
-            markerView.zIndex = null;
+            // markerView.content.classList.remove("highlight");
+            // markerView.zIndex = null;
         } else {
             markerView.content.classList.add("highlight");
             markerView.zIndex = 1;
+        }
+    }
+
+    function turnoffHighlight(markerView, property) {
+        if (markerView.content.classList.contains("highlight")) {
+            markerView.content.classList.remove("highlight");
+            markerView.zIndex = null;
+        } else {
+            // markerView.content.classList.add("highlight");
+            // markerView.zIndex = 1;
         }
     }
 
@@ -202,19 +325,19 @@ if (!defined('ABSPATH')) {
         content.classList.add("property");
         content.innerHTML = `
             <div class="icon">
-                ¥ ${property.fee_monthly_rent}
+                <p class="icon-text">¥ ${property.fee_monthly_rent}</p>
             </div>
             <div class="details">
                 
                 <div class="gm-map-item">
                     <div class="gm-card-img">
-                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/image/${img_path[0]}" alt="img" >
+                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/${property.property_id}/${img_path[0]}" alt="img" onclick="handleDblClick(${property.ID})">
                     </div>
-                    <div class="gm-map-info">
+                    <div class="gm-map-info" onclick="handleDblClick(${property.ID})">
                         <div class="gm-card-info__div">車庫名: ${property.nm}</div>
                         <div class="gm-card-info__div">価格: ${property.fee_monthly_rent}</div>
                     </div>
-                    <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart border-heart" id="heart${property.ID}"></i></button>
+                    <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart fa-solid fa-heart border-heart" id="heart${property.ID}"></i></button>
                 </div>
             </div> `;
         
@@ -244,9 +367,12 @@ if (!defined('ABSPATH')) {
         
     }
     
+
+
     function handleDblClick(id) {
         var href = window.location.href;
-        window.location.assign(href+'/propertys/?id='+id);
+        let link = "<?= home_url('/')?>";
+        window.location.assign(link+'/propertys/?id='+id);
     }
 
     function setCookie(cname, cvalue, exdays, value) {
@@ -291,8 +417,5 @@ if (!defined('ABSPATH')) {
         }
         return "";
     }
-
-
-
 
 </script>

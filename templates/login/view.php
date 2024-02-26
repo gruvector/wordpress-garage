@@ -1,9 +1,11 @@
 <?php
-if (! defined('ABSPATH')) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
 ?>
+
+
 <div class="gm-custom-wrap">
     <form id="gm-page-form" method="POST">
         <input type="text" style="display:none" palceholder="Enter対策">
@@ -25,4 +27,8 @@ if (! defined('ABSPATH')) {
             <input type="submit" class="gm-input-button" value="ログイン">
         </div>
     </form>
+
 </div>
+
+
+

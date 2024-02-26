@@ -11,12 +11,15 @@ if (! defined('ABSPATH')) {
             <div class="carousel-inner mx-auto w-90 h-90" role="listbox" >
                 <?php   
                     $active = "active";
-                    foreach ($this->favorite_list as $i => $record) { 
+                    if ($this->favorite_list) {
+                        foreach ($this->favorite_list as $i => $record) { 
                         $img = explode(',', $record[0]->imgs);
+                    
+                    
                 ?>
                     <div class="carousel-item">
                         <div class="col-lg-5 col-md-4 gm-card">
-                            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/image/<?php echo $img[0] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
+                            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record[0]->property_id ?>/<?= $img[0] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
                             <div class="gm-card-info__div">車庫名: <?php echo $record[0]->nm ?></div>
                             <div class="gm-card-info__div">価格: <?php echo $record[0]->fee_monthly_rent ?></div>
                             <?php
@@ -24,11 +27,17 @@ if (! defined('ABSPATH')) {
                                 $link = add_query_arg($param, home_url('propertys'));
                             ?>
                             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
-                            <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart far fa-heart selected-heart" id="heart${property.ID}"></i></button>
+                            <button class="heart" onclick="handleFavorite('<?= $record[0]->ID ?>')"><i class="heart fa-solid fa-heart selected-heart" id="heart${property.ID}"></i></button>
                         </div>
                     </div>
                 <?php      
                     }
+                } else { ?>
+                    <div class="no-favourite-div">
+                        現在お気に入り登録済みのガレージはありません。
+                    </div>
+
+                <?php }
                 ?>
             </div>
             <div class="w-100">
@@ -54,7 +63,7 @@ if (! defined('ABSPATH')) {
 
         // Modify each slide to contain five columns of images
         $('#gallery.carousel .carousel-item').each(function(){
-            var minPerSlide = 4;
+            var minPerSlide = 2;
             var next = $(this).next();
             if (!next.length) {
             next = $(this).siblings(':first');
@@ -95,6 +104,58 @@ if (! defined('ABSPATH')) {
             element.classList.add("border-heart");
         }
         
+    }
+
+    function handleFavorite(id) {
+        console.log("efe");
+        let a = getCookie("favorite");
+        let ind = a.indexOf(id);
+        deleteCookie('favorite', 365, a, ind);
+        let link = "<?= home_url('/')?>";
+        window.location.assign(link+'/favorite/?id='+id);
+    }
+
+    function setCookie(cname, cvalue, exdays, value) {
+        value.push(cvalue);
+        let b = value.toString();
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + b + ";" + expires + ";path=/";
+        console.log(document.cookie);
+    }
+
+    function deleteCookie(cname, expires, value, indi) {
+        const spliced = value.toSpliced(indi, 1);
+        let b = spliced.toString();
+        document.cookie = cname + "=" + b + ";" + expires + ";path=/";
+        console.log(document.cookie);
+    }
+
+    function getCookie(cname) {
+        let name = cname + "=";
+        
+        let decodedCookie = decodeURIComponent(document.cookie);
+        
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            let d = c.substring(name.length, c.length);
+            let e = d.split(",");
+            let numberArray = [];
+            length = e.length;
+
+            for (let i = 0; i < length; i++)
+                numberArray.push(parseInt(e[i]));
+        
+            return numberArray;
+            }
+        }
+        return "";
     }
 </script>
 

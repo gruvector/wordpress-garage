@@ -35,7 +35,7 @@ final class Gm_Menu
             'アカウント管理[承認済]',
             '承認済',
             'manage_options',
-            'menu_gm_account&show_mode=9',
+            'menu_gm_account_tmp&show_mode=9',
             'Gm_Menu::show_account_tmp'
         );
 
@@ -63,63 +63,63 @@ final class Gm_Menu
             '物件管理[承認済]',
             '承認済',
             'manage_options',
-            'menu_gm_property&show_mode=9',
+            'menu_gm_property_tmp&show_mode=9',
             'Gm_Menu::show_property_tmp'
         );
 
         add_menu_page(
             'アカウント管理[編集]',
-            '[G]アカウント',
+            '',
             'manage_options',
             'menu_gm_account',
             'Gm_Menu::show_account',
-            'dashicons-admin-users',
+            // 'dashicons-admin-users'
             -1
         );
-        add_submenu_page(
-            'menu_gm_account',
-            'アカウント管理[編集]',
-            '編集',
-            'manage_options',
-            'menu_gm_account',
-            'Gm_Menu::show_account'
-        );
+        // add_submenu_page(
+        //     'menu_gm_account',
+        //     'アカウント管理[編集]',
+        //     '編集',
+        //     'manage_options',
+        //     'menu_gm_account&show_mode=1',
+        //     'Gm_Menu::show_account'
+        // );
 
-        add_submenu_page(
-            'menu_gm_account',
-            'アカウント管理[BAN]',
-            'BAN',
-            'manage_options',
-            'menu_gm_account',
-            'Gm_Menu::show_account'
-        );
+        // add_submenu_page(
+        //     'menu_gm_account',
+        //     'アカウント管理[BAN]',
+        //     'BAN',
+        //     'manage_options',
+        //     'menu_gm_account&show_mode=1',
+        //     'Gm_Menu::show_account'
+        // );
 
         add_menu_page(
             '物件管理[編集]',
-            '[G]物件',
+            '',
             'manage_options',
             'menu_gm_property',
             'Gm_Menu::show_property',
-            'dashicons-admin-users',
+            // 'dashicons-admin-users',
             -1
         );
-        add_submenu_page(
-            'menu_gm_property',
-            '物件管理[編集]',
-            '編集',
-            'manage_options',
-            'menu_gm_property',
-            'Gm_Menu::show_property'
-        );
+        // add_submenu_page(
+        //     'menu_gm_property',
+        //     '物件管理[編集]',
+        //     '編集',
+        //     'manage_options',
+        //     'menu_gm_property&show_mode=1',
+        //     'Gm_Menu::show_property'
+        // );
 
-        add_submenu_page(
-            'menu_gm_property',
-            '物件管理[BAN]',
-            'BAN',
-            'manage_options',
-            'menu_gm_property',
-            'Gm_Menu::show_property'
-        );
+        // add_submenu_page(
+        //     'menu_gm_property',
+        //     '物件管理[BAN]',
+        //     'BAN',
+        //     'manage_options',
+        //     'menu_gm_property&show_mode=9',
+        //     'Gm_Menu::show_property'
+        // );
 
         add_menu_page(
             '料金[編集]',

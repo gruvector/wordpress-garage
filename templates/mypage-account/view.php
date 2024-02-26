@@ -294,6 +294,7 @@ if (! defined('ABSPATH')) {
 
     function account_add() {
         document.getElementById("account_attr_other").style.display  = "none";
+        document.getElementById("account_attr_other").value = "";
     }
     
     

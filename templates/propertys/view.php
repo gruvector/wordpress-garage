@@ -11,16 +11,24 @@ if (! defined('ABSPATH')) {
             function cube($n)
             {
                 echo('<div class="property-slide">
-                        <img src="'.wp_get_upload_dir()['baseurl'].'/image/'.$n.'">
+                        <img src="'.wp_get_upload_dir()["baseurl"].'/gm-property/'.$record->property_id.'/'.$n.'">
                     </div>');
             }
             $img = explode(',',$record->imgs);
+
             
         ?>
             <div class="gm-img-property-slide">
 
                 <div class="property-slider">
-                    <?php array_map('cube', $img);?>
+                    <?php foreach($img as $j=>$img_display){
+                        var_dump($img_display);
+                        if ($img_display != ".") {
+                            echo ( ' <div class="property-slide">
+                                <img src="'.wp_get_upload_dir()["baseurl"].'/gm-property/'.$record->property_id.'/'. $img_display.'">
+                            </div>');
+                        }
+                    } ?>
 
                     <button class="btn-property-slide prev"><i class="fas fa-3x fa-chevron-circle-left"></i></button>
                     <button class="btn-property-slide next"><i class="fas fa-3x fa-chevron-circle-right"></i></button>

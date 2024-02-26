@@ -31,7 +31,7 @@ class Gm_Property_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
                 $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null, isset($_GET['show_mode'])?$_GET['show_mode']:"1");
             } elseif ($_POST['process'] == 'deny') {
 
-                echo("<script type='text/javascript'> var answer = prompt('Please type your name.'); </script>");
+                echo("<script type='text/javascript'> var answer = prompt('差し戻しコメントを入力してください'); </script>");
                 echo("<script type='text/javascript'> document.cookie = 'userInput='+answer; </script>");   
                 
                 $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
@@ -78,6 +78,7 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             'account_id' => 'アカウントID',
             'property_id' => '物件ID',
             'nm' => '名前',
+            'imgs' => '画像',
             'section_nm' => '区画名称',
             'availability_id' => '空き状況',
             'handover_date' => '引き渡し可能日',
@@ -100,9 +101,9 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             'other_description' => 'その他紹介',
             'appeal_description' => 'アピールポイント',
             'address_1' => '都道府県',
-            'address_1' => '市区町村',
-            'address_1' => '地番',
-            'address_1' => '建物名',
+            'address_2' => '市区町村',
+            'address_3' => '地番',
+            'address_4' => '建物名',
             'remand_comment' => '差戻コメント',
             'created_at' => '登録日時',
             'updated_at' => '更新日時',
@@ -131,14 +132,38 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
     /*******************
     / 列情報
     ********************/
+
+    
+
+
     public function column_ID($item)
     {
         if ($item->get_remand_flg() == "0") {
             return <<<EOM
             <div>{$item->get_ID()}</div>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8&libraries=places&sensor=false"></script>
             <div class="gm-admin-button-wrap">
-            <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
+            <button type="button" class="gm-admin-button-apply" onClick="getLatLng(); document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
             <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
+            <script type="text/javascript">
+                function getLatLng() {
+                    console.log("efe");
+                    var geocoder = new google.maps.Geocoder(); 
+                    var postal_code = '{$item->get_postal_code()}';
+                    var address1 = '{$item->get_address_1()}';
+                    var address2 = '{$item->get_address_2()}';
+                    var address3 = '{$item->get_address_3()}';
+                    var address4 = {$item->get_address_4()};
+                    geocoder.geocode({ 'address': '〒'+postal_code+' '+address1+address2+address3+address4 }, function (results, status) {  
+                        if (status == google.maps.GeocoderStatus.OK) {  
+                            document.cookie = "latitude="+results[0].geometry.location.lat()+";";
+                            document.cookie = "longitude="+results[0].geometry.location.lng()+";";  
+                        } else {  
+                            console.log("Wrong Details: ");  
+                        }  
+                    });  
+                }
+            </script> 
             </div>
             EOM;
         } else {
@@ -170,6 +195,11 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
     {
         return $item->get_section_nm();
     }
+
+    // public function column_imgs($item)
+    // {
+    //     return $item->get_imgs();
+    // }
 
     public function column_availability_id($item)
     {
@@ -315,11 +345,15 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
 
 class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
 {
+    public $show_mode;
+    
     public function __construct($record)
     {
+        $this->show_mode = (isset($_GET['show_mode'])) ? $_GET['show_mode'] : '';
         $this->ID = $record->ID;
         $this->property_id = $record->property_id;
         $this->account_id = $record->account_id;
+        // $this->imgs = $record->imgs;
         $this->nm = $record->nm;
         $this->section_nm = $record->section_nm;
         $this->availability_id = $record->availability_id;
@@ -348,7 +382,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
         $this->address_3 = $record->address_3;
         $this->address_4 = $record->address_4;
         $this->remand_flg = $record->remand_flg;
-        $this->remand_comment = $record->remand_comment;
+        $this->show_mode == '9' ? $this->remand_comment = $record->remand_comment:$this->remand_comment = '';
         $this->created_at = $record->created_at;
         
     }
@@ -358,7 +392,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     protected $account_id;
     protected $nm;
     protected $section_nm;
-    protected $imgs;
+    // protected $imgs;
     protected $availability_id;
     protected $handover_date;
     protected $min_period;
@@ -399,6 +433,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_min_period(){return $this->min_period;}
     public function get_min_period_unit(){return $this->min_period_unit;}
     public function get_size_w(){return $this->size_w;}
+    // public function get_imgs(){return $this->imgs;}
     public function get_size_h(){return $this->size_h;}
     public function get_size_d(){return $this->size_d;}
     public function get_fee_monthly_rent(){return $this->fee_monthly_rent;}

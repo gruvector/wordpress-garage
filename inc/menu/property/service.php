@@ -9,6 +9,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
     public $show_mode;
     public $data_show;
     public $check_box = [];
+    public $data_show1;
     
 
     public function __construct()
@@ -29,7 +30,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
     {
         if (empty($ID)) {
             return;
-        }
+        };
         $record = [];
         global $wpdb;
         $records1 = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_property WHERE ID = {$ID}");
@@ -42,7 +43,15 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         $record[1] = $records2;
         $record[2] = $records3;
         return $record;
+    }
 
+    public function edit_publish($ID) {
+        if (empty($ID)) {
+            return;
+        };
+        global $wpdb;
+        $record = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_property_publish WHERE property_id = {$ID}");
+        return $record;
     }
 
     public function apply($ID)
@@ -57,6 +66,27 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
                 array_push($this->check_box, $this->data_show['facility_id'][$i]);
            }
         }
+
+        // $format_date = str_replace('/', '-', $this->data_show['handover_date']);
+
+        // switch($this->data_show['min_period_unit']) {
+        //     case '1': $add_date = '+'.$this->data_show['min_period'].' years'; break;
+        //     case '2': $add_date = '+'.$this->data_show['min_period'].' months'; break;
+        //     case '3': $add_date = '+'.$this->data_show['min_period'].' days'; break;
+        //     default: break;
+        // }
+        // $publish_date = date("Y-m-d", strtotime($add_date, strtotime($format_date)));
+
+        // $wpdb->update(
+        //     $wpdb->prefix.'gmt_property_publish',
+        //     [
+        //         'publish_from' => $this->data_show['handover_date'],
+        //         'publish_to' => $publish_date
+        //     ],
+        //     [
+        //         'property_id' => $this->data_show['property_id']
+        //     ]
+        // );
         $a = implode(",", $this->check_box);
         $wpdb->update(
             $wpdb->prefix.'gmt_property',
@@ -104,7 +134,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         global $wpdb;
         $wpdb->update(
             $wpdb->prefix . 'gmt_property',
-            ['status1' => '0',],
+            ['status1' => '9',],
             ['ID' => $ID],
             ['%d'],
         );
@@ -115,12 +145,32 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         if (empty($ID)) {
             return;
         }
+        
         global $wpdb;
         $wpdb->update(
             $wpdb->prefix . 'gmt_property',
             ['status1' => '1',],
             ['ID' => $ID],
             ['%d'],
+        );
+    }
+
+    public function apply_publish($data) {
+        if (empty($data)) {
+            return;
+        }
+        global $wpdb;
+        $this->data_show1 = $_POST;
+        // var_dump($this->data_show1);
+        $wpdb->update(
+            $wpdb->prefix . 'gmt_property_publish',
+            [
+                'publish_from' => $this->data_show1['publish_from'],
+                'publish_to' => $this->data_show1['publish_to'],
+            ],
+            [
+                'property_id' => $this->data_show1['ID2']
+            ],
         );
     }
 

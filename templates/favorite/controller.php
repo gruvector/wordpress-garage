@@ -17,16 +17,26 @@ class Gm_Favorite_Controller extends Abstract_Template_Controller
 
     public function action() {
 
+        
+
         $cookie_name = "favorite";
         if(!isset($_COOKIE[$cookie_name])) {
             echo "Cookie named '" . $cookie_name . "' is not set!";
         } else {
             $a = explode(",", $_COOKIE[$cookie_name]);
+            if (isset($_GET['id'])) {
+                $key = array_search($_GET['id'], $a);
+                if ($key !== false) {
+                    unset($a[$key]);
+                    $a = array_values($a);
+                }
+            }
         }
         for($i = 1; $i < count($a); $i++) {
             $b = (int) $a[$i];
             array_push($this->favorite_list, $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE ID = $b"));
         }
+        // var_dump($this->favorite_list);
         $this->render();
     }
 

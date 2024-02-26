@@ -17,7 +17,13 @@ if (! defined('ABSPATH')) {
         <input type="hidden" name="process" value="regist">
         
         <?php if(!($this->edit_data_from_db == []))
-             foreach ($this->edit_data_from_db as $i => $record_edit) { ?>
+            foreach ($this->edit_data_from_db as $i => $record_edit) { 
+                if (isset($record_edit->handover_date)) {
+                    $date = str_replace('-', '/', $record_edit->handover_date);
+                    $newDate = date("Y/m/d", strtotime($date));
+                }
+            
+        ?>
              <input type="hidden" name="property_id" value="<?= $record_edit->property_id ?>">
         <div class="gm-input-table-wrap">
             <table class="gm-input-table">
@@ -25,6 +31,7 @@ if (! defined('ABSPATH')) {
                     <td>
                         <?php 
                             $img_path_display = explode(',', $record_edit->imgs);
+                            
                         ?>
                         <div class="item">
                             <div class="item-upload">
@@ -33,7 +40,7 @@ if (! defined('ABSPATH')) {
                                     <input type="file" name="imageA" id="upload-photoAC" class="file-upload-input inputA" onchange="readURLA(this);"  >
                                     <input type="hidden" name="hidden_photoA" value="<?= isset($img_path_display[0])?$img_path_display[0]:""  ?>"> 
                                 </div>
-                                <div class="file-upload-content1 upload-contentA">
+                                <div class="file-upload-content1 upload-contentA" id="upload-image-content-divA">
                                     <img class="file-upload-image1" id="upload-imageA" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[0]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUploadA()" class="remove-image"><span class="image-title titleA">削除</span></button>
@@ -46,8 +53,8 @@ if (! defined('ABSPATH')) {
                                     <input type="file" name="imageC" id="upload-photoBC" class="file-upload-input inputC" onchange="readURLC(this);" value="" > 
                                     <input type="hidden" name="hidden_photoC" value="<?= isset($img_path_display[1])?$img_path_display[1]:""  ?>">
                                 </div>
-                                <div class="file-upload-content1 upload-contentC">
-                                    <img class="file-upload-image1" id="upload-imageC" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[1]  ?>" alt="画像" />
+                                <div class="file-upload-content1 upload-contentC" id="upload-image-content-divC">
+                                    <img class="file-upload-image1" id="upload-imageC" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[1]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUploadC()" class="remove-image"><span class="image-title titleC">削除</span></button>
                                     </div>
@@ -59,8 +66,8 @@ if (! defined('ABSPATH')) {
                                     <input type="file" name="imageB" id="upload-photoCC" class="file-upload-input inputB" onchange="readURLB(this);" value="" > 
                                     <input type="hidden" name="hidden_photoB" value="<?= isset($img_path_display[2])?$img_path_display[2]:""  ?>">
                                 </div>
-                                <div class="file-upload-content1 upload-contentB">
-                                        <img class="file-upload-image1" id="upload-imageB" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[2]  ?>" alt="画像" />
+                                <div class="file-upload-content1 upload-contentB" id="upload-image-content-divB">
+                                        <img class="file-upload-image1" id="upload-imageB" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[2]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUploadB()" class="remove-image"><span class="image-title titleB">削除</span></button>
                                     </div>
@@ -72,8 +79,8 @@ if (! defined('ABSPATH')) {
                                     <input type="file" name="imageD" id="upload-photoDC" class="file-upload-input inputD" onchange="readURLD(this);">
                                     <input type="hidden" name="hidden_photoD" value="<?= isset($img_path_display[3])?$img_path_display[3]:""  ?>"> 
                                 </div>
-                                <div class="file-upload-content1 upload-contentD">
-                                    <img class="file-upload-image1" id="upload-imageD" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[3]  ?>" alt="画像" />
+                                <div class="file-upload-content1 upload-contentD" id="upload-image-content-divD">
+                                    <img class="file-upload-image1" id="upload-imageD" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[3]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUploadD()" class="remove-image"><span class="image-title titleD">削除</span></button>
                                     </div>
@@ -85,10 +92,77 @@ if (! defined('ABSPATH')) {
                                     <input type="file" name="imageE" id="upload-photoEC" class="file-upload-input inputE" onchange="readURLE(this);"> 
                                     <input type="hidden" name="hidden_photoE" value="<?= isset($img_path_display[4])?$img_path_display[4]:""  ?>">
                                 </div>
-                                <div class="file-upload-content1 upload-contentE">
-                                    <img class="file-upload-image1" id="upload-imageE" src="<?= wp_get_upload_dir()['baseurl'].'/image/'.$img_path_display[4]  ?>" alt="画像" />
+                                <div class="file-upload-content1 upload-contentE" id="upload-image-content-divE">
+                                    <img class="file-upload-image1" id="upload-imageE" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[4]  ?>" alt="画像" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUploadE()" class="remove-image"><span class="image-title titleE">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapF">
+                                    <label htmlFor="upload-photoFC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageF" id="upload-photoFC" class="file-upload-input inputF" onchange="readURLF(this);"  >
+                                    <input type="hidden" name="hidden_photoF" value="<?= isset($img_path_display[5])?$img_path_display[5]:""  ?>"> 
+                                </div>
+                                <div class="file-upload-content1 upload-contentF" id="upload-image-content-divF">
+                                    <img class="file-upload-image1" id="upload-imageF" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[5]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadF()" class="remove-image"><span class="image-title titleF">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapG">
+                                    <label htmlFor="upload-photoGC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageG" id="upload-photoGC" class="file-upload-input inputG" onchange="readURLG(this);" value="" > 
+                                    <input type="hidden" name="hidden_photoG" value="<?= isset($img_path_display[6])?$img_path_display[6]:""  ?>">
+                                </div>
+                                <div class="file-upload-content1 upload-contentG" id="upload-image-content-divG">
+                                    <img class="file-upload-image1" id="upload-imageG" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[6]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadG()" class="remove-image"><span class="image-title titleG">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapH">
+                                    <label htmlFor="upload-photoHC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageH" id="upload-photoHC" class="file-upload-input inputH" onchange="readURLH(this);" value="" > 
+                                    <input type="hidden" name="hidden_photoH" value="<?= isset($img_path_display[7])?$img_path_display[7]:""  ?>">
+                                </div>
+                                <div class="file-upload-content1 upload-contentH" id="upload-image-content-divH">
+                                    <img class="file-upload-image1" id="upload-imageH" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[7]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadH()" class="remove-image"><span class="image-title titleH">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapI">
+                                    <label htmlFor="upload-photoIC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageI" id="upload-photoIC" class="file-upload-input inputI" onchange="readURLI(this);">
+                                    <input type="hidden" name="hidden_photoI" value="<?= isset($img_path_display[8])?$img_path_display[8]:""  ?>"> 
+                                </div>
+                                <div class="file-upload-content1 upload-contentI" id="upload-image-content-divI">
+                                    <img class="file-upload-image1" id="upload-imageI" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[8]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadI()" class="remove-image"><span class="image-title titleI">削除</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-upload">
+                                <div class="image-upload-wrap1 upload-wrapJ">
+                                    <label htmlFor="upload-photoJC" class="general__fileupload">画像を選ぶ</label>
+                                    <input type="file" name="imageJ" id="upload-photoJC" class="file-upload-input inputJ" onchange="readURLJ(this);"> 
+                                    <input type="hidden" name="hidden_photoJ" value="<?= isset($img_path_display[9])?$img_path_display[9]:""  ?>">
+                                </div>
+                                <div class="file-upload-content1 upload-contentJ" id="upload-image-content-divJ">
+                                    <img class="file-upload-image1" id="upload-imageJ" src="<?= wp_get_upload_dir()['baseurl'].'/gm-property/'.$record_edit->property_id.'/'.$img_path_display[9]  ?>" alt="画像" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUploadJ()" class="remove-image"><span class="image-title titleJ">削除</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +212,7 @@ if (! defined('ABSPATH')) {
                     <th><div>引き渡し可能日</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="handover_date" value="<?= $record_edit->handover_date ?>" 
+                            <input class="gm-input" type="text" name="handover_date" value="<?= $newDate ?>" 
                             data-gm-required data-gm-date="yyyy/MM/dd" data-gm-length="255">
                         </div>
                     </td>
@@ -195,7 +269,7 @@ if (! defined('ABSPATH')) {
                     <th><div>建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value="<?= $record_edit->address_4 ?>"  data-gm-length="255">
+                            <input class="gm-input" type="text" name="address_4" value="<?= $record_edit->address_4 ?>"  data-gm-length="255" data-gm-required>
                         </div>
                     </td>
                 </tr>
@@ -445,7 +519,68 @@ if (! defined('ABSPATH')) {
                                             <button type="button" onclick="removeUploadE()" class="remove-image"><span class="image-title titleE">削除</span></button>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
+                                
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapF">
+                                        <label htmlFor="upload-photoFC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageF" id="upload-photoFC" class="file-upload-input inputF" onchange="readURLF(this);"  >
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentF img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageF" src="" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadF()" class="remove-image"><span class="image-title titleF">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapG">
+                                        <label htmlFor="upload-photoGC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageG" id="upload-photoGC" class="file-upload-input inputG" onchange="readURLG(this);" value="" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentG img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageG" src="" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadG()" class="remove-image"><span class="image-title titleG">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapH">
+                                        <label htmlFor="upload-photoHC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageH" id="upload-photoHC" class="file-upload-input inputH" onchange="readURLH(this);" value="" > 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentH img-display-none">
+                                            <img class="file-upload-image1" id="upload-imageH" src="" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadH()" class="remove-image"><span class="image-title titleH">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapI">
+                                        <label htmlFor="upload-photoIC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageI" id="upload-photoIC" class="file-upload-input inputI" onchange="readURLI(this);">
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentI img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageI" src="" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadI()" class="remove-image"><span class="image-title titleI">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-upload">
+                                    <div class="image-upload-wrap1 upload-wrapJ">
+                                        <label htmlFor="upload-photoJC" class="general__fileupload">画像を選ぶ</label>
+                                        <input type="file" name="imageJ" id="upload-photoJC" class="file-upload-input inputJ" onchange="readURLJ(this);"> 
+                                    </div>
+                                    <div class="file-upload-content1 upload-contentJ img-display-none">
+                                        <img class="file-upload-image1" id="upload-imageJ" src="" alt="画像" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUploadJ()" class="remove-image"><span class="image-title titleJ">削除</span></button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -548,7 +683,7 @@ if (! defined('ABSPATH')) {
                     <th><div>建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value=""  data-gm-length="255">
+                            <input class="gm-input" type="text" name="address_4" value=""  data-gm-length="255" data-gm-required>
                         </div>
                     </td>
                 </tr>
@@ -770,6 +905,59 @@ if (! defined('ABSPATH')) {
 </script> -->
 
 <script>
+
+    $(document).ready(function(){
+        var srcnameE = String($('#upload-imageE').attr('src'));
+        if (srcnameE[srcnameE.length - 1] === ".") {
+            $('#upload-image-content-divE').hide();
+        }
+
+        var srcnameD = String($('#upload-imageD').attr('src'));
+        if (srcnameD[srcnameD.length - 1] === ".") {
+            $('#upload-image-content-divD').hide();
+        }
+
+        var srcnameC = String($('#upload-imageC').attr('src'));
+        if (srcnameC[srcnameC.length - 1] === ".") {
+            $('#upload-image-content-divC').hide();
+        }
+
+        var srcnameB = String($('#upload-imageB').attr('src'));
+        if (srcnameB[srcnameB.length - 1] === ".") {
+            $('#upload-image-content-divB').hide();
+        }
+
+        var srcnameA = String($('#upload-imageA').attr('src'));
+        if (srcnameA[srcnameA.length - 1] === ".") {
+            $('#upload-image-content-divA').hide();
+        }
+
+        var srcnameF = String($('#upload-imageF').attr('src'));
+        if (srcnameF[srcnameF.length - 1] === ".") {
+            $('#upload-image-content-divF').hide();
+        }
+
+        var srcnameG = String($('#upload-imageG').attr('src'));
+        if (srcnameG[srcnameG.length - 1] === ".") {
+            $('#upload-image-content-divG').hide();
+        }
+
+        var srcnameH = String($('#upload-imageH').attr('src'));
+        if (srcnameH[srcnameH.length - 1] === ".") {
+            $('#upload-image-content-divH').hide();
+        }
+
+        var srcnameI = String($('#upload-imageI').attr('src'));
+        if (srcnameI[srcnameI.length - 1] === ".") {
+            $('#upload-image-content-divI').hide();
+        }
+
+        var srcnameJ = String($('#upload-imageJ').attr('src'));
+        if (srcnameJ[srcnameJ.length - 1] === "." || "") {
+            $('#upload-image-content-divJ').hide();
+        }
+    })
+
     function readURLA(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -886,10 +1074,130 @@ if (! defined('ABSPATH')) {
         }
     }
 
-    function removeUploadE() {
-        $('.inputE').replaceWith($('.inputE').clone());
-        $('.upload-contentE').hide();
-        $('.upload-wrapE').show();
+    function removeUploadF() {
+        $('.inputF').replaceWith($('.inputF').clone());
+        $('.upload-contentF').hide();
+        $('.upload-wrapF').show();
+    }
+
+    function readURLF(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapE').hide();
+            $('#upload-imageF').attr('src', e.target.result);
+            $('.upload-contentF').show();
+            $('#upload-imageF').show();
+            $('.upload-contentF').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadF();
+        }
+    }
+
+    function removeUploadF() {
+        $('.inputF').replaceWith($('.inputF').clone());
+        $('.upload-contentF').hide();
+        $('.upload-wrapF').show();
+    }
+
+    function readURLG(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapE').hide();
+            $('#upload-imageG').attr('src', e.target.result);
+            $('.upload-contentG').show();
+            $('#upload-imageG').show();
+            $('.upload-contentG').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadG();
+        }
+    }
+
+    function removeUploadG() {
+        $('.inputG').replaceWith($('.inputG').clone());
+        $('.upload-contentG').hide();
+        $('.upload-wrapG').show();
+    }
+
+    function readURLH(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapE').hide();
+            $('#upload-imageH').attr('src', e.target.result);
+            $('.upload-contentH').show();
+            $('#upload-imageH').show();
+            $('.upload-contentH').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadH();
+        }
+    }
+
+    function removeUploadH() {
+        $('.inputH').replaceWith($('.inputH').clone());
+        $('.upload-contentH').hide();
+        $('.upload-wrapH').show();
+    }
+
+    function readURLI(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapE').hide();
+            $('#upload-imageI').attr('src', e.target.result);
+            $('.upload-contentI').show();
+            $('#upload-imageI').show();
+            $('.upload-contentI').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadI();
+        }
+    }
+
+    function removeUploadI() {
+        $('.inputI').replaceWith($('.inputI').clone());
+        $('.upload-contentI').hide();
+        $('.upload-wrapI').show();
+    }
+
+    function readURLJ(input) {
+		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            // $('.upload-wrapE').hide();
+            $('#upload-imageJ').attr('src', e.target.result);
+            $('.upload-contentJ').show();
+            $('#upload-imageJ').show();
+            $('.upload-contentJ').removeClass("img-display-none");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUploadJ();
+        }
+    }
+
+    function removeUploadJ() {
+        $('.inputJ').replaceWith($('.inputJ').clone());
+        $('.upload-contentJ').hide();
+        $('.upload-wrapJ').show();
     }
 
     function autoFill() {

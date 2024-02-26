@@ -105,10 +105,16 @@ class Gm_Application_Controller extends Abstract_Template_Controller
         // -----------------
         // 画面遷移
         // -----------------
-        $email_object = $this->wpdb->get_results("SELECT email FROM {$this->wpdb->prefix}gmt_account");
+        $email_object1 = $this->wpdb->get_results("SELECT email FROM {$this->wpdb->prefix}gmt_account");
+        $email_object2 = $this->wpdb->get_results("SELECT email FROM {$this->wpdb->prefix}gmt_account_tmp");
+
         $email_array = [];
-        for ($i=0; $i < count($email_object); $i++) { 
-            array_push($email_array, $email_object[$i]->email);
+        for ($i=0; $i < count($email_object1); $i++) { 
+            array_push($email_array, $email_object1[$i]->email);
+            // echo ($email_array);
+        }
+        for ($i=0; $i < count($email_object2); $i++) { 
+            array_push($email_array, $email_object2[$i]->email);
             // echo ($email_array);
         }
         if(array_search($params['email'], $email_array)) {

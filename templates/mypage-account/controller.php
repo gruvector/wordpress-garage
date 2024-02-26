@@ -117,7 +117,7 @@ class Gm_Mypage_Account_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // データ登録
         // -----------------
-        var_dump($_SESSION['account_id']);
+        var_dump($params['account_attr_id']);
         $postal_code = $params['postal_code'];
         $this->wpdb->update(
             $this->wpdb->prefix.'gmt_account',

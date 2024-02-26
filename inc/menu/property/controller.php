@@ -10,7 +10,9 @@ class Gm_Property_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     public $service;
     public $show_mode;
     public $show_modal = 'none';
+    public $show_publish_modal = 'none';
     public $show_data;
+    public $show_data1;
 
     /** コンストラクタ */
     public function __construct()
@@ -26,20 +28,33 @@ class Gm_Property_Menu_Controller extends Gm_Abstract_List_Menu_Controller
      * 実行処理
      * @override
      */
+
     public function action()
     {
         if (isset($_POST['process'])) {
-            if ($_POST['process'] == 'edit') {
-                $this->show_data = $this->service->edit(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-                $this->show_modal = 'block';
-            } elseif ($_POST['process'] == 'ban') {
-                $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-            } elseif ($_POST['process'] == 'recover') {
-                $this->service->recover(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-            } elseif ($_POST['process1'] == 'apply') {
-                $this->service->apply(isset($_POST) ? $_POST : null);
-            } 
+
+            switch ($_POST['process']) {
+                case 'edit':$this->show_data = $this->service->edit(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+                            $this->show_modal = 'block';
+                            break;
+                case 'ban':$this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+                            break;
+                case 'recover':$this->service->recover(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+                            break;
+                case 'publish_date':$this->show_publish_modal = 'block';
+                                    $this->show_data1 = $this->service->edit_publish(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
+                                    break;
+            }
         }
+
+        if (isset($_POST['process1'])) {
+            if ($_POST['process1'] == 'apply') {
+                $this->service->apply(isset($_POST) ? $_POST : null);
+            } else {
+                $this->service->apply_publish(isset($_POST) ? $_POST : null);
+            }
+        }
+        
 
         $param_s = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
         $param_orderby = (isset($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : false;
@@ -137,16 +152,18 @@ class Gm_Property_Menu_Table extends Gm_Abstract_Menu_Table
             return <<<EOM
                 <div>{$item->get_ID()}</div>
                 <div class="gm-admin-button-wrap">
-                <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
-                <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='ban';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
+                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
+                    <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='ban';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
+                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='publish_date';document.getElementsByName('execute_id')[0].value='{$item->get_property_id()}'; document.getElementById('gm-admin-form').submit();">PUBLISH</button>
                 </div>
                 EOM;
         } else {
             return <<<EOM
                 <div>{$item->get_ID()}</div>
                 <div class="gm-admin-button-wrap">
-                <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
-                <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='recover';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">RECOVER</button>
+                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
+                    <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='recover';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">RECOVER</button>
+                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='publish_date';document.getElementsByName('execute_id')[0].value='{$item->get_property_id()}'; document.getElementById('gm-admin-form').submit();">PUBLISH</button>
                 </div>
                 EOM;
         }

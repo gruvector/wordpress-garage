@@ -19,18 +19,21 @@ if (! defined('ABSPATH')) {
         <div class="gm-forget-input">
             <label class="width_100" for="user_id">メールアドレス<br>
                 <input 
-                    class="gm-input" 
+                    class="gm-input w-300" 
                     type="text" 
                     name="user_id" 
                     value="<?php echo $this->get_input_param('user_id') ?>" 
-                    placeholder="ユーザーID"
                     data-gm-required 
                 />
             </label>
+            <div class="forget_comment">
+                パスワード再設定用のURLをメールで送信致しますので以下を入力してください。<br />
+                メールアドレスは登録してあるメールアドレスを入力してください。
+            </div>
         </div>
 
         <div class="gm-input-button-wrap">
-            <input type="submit" class="gm-input-button" value="リクエスト送信">
+            <input type="submit" class="gm-input-button" value="送信">
         </div>
     </form>
 </div>

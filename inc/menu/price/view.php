@@ -122,7 +122,7 @@ if (! defined('ABSPATH')) {
 <script>
 
     // function show_date() {
-        document.getElementById("campaign_from").value("<?= isset($this->show_data[0]->campaign_from) ? $this->show_data[0]->campaign_from : null ?>");
+        // document.getElementById("campaign_from").value("<?= isset($this->show_data[0]->campaign_from) ? $this->show_data[0]->campaign_from : null ?>");
     //     console.log('ffef');
     // }
 

@@ -1,9 +1,12 @@
 <?php
 
 require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_common/abstarct-template-mypage-controller.php';
+
+
 class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 {
 
+    
     public $edit_data_from_db = [];
     public $param_id = "";
     public $param_type = "";
@@ -26,28 +29,32 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
     public function action()
     {
         // session_start();
-        if (isset($_GET['id'])) {
-            $this->param_id = sanitize_key($_GET['id']);
-        }
 
         if (isset($_GET['type'])) {
             $this->param_type = sanitize_key($_GET['type']);
+            if ($this->param_type == "edit") {
+                $this->param_id = base64_decode($_GET['id']);
+            }
+
+            // var_dump($this->param_id);
         }       
+
         
         // -------------------
         // メイン処理
         // -------------------
 
         if ($this->param_type == "add") {} else {
-            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE property_id = $this->param_id");
+            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE property_id={$this->param_id}");
             if($this->edit_data_from_db == []) {
-                $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property_tmp WHERE property_id = $this->param_id");
+                $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property_tmp WHERE property_id={$this->param_id}");
                 $this->bool_tmp = true;
             }
         }
 
         if (isset($_POST['process']) && $_POST['process'] == 'regist') {
-
+            // $property_id_mypage = "property_id_mypage";
+            // $this->param_id = $_COOKIE[$property_id_mypage];
             // File upload start
             // if($_FILES["imageA"]["name"] || $_FILES["imageB"]["name"] || $_FILES["imageC"]["name"] || $_FILES["imageD"]["name"] || $_FILES["imageE"]["name"]) {
                 $extensionA = pathinfo($_FILES["imageA"]["name"], PATHINFO_EXTENSION);
@@ -55,6 +62,11 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $extensionC = pathinfo($_FILES["imageC"]["name"], PATHINFO_EXTENSION);
                 $extensionD = pathinfo($_FILES["imageD"]["name"], PATHINFO_EXTENSION);
                 $extensionE = pathinfo($_FILES["imageE"]["name"], PATHINFO_EXTENSION);
+                $extensionF = pathinfo($_FILES["imageF"]["name"], PATHINFO_EXTENSION);
+                $extensionG = pathinfo($_FILES["imageG"]["name"], PATHINFO_EXTENSION);
+                $extensionH = pathinfo($_FILES["imageH"]["name"], PATHINFO_EXTENSION);
+                $extensionI = pathinfo($_FILES["imageI"]["name"], PATHINFO_EXTENSION);
+                $extensionJ = pathinfo($_FILES["imageJ"]["name"], PATHINFO_EXTENSION);
 
                 if ($this->param_type == "add") {
                     $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
@@ -68,6 +80,11 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $fileNameC = base64_encode($_FILES["imageC"]["name"]).'.'.$extensionC;
                 $fileNameD = base64_encode($_FILES["imageD"]["name"]).'.'.$extensionD;
                 $fileNameE = base64_encode($_FILES["imageE"]["name"]).'.'.$extensionE;
+                $fileNameF = base64_encode($_FILES["imageF"]["name"]).'.'.$extensionF;
+                $fileNameG = base64_encode($_FILES["imageG"]["name"]).'.'.$extensionG;
+                $fileNameH = base64_encode($_FILES["imageH"]["name"]).'.'.$extensionH;
+                $fileNameI = base64_encode($_FILES["imageI"]["name"]).'.'.$extensionI;
+                $fileNameJ = base64_encode($_FILES["imageJ"]["name"]).'.'.$extensionJ;
 
                 $upload_dir_url = $_SERVER['DOCUMENT_ROOT'];
                 $new_upload_dir = $upload_dir_url.'/wp-content/uploads/gm-property/'.$property_id_1.'/'; // Create a new directory with the current date
@@ -94,22 +111,51 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 move_uploaded_file($_FILES["imageE"]['tmp_name'], $imageE_path);
                 update_option('imageE_path', $imageE_path);
 
+                $imageF_path = $new_upload_dir. $fileNameF; // Create the image path
+                move_uploaded_file($_FILES["imageF"]['tmp_name'], $imageF_path);
+                update_option('imageF_path', $imageF_path);
+
+                $imageG_path = $new_upload_dir. $fileNameG; // Create the image path
+                move_uploaded_file($_FILES["imageG"]['tmp_name'], $imageG_path);
+                update_option('imageG_path', $imageG_path);
+
+                $imageH_path = $new_upload_dir. $fileNameH; // Create the image path
+                move_uploaded_file($_FILES["imageH"]['tmp_name'], $imageH_path);
+                update_option('imageH_path', $imageH_path);
+
+                $imageI_path = $new_upload_dir. $fileNameI; // Create the image path
+                move_uploaded_file($_FILES["imageI"]['tmp_name'], $imageI_path);
+                update_option('imageI_path', $imageI_path);
+
+                $imageJ_path = $new_upload_dir. $fileNameJ; // Create the image path
+                move_uploaded_file($_FILES["imageJ"]['tmp_name'], $imageJ_path);
+                update_option('imageJ_path', $imageJ_path);
+
                 // var_dump($imageA_path);
                 // File Upload End
-                $img_path_array = explode(',', $this->edit_data_from_db[0]->imgs);
+                // $img_path_array = explode(',', $this->edit_data_from_db[0]->imgs);
                 // var_dump($img_path_array);
-                // $hidden_photoA = $_FILES["imageA"]["name"] != "" ? '1' : $_POST['hidden_photoA'];
-                // $hidden_photoB = $_FILES["imageB"]["name"] != "" ? '2' : $_POST['hidden_photoB'];
-                // $hidden_photoC = $_FILES["imageC"]["name"] != "" ? '3' : $_POST['hidden_photoC'];
-                // $hidden_photoD = $_FILES["imageD"]["name"] != "" ? '4' : $_POST['hidden_photoD'];
-                // $hidden_photoE = $_FILES["imageE"]["name"] != "" ? '5' : $_POST['hidden_photoE'];
-
+                $hidden_photoA = $fileNameA != "." ? $fileNameA : $_POST['hidden_photoA'];
+                $hidden_photoB = $fileNameB != "." ? $fileNameB : $_POST['hidden_photoB'];
+                $hidden_photoC = $fileNameC != "." ? $fileNameC : $_POST['hidden_photoC'];
+                $hidden_photoD = $fileNameD != "." ? $fileNameD : $_POST['hidden_photoD'];
+                $hidden_photoE = $fileNameE != "." ? $fileNameE : $_POST['hidden_photoE'];
+                $hidden_photoF = $fileNameF != "." ? $fileNameF : $_POST['hidden_photoF'];
+                $hidden_photoG = $fileNameG != "." ? $fileNameG : $_POST['hidden_photoG'];
+                $hidden_photoH = $fileNameH != "." ? $fileNameH : $_POST['hidden_photoH'];
+                $hidden_photoI = $fileNameI != "." ? $fileNameI : $_POST['hidden_photoI'];
+                $hidden_photoJ = $fileNameJ != "." ? $fileNameJ : $_POST['hidden_photoJ'];
                 array_push($this->img_path, 
-                    $fileNameA, 
-                    $fileNameB, 
-                    $fileNameC, 
-                    $fileNameD, 
-                    $fileNameE,
+                    $hidden_photoA, 
+                    $hidden_photoB, 
+                    $hidden_photoC, 
+                    $hidden_photoD, 
+                    $hidden_photoE,
+                    $hidden_photoF, 
+                    $hidden_photoG, 
+                    $hidden_photoH, 
+                    $hidden_photoI, 
+                    $hidden_photoJ,
                 );
                 $img_path_str = implode(',', $this->img_path);
 
@@ -137,19 +183,12 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         
     }
 
-    public function getLnt($zip){
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($zip)."&sensor=false&key=AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8";
-        $result_string = file_get_contents($url);
-        $result = json_decode($result_string, true);
-        return $result['results'][0]['geometry']['location'];
-    }
-
     private function regist($params, $img_path_str)
     {
         // -----------------
         // start to get lat and long
         // -----------------
-        $result_string = $this->getLnt($params['postal_code']);
+        // $result_string = $this->getLnt($params['postal_code']);
 
         var_dump($img_path_str);
         
@@ -170,7 +209,6 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
          */
 
         
-        $format_date = str_replace('/', '-', $params['handover_date']);
 
         switch($params['min_period_unit']) {
             case '1': $add_date = '+'.$params['min_period'].' years'; break;
@@ -178,16 +216,19 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             case '3': $add_date = '+'.$params['min_period'].' days'; break;
             default: break;
         }
-        $publish_date = date("Y-m-d", strtotime($add_date, strtotime($format_date)));
+        $publish_date = date("Y/m/d", strtotime($add_date, strtotime($format_date)));
         /****
          * 
          * end to get publish_to date
          */
 
+
         if($this->param_type == "add") {
-            $property_id_tmp = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
-            $property_id = (int) $property_id_tmp + 1;
+            $property_id_tmp1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
+            $property_id_tmp2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
             
+            $property_id = (int)$property_id_tmp1 > (int)$property_id_tmp2 ? (int) $property_id_tmp1 + 1 : $property_id_tmp2+1;
+
             $this->wpdb->insert(
                 $this->wpdb->prefix.'gmt_property_tmp',
                 [
@@ -212,7 +253,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                     'fee_contract_deposit_amortization' => (int) $params['fee_contract_deposit_amortization'],
                     'fee_contract_key_money' => (int) $params['fee_contract_key_money'],
                     'fee_contract_guarantee_charge' => (int) $params['fee_contract_guarantee_charge'],
-                    'fee_contract_other' => (int) $params['fee_contract_other'],
+                    'fee_contract_other' =>  $params['fee_contract_other'],
                     'other_description' => $params['other_description'],
                     'appeal_description' => $params['appeal_description'],
                     'postal_code' => $params['postal_code'],
@@ -220,8 +261,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                     'address_2' => $params['address_2'],
                     'address_3' => $params['address_3'],
                     'address_4' => $params['address_4'],
-                    'lat' => (string) $result_string['lat'],
-                    'lng' => (string) $result_string['lng'],
+                    // 'lat' => (string) $result_string['lat'],
+                    // 'lng' => (string) $result_string['lng'],
                     'facility_ids' => $a,
                 ]
             );
@@ -250,6 +291,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 ]
             );
 
+            
+
             if($this->bool_tmp) {
                 $this->wpdb->update(
                     $this->wpdb->prefix.'gmt_property_tmp',
@@ -273,7 +316,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'fee_contract_deposit_amortization' => (int) $params['fee_contract_deposit_amortization'],
                         'fee_contract_key_money' => (int) $params['fee_contract_key_money'],
                         'fee_contract_guarantee_charge' => (int) $params['fee_contract_guarantee_charge'],
-                        'fee_contract_other' => (int) $params['fee_contract_other'],
+                        'fee_contract_other' => $params['fee_contract_other'],
                         'other_description' => $params['other_description'],
                         'appeal_description' => $params['appeal_description'],
                         'postal_code' => $params['postal_code'],
@@ -281,12 +324,12 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'address_2' => $params['address_2'],
                         'address_3' => $params['address_3'],
                         'address_4' => $params['address_4'],
-                        'lat' => (string) $result_string['lat'],
-                        'lng' => (string) $result_string['lng'],
+                        // 'lat' => (string) $result_string['lat'],
+                        // 'lng' => (string) $result_string['lng'],
                         'facility_ids' => $a,
                     ],
                     [
-                        'property_id' => $_GET['id'],
+                        'property_id' => $this->param_id,
                     ]
                 );
             } else {
@@ -312,7 +355,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'fee_contract_deposit_amortization' => (int) $params['fee_contract_deposit_amortization'],
                         'fee_contract_key_money' => (int) $params['fee_contract_key_money'],
                         'fee_contract_guarantee_charge' => (int) $params['fee_contract_guarantee_charge'],
-                        'fee_contract_other' => (int) $params['fee_contract_other'],
+                        'fee_contract_other' => $params['fee_contract_other'],
                         'other_description' => $params['other_description'],
                         'appeal_description' => $params['appeal_description'],
                         'postal_code' => $params['postal_code'],
@@ -320,12 +363,12 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'address_2' => $params['address_2'],
                         'address_3' => $params['address_3'],
                         'address_4' => $params['address_4'],
-                        'lat' => (string) $result_string['lat'],
-                        'lng' => (string) $result_string['lng'],
+                        // 'lat' => (string) $result_string['lat'],
+                        // 'lng' => (string) $result_string['lng'],
                         'facility_ids' => $a,
                     ],
                     [
-                        'property_id' => $_GET['id'],
+                        'property_id' => $this->param_id,
                     ]
                 );
             }

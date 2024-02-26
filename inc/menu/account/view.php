@@ -26,7 +26,7 @@ if (! defined('ABSPATH')) {
       <div class="modal-content">
         <div class="modal-header">
           <span class="close">&times;</span>
-          <h2>編集ウィンドウ</h2>
+          <h2>アカウント編集</h2>
         </div>
         <div class="modal-body">
           

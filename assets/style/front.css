@@ -91,6 +91,12 @@
   margin-right: 0px;
 }
 
+.gm-card-1 {
+
+  border: 1px solid black;
+  padding: 5px;
+}
+
 .gm-custom-wrap {
   display: flex;
   flex-direction: column;
@@ -307,6 +313,17 @@
   padding: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
+  background-color: orange;
+}
+
+.gm-property-list1_3 {
+  width: 330px;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  box-shadow: lightgray 5px 3px;
+  padding: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
   background-color: gray;
 }
 
@@ -450,6 +467,7 @@
 
 .property::after .icon {
   display: none;
+  color: rgba(0,0,0,0);
 }
 
 .property > .details {
@@ -499,6 +517,7 @@
 
 .property.highlight::after {
   border-top: 9px solid rgba(0,0,0,0);
+  display: none;
 }
 
 .property.highlight .details {
@@ -509,22 +528,32 @@
   background-color: rgba(0,0,0,0);
   width: 50px;
   height: 50px;
+  display: none;
 }
 
-
+.icon-text {
+  height: 5px;
+  padding-top: 5px;
+}
 /*
  * House icon colors.
  */
-.property.highlight:has(.fa-house) .icon {
-  color: var(--house-color);
+.property.highlight .icon {
+  color: rgba(0,0,0,0);
+  background-color: var(--house-color);
 }
+
 
 .property:not(.highlight):has(.fa-house) {
   background-color: var(--house-color);
+  color: white;
+  display: none;
 }
 
 .property:not(.highlight):has(.fa-house)::after {
   border-top: 9px solid var(--house-color);
+  color: white;
+  display: none;
 }
 
 .property > .details > .gm-map-item {
@@ -559,8 +588,8 @@
 
 .gm-map-favorite {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 5px;
   width: 25px;
   height: auto;
 
@@ -577,11 +606,20 @@
   font-size: 20px;
   padding: 5px;
   border-radius: 50%;
+  background-color: red;
 }
 .heart {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 15px;
+  background-color: white;
+  border: none;
+}
+
+.close {
+  position: absolute;
+  top: 18px;
+  right: 5px;
   background-color: white;
   border: none;
 }
@@ -594,6 +632,7 @@
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   column-gap: 10px ;
+  row-gap: 20px ;
   width: 100%;
   height: auto;
 }
@@ -910,7 +949,12 @@ button .fas{
 #upload-photoBC, 
 #upload-photoCC, 
 #upload-photoDC, 
-#upload-photoEC {
+#upload-photoEC,
+#upload-photoFC,
+#upload-photoGC, 
+#upload-photoHC, 
+#upload-photoIC, 
+#upload-photoJC {
   opacity: 0;
   position: absolute;
   z-index: 2;
@@ -922,3 +966,40 @@ button .fas{
 .item > .item-upload >.img-display-none {
   display: none;
 }
+
+.map-filter {
+  padding: 20px;
+}
+
+.gm-custom-wrap > .post-garage {
+  margin: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  column-gap: 20px;
+  margin-bottom: 50px;
+  margin-top: 0;
+}
+
+.post-garage-header {
+  margin: 40px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.forget_comment {
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+.w-300 {
+  width: 500px !important;
+}
+
+.no-favourite-div {
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+} 
+
+
+

@@ -25,7 +25,7 @@ if (! defined('ABSPATH')) {
       <div class="modal-content">
         <div class="modal-header">
           <span class="close">&times;</span>
-          <h2>編集ウィンドウ</h2>
+          <h2>物件編集</h2>
         </div>
         <div class="modal-body">
           
@@ -306,33 +306,76 @@ if (! defined('ABSPATH')) {
         </div>
       </div>
     </div>
+
+    <div id="myModal2" class="modal" style="display: <?= $this->show_publish_modal; ?>;">
+        <div class="modal-content">
+            <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>物件編集</h2>
+            </div>
+            <div class="modal-body">
+            
+                <form id="gm-page-form" method="POST">
+                    <input type="hidden" name="process1" value="apply_publish">
+                    <input type="hidden" name="ID2" value="<?= $this->show_data1[0]->property_id; ?>">
+                    <?php
+                        if (isset($this->show_data1[0]->publish_from) && isset($this->show_data1[0]->publish_to)) {
+                            $date1 = str_replace('-', '/', $this->show_data1[0]->publish_from);
+                            $date2 = str_replace('-', '/', $this->show_data1[0]->publish_to);
+                            $newDate1 = date("Y/m/d", strtotime($date1));
+                            $newDate2 = date("Y/m/d", strtotime($date2));
+                        }
+                    ?>
+                    <div class="calendar">
+                        <input class="gm-input" type="text" name="publish_from" value="<?= $newDate1 ?>" data-gm-required data-gm-date="yyyy/MM/dd">
+                        <input class="gm-input" type="text" name="publish_to" value="<?= $newDate2 ?>" data-gm-required data-gm-date="yyyy/MM/dd">
+                    </div>
+                    <div class="gm-input-button-wrap">
+                        <input type="submit" class="gm-input-button" value="確認">
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
   </form>
 </div>
 
 <script>
   // Get the modal
-  var modal = document.getElementById("myModal");
 
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+    var modal1 = document.getElementById("myModal");
+    var modal2 = document.getElementById('myModal2');
+    // Get the <span> element that closes the modal
+    var span1 = document.getElementsByClassName("close")[0];
+    var span2 = document.getElementsByClassName("close")[1];
 
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
+    // When the user clicks on <span> (x), close the modal
+    span1.onclick = function() {
+        modal1.style.display = "none";
     }
-  }
 
-  function account_other() {
+    span2.onclick = function() {
+        modal2.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal1) {
+        modal1.style.display = "none";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal2) {
+        modal2.style.display = "none";
+        }
+    }
+
+    function account_other() {
         document.getElementById("account_attr_other1").disabled = false;
         document.getElementById("account_attr_other1").style.backgroundColor = "#fff";
         document.getElementById("account_attr_other1").style.border = "0.5px solid lightgray";
-        
     }
 
     function account_add() {

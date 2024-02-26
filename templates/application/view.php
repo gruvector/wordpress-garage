@@ -268,7 +268,7 @@ if (! defined('ABSPATH')) {
         お申し込み後2日以内にメールが届かない場合、迷惑メールフォルダをご確認いた だくか、お手数をおかけしますが再度お申し込みをお願いいたします。
     </div>
 
-    <a href="<?= home_url('')?>" class="gm-input-button">トップページに行く >></a>
+    <a href="<?= home_url('')?>" class="gm-input-button">トップページに戻る >></a>
 <?php endif; ?>
 </div>
 
