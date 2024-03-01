@@ -63,6 +63,7 @@ if (!$_SESSION['account_id']) {
                         if($record2->property_id == $record1_1->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
                     } 
                 ?>
+                
             <form class="gm-property-list-button" method="post">
                 <?php
                     $info = base64_encode((string)$record1_1->property_id);
