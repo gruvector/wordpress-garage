@@ -170,3 +170,11 @@
     height: 100%;
     width: auto;
   }
+
+  #toplevel_page_menu_gm_account {
+    display: none;
+  }
+
+  #toplevel_page_menu_gm_property {
+    display: none;
+  }

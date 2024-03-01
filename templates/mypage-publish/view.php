@@ -16,55 +16,24 @@ if (!$_SESSION['account_id']) {
                     <th><div class="pl-3">物件番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="section_nm" disabled value="<?= $this->address[0]; ?>" disabled>
+                            <input class="gm-input" type="text" name="section_nm" value="<?= $this->property_info1->ID; ?>" disabled>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <th><div class="pl-3">リクエストタイプ</div></th>
+                    <th><div class="pl-3">名称</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address" value="<?= $this->address[1] ?>" disabled >
+                            <input class="gm-input" type="text" name="nm" value="<?= $this->property_info1->nm; ?>" disabled>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <th><div class="pl-3">お名前 <small>(必須)</small></div></th>
+                    <th><div class="pl-3">掲載希望期間<small>(必須)</small></div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="nm" data-gm-required data-gm-length="255">
+                            <input class="gm-input" type="text" name="period" data-gm-required data-gm-length="255">
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th><div class="pl-3">メールアドレス <small>(必須)</small></div></th>
-                    <td>
-                        <div>
-                            <input class="gm-input" type="text" name="email" data-gm-required data-gm-email data-gm-length="255">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th><div class="pl-3">電話番号 <small>(必須)</small></div></th>
-                    <td>
-                        <div>
-                            <input class="gm-input" type="text" name="phone" data-gm-required data-gm-phone data-gm-length="12">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th><div class="pl-3 mt-2">ご希望の連絡方法 <small>(必須)</small></div></th>
-                    <td>
-                        <input type="checkbox" name="contact_way[]" value="電話" class="ml-2 mt-2" data-gm-required>電話
-                        <input type="checkbox" name="contact_way[]" value="メール" class="ml-5" data-gm-required>メール
-                    </td>
-                </tr>
-                <tr>
-                    <th><div class="pl-3 mt-2">お問合せ内容 <small>(必須)</small></div></th>
-                    <td>
-                        <input type="checkbox" name="contact_content[]" value="借りたい" class="ml-2 mt-2" data-gm-required>借りたい
-                        <input type="checkbox" name="contact_content[]" value="内覧したい" class="ml-3" data-gm-required>内覧したい
-                        <input type="checkbox" name="contact_content[]" value="質問したい" class="ml-3" data-gm-required>質問したい
                     </td>
                 </tr>
                 <tr>

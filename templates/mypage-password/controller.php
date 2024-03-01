@@ -61,7 +61,7 @@ class Gm_Mypage_Password_Controller extends Abstract_Template_Mypage_Controller
         );
 
 
-        header('Location:/mypage/?pwd=ok');
+        header('Location:/mypage/?propertyFilter=1&pwd=ok');
         exit();
     }
 

@@ -269,7 +269,7 @@ if (! defined('ABSPATH')) {
                     <th><div>建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value="<?= $record_edit->address_4 ?>"  data-gm-length="255" data-gm-required>
+                            <input class="gm-input" type="text" name="address_4" value="<?= $record_edit->address_4 ?>"  data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -683,7 +683,7 @@ if (! defined('ABSPATH')) {
                     <th><div>建物名・部屋番号</div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="address_4" value=""  data-gm-length="255" data-gm-required>
+                            <input class="gm-input" type="text" name="address_4" value=""  data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -908,52 +908,52 @@ if (! defined('ABSPATH')) {
 
     $(document).ready(function(){
         var srcnameE = String($('#upload-imageE').attr('src'));
-        if (srcnameE[srcnameE.length - 1] === ".") {
+        if (srcnameE[srcnameE.length - 1] === "/") {
             $('#upload-image-content-divE').hide();
         }
 
         var srcnameD = String($('#upload-imageD').attr('src'));
-        if (srcnameD[srcnameD.length - 1] === ".") {
+        if (srcnameD[srcnameD.length - 1] === "/") {
             $('#upload-image-content-divD').hide();
         }
 
         var srcnameC = String($('#upload-imageC').attr('src'));
-        if (srcnameC[srcnameC.length - 1] === ".") {
+        if (srcnameC[srcnameC.length - 1] === "/") {
             $('#upload-image-content-divC').hide();
         }
 
         var srcnameB = String($('#upload-imageB').attr('src'));
-        if (srcnameB[srcnameB.length - 1] === ".") {
+        if (srcnameB[srcnameB.length - 1] === "/") {
             $('#upload-image-content-divB').hide();
         }
 
         var srcnameA = String($('#upload-imageA').attr('src'));
-        if (srcnameA[srcnameA.length - 1] === ".") {
+        if (srcnameA[srcnameA.length - 1] === "/") {
             $('#upload-image-content-divA').hide();
         }
 
         var srcnameF = String($('#upload-imageF').attr('src'));
-        if (srcnameF[srcnameF.length - 1] === ".") {
+        if (srcnameF[srcnameF.length - 1] === "/") {
             $('#upload-image-content-divF').hide();
         }
 
         var srcnameG = String($('#upload-imageG').attr('src'));
-        if (srcnameG[srcnameG.length - 1] === ".") {
+        if (srcnameG[srcnameG.length - 1] === "/") {
             $('#upload-image-content-divG').hide();
         }
 
         var srcnameH = String($('#upload-imageH').attr('src'));
-        if (srcnameH[srcnameH.length - 1] === ".") {
+        if (srcnameH[srcnameH.length - 1] === "/" ) {
             $('#upload-image-content-divH').hide();
         }
 
         var srcnameI = String($('#upload-imageI').attr('src'));
-        if (srcnameI[srcnameI.length - 1] === ".") {
+        if (srcnameI[srcnameI.length - 1] === "/") {
             $('#upload-image-content-divI').hide();
         }
 
         var srcnameJ = String($('#upload-imageJ').attr('src'));
-        if (srcnameJ[srcnameJ.length - 1] === "." || "") {
+        if (srcnameJ[srcnameJ.length - 1] === "/") {
             $('#upload-image-content-divJ').hide();
         }
     })

@@ -14,10 +14,13 @@ if (! defined('ABSPATH')) {
                     if ($this->favorite_list) {
                         foreach ($this->favorite_list as $i => $record) { 
                         $img = explode(',', $record[0]->imgs);
-                    
-                    
+                        if (count($this->favorite_list) > 2) {
+                        
                 ?>
                     <div class="carousel-item">
+                <?php } else { ?>
+                    <!-- <div class="no-carousel"> -->
+                <?php } ?>
                         <div class="col-lg-5 col-md-4 gm-card">
                             <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record[0]->property_id ?>/<?= $img[0] ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
                             <div class="gm-card-info__div">車庫名: <?php echo $record[0]->nm ?></div>
@@ -29,7 +32,9 @@ if (! defined('ABSPATH')) {
                             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
                             <button class="heart" onclick="handleFavorite('<?= $record[0]->ID ?>')"><i class="heart fa-solid fa-heart selected-heart" id="heart${property.ID}"></i></button>
                         </div>
+                        <?php if (count($this->favorite_list) > 2) { ?>
                     </div>
+                    <?php } ?>
                 <?php      
                     }
                 } else { ?>

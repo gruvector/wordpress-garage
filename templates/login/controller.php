@@ -83,7 +83,7 @@ class Gm_Login_Controller extends Abstract_Template_Controller
         // 画面遷移
         // -----------------
         // 画面遷移
-        header('Location: /mypage');
+        header('Location: /mypage/?propertyFilter=1');
         exit();
     }
 

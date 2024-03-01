@@ -35,7 +35,7 @@ final class Gm_Menu
             'アカウント管理[承認済]',
             '承認済',
             'manage_options',
-            'menu_gm_account_tmp&show_mode=9',
+            'menu_gm_account&show_mode=1',
             'Gm_Menu::show_account_tmp'
         );
 
@@ -63,7 +63,7 @@ final class Gm_Menu
             '物件管理[承認済]',
             '承認済',
             'manage_options',
-            'menu_gm_property_tmp&show_mode=9',
+            'menu_gm_property&show_mode=1',
             'Gm_Menu::show_property_tmp'
         );
 
@@ -74,7 +74,8 @@ final class Gm_Menu
             'menu_gm_account',
             'Gm_Menu::show_account',
             // 'dashicons-admin-users'
-            -1
+            null,
+            null
         );
         // add_submenu_page(
         //     'menu_gm_account',
@@ -101,7 +102,7 @@ final class Gm_Menu
             'menu_gm_property',
             'Gm_Menu::show_property',
             // 'dashicons-admin-users',
-            -1
+            null,null
         );
         // add_submenu_page(
         //     'menu_gm_property',

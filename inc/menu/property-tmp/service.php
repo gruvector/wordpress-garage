@@ -6,7 +6,10 @@ if (!defined('ABSPATH')) {
 require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/inc/menu/abstract-menu-service.php';
 class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 {
+    public $lat;
+    public $lng;
     public $show_mode;
+    public $name;
 
     public function __construct()
     {
@@ -37,8 +40,8 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
             }
             $record = $records[0];
             if (isset($_COOKIE['latitude']) && isset($_COOKIE['longitude'])) {
-                $lat = $_COOKIE['latitude'];
-                $lng = $_COOKIE['longitude'];
+                $this->lat = $_COOKIE['latitude'];
+                $this->lng = $_COOKIE['longitude'];
             }
             $wpdb->insert(
                 $wpdb->prefix.'gmt_property',
@@ -69,8 +72,8 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                     'other_description' => $record->other_description,
                     'appeal_description' => $record->appeal_description,
                     'postal_code' => $record->postal_code,
-                    'lat' => $lat,
-                    'lng' => $lng,
+                    'lat' => $this->lat,
+                    'lng' => $this->lng,
                     'address_1' => $record->address_1,
                     'address_2' => $record->address_2,
                     'address_3' => $record->address_3,
@@ -100,8 +103,9 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 
     public function deny($ID)
     {
+        
         if(isset($_COOKIE['userInput'])) {
-            $name = $_COOKIE['userInput'];
+            $this->name = $_COOKIE['userInput'];
             // echo $name;  
         }
         if (empty($ID)) {
@@ -112,7 +116,10 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 
         $wpdb->update(
             $wpdb->prefix . 'gmt_property_tmp',
-            ['remand_flg' => 1, 'remand_comment' => $name],
+            [
+                'remand_flg' => 1,
+                'remand_comment' => $this->name
+            ],
             ['ID' => $ID],
         );
 

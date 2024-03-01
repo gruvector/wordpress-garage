@@ -39,16 +39,21 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             // var_dump($this->param_id);
         }       
 
+        $accountid = $_SESSION['account_id'];
+
         
         // -------------------
         // メイン処理
         // -------------------
 
         if ($this->param_type == "add") {} else {
-            $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE property_id={$this->param_id}");
+            $this->edit_data_from_db = $this->wpdb->get_results($this->wpdb->prepare("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE property_id=%d AND account_id=%d", $this->param_id, $accountid));
             if($this->edit_data_from_db == []) {
-                $this->edit_data_from_db = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property_tmp WHERE property_id={$this->param_id}");
+                $this->edit_data_from_db = $this->wpdb->get_results($this->wpdb->prepare("SELECT * FROM {$this->wpdb->prefix}gmt_property_tmp WHERE property_id=%d AND account_id=%d", $this->param_id, $accountid));
                 $this->bool_tmp = true;
+                if ($this->edit_data_from_db == []) {
+                    header('Location:/mypage');
+                }
             }
         }
 
@@ -373,7 +378,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 );
             }
         }
-        header('Location: /mypage');
+        header('Location: /mypage/?propertyFilter=1');
         exit();
     }
 

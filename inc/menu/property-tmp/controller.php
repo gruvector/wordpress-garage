@@ -141,7 +141,7 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
         if ($item->get_remand_flg() == "0") {
             return <<<EOM
             <div>{$item->get_ID()}</div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8&libraries=places&sensor=false"></script>
+            // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8&libraries=places&sensor=false"></script>
             <div class="gm-admin-button-wrap">
             <button type="button" class="gm-admin-button-apply" onClick="getLatLng(); document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
             <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
@@ -153,7 +153,7 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
                     var address1 = '{$item->get_address_1()}';
                     var address2 = '{$item->get_address_2()}';
                     var address3 = '{$item->get_address_3()}';
-                    var address4 = {$item->get_address_4()};
+                    var address4 = '{$item->get_address_4()}';
                     geocoder.geocode({ 'address': '〒'+postal_code+' '+address1+address2+address3+address4 }, function (results, status) {  
                         if (status == google.maps.GeocoderStatus.OK) {  
                             document.cookie = "latitude="+results[0].geometry.location.lat()+";";

@@ -30,8 +30,8 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
         $account = $this->wpdb->get_results("SELECT ID  FROM {$this->wpdb->prefix}gmt_account WHERE del_flg = '0'");
         $wpgomap1 = $this->wpdb->get_results("SELECT ID, nm, imgs, lat, lng, fee_monthly_rent, facility_ids, property_id, account_id  FROM {$this->wpdb->prefix}gmt_property WHERE status1 = 1");
         // var_dump($wpgomap1);
-        $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority");
-        $this->recentList = $this->wpdb->get_results("SELECT *  FROM {$this->wpdb->prefix}gmt_property WHERE status1 = 1 AND availability_id = 3");
+        $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority")  ;
+        $this->recentList = $this->wpdb->get_results($this->wpdb->prepare("SELECT *  FROM {$this->wpdb->prefix}gmt_property WHERE status1 = 1 AND availability_id = %d", 3));
         
 
         function stringToArray($string) {

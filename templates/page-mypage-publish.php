@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <?php
-require_once locate_template('templates/pubprirequest/controller.php');
-new Gm_PubPriRequest_Controller();
+require_once locate_template('templates/mypage-publish/controller.php');
+new Gm_MypagePublish_Controller();
 ?>
 

@@ -43,19 +43,20 @@ if (!$_SESSION['account_id']) {
             foreach ($this->records1_1 as $i => $record1_1) { $real_i = $i+1;
                 if($record1_1->status1 == "1") {
                 if ($today >= new DateTime($record1_1->publish_from) && $today <= new DateTime($record1_1->publish_to)) {
+                    $hiretype = "公開済み";
             ?>
                     <div class="gm-property-list1_1">
             <?php
-                } else {
+                } else {  $hiretype = "非公開";
             ?>
                     <div class="gm-property-list1_3">
             <?php } ?>
-            <?php } elseif ($record1_1->status1 == "9") { ?>
+            <?php } elseif ($record1_1->status1 == "9") { $hiretype = "削除";?>
             <div class="gm-property-list1_2">
             <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_1->nm ?></div>
                 物件番号: <?= $record1_1->property_id ?> <br>
-                掲載状況: <?php if($record1_1->status1 == "1") {echo "公開済";} else {echo "非公開";}?> <br>
+                掲載状況: <?= $hiretype ?> <br>
                 区画名  : <?= $record1_1->section_nm ?> <br>
                 掲載期間:<?php  
                     foreach ($this->records2 as $i => $record2) {
@@ -67,12 +68,13 @@ if (!$_SESSION['account_id']) {
                     $info = base64_encode((string)$record1_1->property_id);
                     $param = array('type'=>'edit', 'id'=>$info);
                     $link = add_query_arg($param, home_url('mypage-property'));
+                    $param1 = array('id'=>$info);
+                    $link1 = add_query_arg($param1, home_url('mypage-publish'));
                 ?>
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
-                <input type="hidden" name="public_private" value="<?= $record1_1->status1 == '9' ? "public" : "private" ?>">
                 <input type="hidden" name="property_id_num" value="<?= $record1_1->property_id ?>">
-                <button class="gm-property-list-private_publicbutton" type="submit"><?= $record1_1->status1 == '9' ? ">>公開申請" : ">>非公開" ?></button>
+                <a class="gm-property-list-private_publicbutton" href="<?= esc_url($link1) ?>"><?= $record1_1->status1 == '9' ? ">>公開申請" : ">>非公開" ?></a>
 
             </form>
             </div> 
@@ -82,9 +84,9 @@ if (!$_SESSION['account_id']) {
 
         <?php  
             foreach ($this->records1_2 as $i => $record1_2) {?>
-            <?php if($record1_2->remand_flg == "1") { $status = "否認"; $comment="コメント: ".$record1_2->remand_comment; ?>
+            <?php if($record1_2->remand_flg == "1") { $status = "承認待ち"; ?>
             <div class="gm-property-list2_1">
-            <?php } else { $status = "申請中"; $comment="";?>
+            <?php } else { $status = "承認済み"; $comment="";?>
             <div class="gm-property-list2_2">
             <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_2->nm ?></div>
@@ -96,18 +98,18 @@ if (!$_SESSION['account_id']) {
                         if($record2->property_id == $record1_2->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
                     } 
                 ?> <br />
-                <?= $comment ?>
             <form class="gm-property-list-button" method="post">
                 <?php
                     $info = base64_encode((string)$record1_2->property_id);
                     $param = array('type'=>'edit', 'id'=>$info);
                     $link = add_query_arg($param, home_url('mypage-property'));
+                    $param1 = array('id'=>$info);
+                    $link1 = add_query_arg($param1, home_url('mypage-publish'));
                 ?>
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
                 <input type="hidden" name="property_id_num" value="<?= $record1_2->property_id ?>">
-                <input type="hidden" name="req_public" value="<?= $record1_2->remand_flg==1?"apply":"deny" ?>">
-                <button class="gm-property-list-private_publicbutton" type="submit">公開申請</button>
+                <a class="gm-property-list-private_publicbutton" href="<?= esc_url($link1) ?>">>>公開申請</a>
 
             </form>
             </div> 

@@ -26,22 +26,6 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            if ($_POST['public_private'] == "public" && isset($_POST['public_private'])) {
-                $property_idnum = $_POST['property_id_num'];
-                header('Location:/pubprirequest/?req=public&id='.$property_idnum);
-            };
-            if ($_POST['public_private'] == "private" && isset($_POST['public_private'])) {
-                $property_idnum = $_POST['property_id_num'];
-                header('Location:/pubprirequest/?req=private&id='.$property_idnum);
-            };
-            if ($_POST['req_public'] == "apply" && isset($_POST['req_public'])) {
-                $property_idnum = $_POST['property_id_num'];
-                header('Location:/pubprirequest/?req=apply&id='.$property_idnum);
-            };
-            if ($_POST['req_public'] == "deny" && isset($_POST['req_public'])) {
-                $property_idnum = $_POST['property_id_num'];
-                header('Location:/pubprirequest/?req=deny&id='.$property_idnum);
-            };
         }
         
 
@@ -56,7 +40,7 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
             case "6" : $this->records1_1 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, status1, property_id  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id AND status1 = '9'");$this->req_type=6;break;
 
         }} else {
-            $this->records1_1 = $this->wpdb->get_results( "SELECT ID, nm, status1, section_nm, property_id  FROM {$this->wpdb->prefix}gmt_property WHERE account_id = $account_id ");
+            $this->records1_1 = $this->wpdb->get_results( "SELECT {$this->wpdb->prefix}gmt_property.*,{$this->wpdb->prefix}gmt_property_publish.* FROM {$this->wpdb->prefix}gmt_property JOIN {$this->wpdb->prefix}gmt_property_publish ON {$this->wpdb->prefix}gmt_property.property_id = {$this->wpdb->prefix}gmt_property_publish.property_id WHERE account_id = $account_id");
             $this->records1_2 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, property_id, remand_flg, remand_comment  FROM {$this->wpdb->prefix}gmt_property_tmp WHERE account_id = $account_id");
         }
         $this->records2 = $this->wpdb->get_results( "SELECT * FROM {$this->wpdb->prefix}gmt_property_publish");

@@ -385,6 +385,7 @@
   border-radius: 5px;
   font-weight: bold;
   border: none;
+  text-align: center;
 }
 
 #mySidenav a {
@@ -881,6 +882,7 @@ button .fas{
 /* bootstrap mod addons */
 .w-90 {
   width: 90%;
+  display: flex;
 }
 
 .col-5,
@@ -1001,5 +1003,8 @@ button .fas{
     text-align: center;
 } 
 
+.no-carousel {
+  display: flex;
 
+}
 

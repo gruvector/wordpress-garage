@@ -50,7 +50,8 @@ if (!defined('ABSPATH')) {
                 }
             }
             let link = "<?= home_url('/')?>";
-            if (filterList == []) {
+            console.log(filterList);
+            if (filterList.length == 0) {
                 window.location.assign(link);
             } else {
                 window.location.assign(link+"/?filterList="+filterList.toString());
