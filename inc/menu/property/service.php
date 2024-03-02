@@ -185,7 +185,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
             $sql_order = $order;
         }
 
-        $add_cond .= ' AND property.status1 = ' . (($this->show_mode == '9') ? '0' : '1');
+        $add_cond .= ' AND property.status1 = ' . (($this->show_mode == '9') ? '9' : '1');
 
         global $wpdb;
         $sql =

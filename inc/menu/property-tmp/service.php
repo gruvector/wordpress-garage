@@ -103,10 +103,10 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 
     public function deny($ID)
     {
-        
+        $reason = "";
         if(isset($_COOKIE['userInput'])) {
-            $this->name = $_COOKIE['userInput'];
-            // echo $name;  
+            $reason = $_COOKIE['userInput'];
+            echo $reason;  
         }
         if (empty($ID)) {
             return;
@@ -118,12 +118,16 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
             $wpdb->prefix . 'gmt_property_tmp',
             [
                 'remand_flg' => 1,
-                'remand_comment' => $this->name
+                'remand_comment' => $reason
             ],
             ['ID' => $ID],
         );
 
+        setcookie("userInput", "", time() - 3600); 
+
     }
+
+    
 
     // -----------------------------------------------
     // 参照系

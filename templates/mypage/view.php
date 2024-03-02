@@ -5,6 +5,10 @@ if (! defined('ABSPATH')) {
 if (!$_SESSION['account_id']) {  
     exit; // header("Location: login.php"); would also be an option 
 } 
+
+if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_account WHERE ID = {$_SESSION['account_id']}")[0]->del_flg == "1") {
+    header('Location:/');
+}
 ?>
 <style>
 .gm-mypage-filter-raido-wrap{
@@ -20,13 +24,12 @@ if (!$_SESSION['account_id']) {
         <a href="<?= home_url('mypage-password') ?>" id="password">パスワード変更</a>
     </div>
     <h2>登録済みの物件一覧</h2>
-    
     <form class="gm-mypage-filter-raido-wrap" method="get" id="radio_form">
         <label><input type="radio" name="propertyFilter" value="1" checked>全て</label>
         <label><input type="radio" name="propertyFilter" value="2">公開済み</label>
         <label><input type="radio" name="propertyFilter" value="3">承認済み</label>
         <label><input type="radio" name="propertyFilter" value="4">承認待ち</label>
-        <label><input type="radio" name="propertyFilter" value="5">非公開</label>
+        <label><input type="radio" name="propertyFilter" value="5">差戻</label>
         <label><input type="radio" name="propertyFilter" value="6">削除</label>
         <input type="submit" class="submit_hidden" />
     </form>
@@ -47,7 +50,7 @@ if (!$_SESSION['account_id']) {
             ?>
                     <div class="gm-property-list1_1">
             <?php
-                } else {  $hiretype = "非公開";
+                } else {  $hiretype = "承認済み";
             ?>
                     <div class="gm-property-list1_3">
             <?php } ?>
@@ -63,10 +66,10 @@ if (!$_SESSION['account_id']) {
                         if($record2->property_id == $record1_1->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
                     } 
                 ?>
-                
+
             <form class="gm-property-list-button" method="post">
                 <?php
-                    $info = base64_encode((string)$record1_1->property_id);
+                    $info = $record1_1->property_id;
                     $param = array('type'=>'edit', 'id'=>$info);
                     $link = add_query_arg($param, home_url('mypage-property'));
                     $param1 = array('id'=>$info);
@@ -75,7 +78,7 @@ if (!$_SESSION['account_id']) {
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
                 <input type="hidden" name="property_id_num" value="<?= $record1_1->property_id ?>">
-                <a class="gm-property-list-private_publicbutton" href="<?= esc_url($link1) ?>"><?= $record1_1->status1 == '9' ? ">>公開申請" : ">>非公開" ?></a>
+                <a class="gm-property-list-private_publicbutton" href="<?= esc_url($link1) ?>">>>公開申請</a>
 
             </form>
             </div> 
@@ -85,9 +88,9 @@ if (!$_SESSION['account_id']) {
 
         <?php  
             foreach ($this->records1_2 as $i => $record1_2) {?>
-            <?php if($record1_2->remand_flg == "1") { $status = "承認待ち"; ?>
+            <?php if($record1_2->remand_flg == "1") { $status = "差戻"; $comment=""?>
             <div class="gm-property-list2_1">
-            <?php } else { $status = "承認済み"; $comment="";?>
+            <?php } else { $status = "承認待ち"; $comment="display_button";?>
             <div class="gm-property-list2_2">
             <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_2->nm ?></div>
@@ -96,12 +99,12 @@ if (!$_SESSION['account_id']) {
                 区画名  : <?= $record1_2->section_nm ?> <br>
                 掲載期間: <?php  
                     foreach ($this->records2 as $i => $record2) {
-                        if($record2->property_id == $record1_2->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
+                        if($record2->property_id == $record1_2->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ "; }
                     } 
                 ?> <br />
             <form class="gm-property-list-button" method="post">
                 <?php
-                    $info = base64_encode((string)$record1_2->property_id);
+                    $info = $record1_2->property_id;
                     $param = array('type'=>'edit', 'id'=>$info);
                     $link = add_query_arg($param, home_url('mypage-property'));
                     $param1 = array('id'=>$info);
@@ -110,7 +113,7 @@ if (!$_SESSION['account_id']) {
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
                 <input type="hidden" name="property_id_num" value="<?= $record1_2->property_id ?>">
-                <a class="gm-property-list-private_publicbutton" href="<?= esc_url($link1) ?>">>>公開申請</a>
+                <a class="gm-property-list-private_publicbutton <?= $comment ?>" href="<?= esc_url($link1) ?>">>>公開申請</a>
 
             </form>
             </div> 

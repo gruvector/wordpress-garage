@@ -201,7 +201,7 @@ if (! defined('ABSPATH')) {
 
     function confirmData() {
         var txt;
-        if (confirm("本気ですか？")) {
+        if (confirm("変更しますがよろしいですか？")) {
             
         } else {
             return

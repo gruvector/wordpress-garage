@@ -199,7 +199,7 @@ if (! defined('ABSPATH')) {
                             <?php
                             foreach ($this->availability_records as $i => $record) {
                                 $checked = '';
-                                if ($this->get_input_param('availability_id') == $record->ID || (empty($this->get_input_param('availability_id')) && $i == 0)){
+                                if ( $record_edit->availability_id == $record->ID || (empty($this->get_input_param('availability_id')) && $i == 0)){
                                     $checked = 'checked';
                                 }
                                 echo '<label><input type="radio" name="availability_id" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
@@ -614,7 +614,9 @@ if (! defined('ABSPATH')) {
                             <?php
                             foreach ($this->availability_records as $i => $record) {
                                 $checked = '';
-                                if ($this->get_input_param('availability_id') == $record->ID || (empty($this->get_input_param('availability_id')) && $i == 0)){
+                                
+                                if ($this->get_input_param('availability_id') == $record->ID ) {
+                                    
                                     $checked = 'checked';
                                 }
                                 echo '<label><input type="radio" name="availability_id" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
@@ -981,6 +983,7 @@ if (! defined('ABSPATH')) {
         $('.inputA').replaceWith($('.inputA').clone());
         $('.upload-contentA').hide();
         $('.upload-wrapA').show();
+        $('[name="hidden_photoA"]').val("");
     }
 
     function readURLB(input) {
@@ -1005,6 +1008,7 @@ if (! defined('ABSPATH')) {
         $('.inputB').replaceWith($('.inputB').clone());
         $('.upload-contentB').hide();
         $('.upload-wrapB').show();
+        $('[name="hidden_photoB"]').val("");
     }
 
 
@@ -1030,6 +1034,7 @@ if (! defined('ABSPATH')) {
         $('.inputC').replaceWith($('.inputC').clone());
         $('.upload-contentC').hide();
         $('.upload-wrapC').show();
+        $('[name="hidden_photoC"]').val("");
     }
 
     function readURLD(input) {
@@ -1054,6 +1059,7 @@ if (! defined('ABSPATH')) {
         $('.inputD').replaceWith($('.inputD').clone());
         $('.upload-contentD').hide();
         $('.upload-wrapD').show();
+        $('[name="hidden_photoD"]').val("");
     }
 
     function readURLE(input) {
@@ -1078,6 +1084,7 @@ if (! defined('ABSPATH')) {
         $('.inputF').replaceWith($('.inputF').clone());
         $('.upload-contentF').hide();
         $('.upload-wrapF').show();
+        $('[name="hidden_photoE"]').val("");
     }
 
     function readURLF(input) {
@@ -1102,6 +1109,7 @@ if (! defined('ABSPATH')) {
         $('.inputF').replaceWith($('.inputF').clone());
         $('.upload-contentF').hide();
         $('.upload-wrapF').show();
+        $('[name="hidden_photoF"]').val("");
     }
 
     function readURLG(input) {
@@ -1126,6 +1134,7 @@ if (! defined('ABSPATH')) {
         $('.inputG').replaceWith($('.inputG').clone());
         $('.upload-contentG').hide();
         $('.upload-wrapG').show();
+        $('[name="hidden_photoG"]').val("");
     }
 
     function readURLH(input) {
@@ -1150,6 +1159,7 @@ if (! defined('ABSPATH')) {
         $('.inputH').replaceWith($('.inputH').clone());
         $('.upload-contentH').hide();
         $('.upload-wrapH').show();
+        $('[name="hidden_photoH"]').val("");
     }
 
     function readURLI(input) {
@@ -1174,6 +1184,7 @@ if (! defined('ABSPATH')) {
         $('.inputI').replaceWith($('.inputI').clone());
         $('.upload-contentI').hide();
         $('.upload-wrapI').show();
+        $('[name="hidden_photoI"]').val("");
     }
 
     function readURLJ(input) {
@@ -1198,6 +1209,7 @@ if (! defined('ABSPATH')) {
         $('.inputJ').replaceWith($('.inputJ').clone());
         $('.upload-contentJ').hide();
         $('.upload-wrapJ').show();
+        $('[name="hidden_photoJ"]').val("");
     }
 
     function autoFill() {

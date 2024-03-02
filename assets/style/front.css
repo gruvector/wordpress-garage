@@ -313,7 +313,7 @@
   padding: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
-  background-color: orange;
+  background-color: gray;
 }
 
 .gm-property-list1_3 {
@@ -324,7 +324,7 @@
   padding: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
-  background-color: gray;
+  background-color: rgb(37, 207, 74);
 }
 
 .gm-property-list2_1 {
@@ -386,6 +386,7 @@
   font-weight: bold;
   border: none;
   text-align: center;
+  display: none;
 }
 
 #mySidenav a {
@@ -1008,3 +1009,6 @@ button .fas{
 
 }
 
+.display_button {
+  display: block;
+}

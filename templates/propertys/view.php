@@ -23,7 +23,7 @@ if (! defined('ABSPATH')) {
                 <div class="property-slider">
                     <?php foreach($img as $j=>$img_display){
                         var_dump($img_display);
-                        if ($img_display != ".") {
+                        if ($img_display != "") {
                             echo ( ' <div class="property-slide">
                                 <img src="'.wp_get_upload_dir()["baseurl"].'/gm-property/'.$record->property_id.'/'. $img_display.'">
                             </div>');

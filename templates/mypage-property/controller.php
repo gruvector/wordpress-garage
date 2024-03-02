@@ -28,15 +28,13 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
     public function action()
     {
-        // session_start();
+       
 
         if (isset($_GET['type'])) {
             $this->param_type = sanitize_key($_GET['type']);
             if ($this->param_type == "edit") {
-                $this->param_id = base64_decode($_GET['id']);
+                $this->param_id = $_GET['id'];
             }
-
-            // var_dump($this->param_id);
         }       
 
         $accountid = $_SESSION['account_id'];
@@ -221,7 +219,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             case '3': $add_date = '+'.$params['min_period'].' days'; break;
             default: break;
         }
-        $publish_date = date("Y/m/d", strtotime($add_date, strtotime($format_date)));
+        // $publish_date = date("Y/m/d", strtotime($add_date, strtotime($format_date)));
         /****
          * 
          * end to get publish_to date
@@ -232,6 +230,13 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
             $property_id_tmp1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
             $property_id_tmp2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
             
+            if (!(isset($property_id_tmp1))) {
+                $property_id_tmp1 = 0;
+            }
+            
+            if (!(isset($property_id_tmp2))) {
+                $property_id_tmp2 = 0;
+            }
             $property_id = (int)$property_id_tmp1 > (int)$property_id_tmp2 ? (int) $property_id_tmp1 + 1 : $property_id_tmp2+1;
 
             $this->wpdb->insert(
@@ -272,29 +277,21 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 ]
             );
 
-            $this->wpdb->insert(
-                $this->wpdb->prefix.'gmt_property_publish',
-                [
-                    'property_id' => (string)$property_id,
-                    'publish_from' => $params['handover_date'],
-                    'publish_to' => $publish_date
-                ]
-            );
         }
 
         if ($this->param_type == "edit") {
             // var_dump($_GET['param']);
             
-            $this->wpdb->update(
-                $this->wpdb->prefix.'gmt_property_publish',
-                [
-                    'publish_from' => $params['handover_date'],
-                    'publish_to' => $publish_date
-                ],
-                [
-                    'property_id' => $this->param_id
-                ]
-            );
+            // $this->wpdb->update(
+            //     $this->wpdb->prefix.'gmt_property_publish',
+            //     [
+            //         'publish_from' => $params['handover_date'],
+            //         'publish_to' => $publish_date
+            //     ],
+            //     [
+            //         'property_id' => $this->param_id
+            //     ]
+            // );
 
             
 
