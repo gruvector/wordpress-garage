@@ -10,6 +10,7 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
     public $newGarageList = [];
     public $recentList = [];
     public $facility_records = [];
+    public $apikey = "";
 
     protected function setting()
     {
@@ -32,8 +33,7 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
         // var_dump($wpgomap1);
         $this->facility_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_facility order by priority")  ;
         $this->recentList = $this->wpdb->get_results($this->wpdb->prepare("SELECT *  FROM {$this->wpdb->prefix}gmt_property WHERE status1 = 1 AND availability_id = %d", 3));
-        
-
+        $this->apikey = $this->wpdb->get_results("SELECT group_map_title FROM {$this->wpdb->prefix}group_map WHERE group_map_id = 1")[0]->group_map_title;
         function stringToArray($string) {
             $c = [];
             strlen((string)$string) == 1 ?  array_push($c, $string) : $c = explode(",", (string)$string);

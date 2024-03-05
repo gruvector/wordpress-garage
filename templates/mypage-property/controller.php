@@ -193,7 +193,7 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
         // -----------------
         // $result_string = $this->getLnt($params['postal_code']);
 
-        var_dump($img_path_str);
+        // var_dump($img_path_str);
         
         // ---------------------
         // end to get lat and long

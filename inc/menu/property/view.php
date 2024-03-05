@@ -317,7 +317,8 @@ if (! defined('ABSPATH')) {
             
                 <form id="gm-page-form" method="POST">
                     <input type="hidden" name="process1" value="apply_publish">
-                    <input type="hidden" name="ID2" value="<?= $this->show_data1[0]->property_id; ?>">
+                    <input type="hidden" name="ID2" value="<?= count($this->show_data1) == 1?$this->show_data1[0]:$this->show_data1[1]; ?>">
+                    <input type="hidden" name="TYPE2" value="<?= count($this->show_data1) == 1?"insert":"update"; ?>">
                     <?php
                         if (isset($this->show_data1[0]->publish_from) && isset($this->show_data1[0]->publish_to)) {
                             $date1 = str_replace('-', '/', $this->show_data1[0]->publish_from);
@@ -327,8 +328,8 @@ if (! defined('ABSPATH')) {
                         }
                     ?>
                     <div class="calendar">
-                        <input class="gm-input" type="text" name="publish_from" value="<?= $newDate1 ?>" data-gm-required data-gm-date="yyyy/MM/dd">
-                        <input class="gm-input" type="text" name="publish_to" value="<?= $newDate2 ?>" data-gm-required data-gm-date="yyyy/MM/dd">
+                        <input class="gm-input" type="text" name="publish_from" value="<?= isset($newDate1)?$newDate1:"" ?>" data-gm-required data-gm-date="yyyy/MM/dd">
+                        <input class="gm-input" type="text" name="publish_to" value="<?= isset($newDate2)?$newDate2:"" ?>" data-gm-required data-gm-date="yyyy/MM/dd">
                     </div>
                     <div class="gm-input-button-wrap">
                         <input type="submit" class="gm-input-button" value="確認">

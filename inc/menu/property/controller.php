@@ -13,6 +13,7 @@ class Gm_Property_Menu_Controller extends Gm_Abstract_List_Menu_Controller
     public $show_publish_modal = 'none';
     public $show_data;
     public $show_data1;
+    public $publish_id;
 
     /** コンストラクタ */
     public function __construct()
@@ -118,9 +119,9 @@ class Gm_Property_Menu_Table extends Gm_Abstract_Menu_Table
             'other_description' => 'その他紹介',
             'appeal_description' => 'アピールポイント',
             'address_1' => '都道府県',
-            'address_1' => '市区町村',
-            'address_1' => '地番',
-            'address_1' => '建物名',
+            'address_2' => '市区町村',
+            'address_3' => '地番',
+            'address_4' => '建物名',
             'created_at' => '登録日時',
             'updated_at' => '更新日時',
 

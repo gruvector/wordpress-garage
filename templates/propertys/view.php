@@ -8,12 +8,12 @@ if (! defined('ABSPATH')) {
 <div class="gm-custom-wrap">
     <div class="">
         <?php foreach ($this->property_details as $i => $record) { 
-            function cube($n)
-            {
-                echo('<div class="property-slide">
-                        <img src="'.wp_get_upload_dir()["baseurl"].'/gm-property/'.$record->property_id.'/'.$n.'">
-                    </div>');
-            }
+            // function cube($n)
+            // {
+            //     echo('<div class="property-slide">
+            //             <img src="'.wp_get_upload_dir()["baseurl"].'/gm-property/'.$record->property_id.'/'.$n.'">
+            //         </div>');
+            // }
             $img = explode(',',$record->imgs);
 
             
@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
 
                 <div class="property-slider">
                     <?php foreach($img as $j=>$img_display){
-                        var_dump($img_display);
+                        // var_dump($img_display);
                         if ($img_display != "") {
                             echo ( ' <div class="property-slide">
                                 <img src="'.wp_get_upload_dir()["baseurl"].'/gm-property/'.$record->property_id.'/'. $img_display.'">
@@ -49,7 +49,7 @@ if (! defined('ABSPATH')) {
                 <div class="gm-map" id="map">
                     <script>
                         (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-                        ({key: "AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8", v: "weekly"});
+                        ({key: "<?= $this->apikey ?>", v: "weekly"});
                     </script>
                 </div>
                 <div class="gm-basic-table">
@@ -60,7 +60,7 @@ if (! defined('ABSPATH')) {
                     <div class="gm-basic-table-section1">現況</div>
                     <div class="gm-basic-table-section2"><?php if ($record->availability_id) {echo "空き予定";} else {echo "使用中";}; ?></div>
                     <div class="gm-basic-table-section1">使用開始可能日</div>
-                    <div class="gm-basic-table-section2"><?=$this->property_publish[0]->publish_from?></div>
+                    <div class="gm-basic-table-section2"><?= $this->property_publish[0]->publish_from?></div>
                     <div class="gm-basic-table-section1">最低契約期間</div>
                     <div class="gm-basic-table-section2"><?= $record->min_period ?></div>
                     <div class="gm-basic-table-section1">サイズ</div>
@@ -71,7 +71,16 @@ if (! defined('ABSPATH')) {
             </div>
             <div class="gm-character-table">
                 <div class="gm-basic-table-section1">特徴</div>
-                <div class="gm-basic-table-section2"><?= $record->nm ?></div>
+                <div class="gm-basic-table-section2">
+                    <?php
+                        $facility_ids = explode(',', $record->facility_ids);
+                        foreach ($this->property_special as $i => $record2) {
+                            if (in_array($record2->ID, $facility_ids)){
+                                echo $record2->nm.', ';
+                            }
+                        }
+                    ?>
+                </div>
             </div>
             <div class="gm-fee-month">
                 <div class="gm-basic-table-section1 gm-border-right">毎月支払うもの</div>
@@ -105,12 +114,12 @@ if (! defined('ABSPATH')) {
             <div class="gm-special-term">
                 <div class="gm-basic-table-section1 gm-border-right">特約事項</div>
                 <div class="gm-border-left"></div>
-                <div class="gm-basic-table-section4"></div>
+                <div class="gm-basic-table-section4"><?= $record->appeal_description ?></div>
             </div>
             <div class="gm-special-term2">
                 <div class="gm-basic-table-section1 gm-border-right">アピールポイント、他の空き区画の紹介</div>
                 <div class="gm-border-left"></div>
-                <div class="gm-basic-table-section4"></div>
+                <div class="gm-basic-table-section4"><?= $record->other_description ?></div>
             </div>
             <div class="gm-input-button-wrap">
                 <a class="gm-input-button" href="<?= home_url('contact-property').'?id='.$record->ID?>">お問い合わせ</a>

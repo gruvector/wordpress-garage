@@ -37,7 +37,7 @@ if (! defined('ABSPATH')) {
                             <div class="item-upload">
                                 <div class="image-upload-wrap1 upload-wrapA">
                                     <label htmlFor="upload-photoAC" class="general__fileupload">画像を選ぶ</label>
-                                    <input type="file" name="imageA" id="upload-photoAC" class="file-upload-input inputA" onchange="readURLA(this);"  >
+                                    <input type="file" name="imageA" id="upload-photoAC" class="file-upload-input inputA" onchange="readURLA(this);">
                                     <input type="hidden" name="hidden_photoA" value="<?= isset($img_path_display[0])?$img_path_display[0]:""  ?>"> 
                                 </div>
                                 <div class="file-upload-content1 upload-contentA" id="upload-image-content-divA">
@@ -99,8 +99,6 @@ if (! defined('ABSPATH')) {
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="item-upload">
                                 <div class="image-upload-wrap1 upload-wrapF">
                                     <label htmlFor="upload-photoFC" class="general__fileupload">画像を選ぶ</label>
@@ -167,6 +165,7 @@ if (! defined('ABSPATH')) {
                                 </div>
                             </div>
                         </div>
+                        <div class="red_text">1枚以上の画像を入力してください。</div>
                             
                     </td>
                 </tr>
@@ -463,7 +462,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapA">
                                         <label htmlFor="upload-photoAC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageA" class="file-upload-input inputA" id="upload-photoAC" onchange="readURLA(this);" data-gm-required> 
+                                        <input type="file" name="imageA" class="file-upload-input1 inputA" id="upload-photoAC" onchange="readURLA(this);" required> 
                                     </div>
                                     <div class="file-upload-content1 upload-contentA img-display-none">
                                         <img class="file-upload-image1" id="upload-imageA" src="#" alt="画像" />
@@ -475,7 +474,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapC">
                                         <label htmlFor="upload-photoCC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageC" id="upload-photoCC" class="file-upload-input inputC" onchange="readURLC(this);" > 
+                                        <input type="file" name="imageC" id="upload-photoCC" class="file-upload-input1 inputC" onchange="readURLC(this);" > 
                                     </div>
                                     <div class="file-upload-content1 upload-contentC img-display-none">
                                         <img class="file-upload-image1" id="upload-imageC" src="#" alt="画像" />
@@ -487,7 +486,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapB ">
                                         <label htmlFor="upload-photoBC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageB" id="upload-photoBC" class="file-upload-input inputB" onchange="readURLB(this);" > 
+                                        <input type="file" name="imageB" id="upload-photoBC" class="file-upload-input1 inputB" onchange="readURLB(this);" > 
                                     </div>
                                     <div class="file-upload-content1 upload-contentB img-display-none">
                                         <img class="file-upload-image1" id="upload-imageB" src="#" alt="画像" />
@@ -499,7 +498,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapD">
                                         <label htmlFor="upload-photoDC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageD" id="upload-photoDC" class="file-upload-input inputD" onchange="readURLD(this);" > 
+                                        <input type="file" name="imageD" id="upload-photoDC" class="file-upload-input1 inputD" onchange="readURLD(this);" > 
                                     </div>
                                     <div class="file-upload-content1 upload-contentD img-display-none">
                                         <img class="file-upload-image1" id="upload-imageD" src="#" alt="画像" />
@@ -511,7 +510,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapE">
                                         <label htmlFor="upload-photoEC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageE" id="upload-photoEC" class="file-upload-input inputE" onchange="readURLE(this);" value="+" > 
+                                        <input type="file" name="imageE" id="upload-photoEC" class="file-upload-input1 inputE" onchange="readURLE(this);" value="+" > 
                                     </div>
                                     <div class="file-upload-content1 upload-contentE img-display-none">
                                         <img class="file-upload-image1" id="upload-imageE" src="#" alt="画像" />
@@ -524,7 +523,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapF">
                                         <label htmlFor="upload-photoFC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageF" id="upload-photoFC" class="file-upload-input inputF" onchange="readURLF(this);"  >
+                                        <input type="file" name="imageF" id="upload-photoFC" class="file-upload-input1 inputF" onchange="readURLF(this);"  >
                                     </div>
                                     <div class="file-upload-content1 upload-contentF img-display-none">
                                         <img class="file-upload-image1" id="upload-imageF" src="" alt="画像" />
@@ -536,7 +535,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapG">
                                         <label htmlFor="upload-photoGC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageG" id="upload-photoGC" class="file-upload-input inputG" onchange="readURLG(this);" value="" > 
+                                        <input type="file" name="imageG" id="upload-photoGC" class="file-upload-input1 inputG" onchange="readURLG(this);" value="" > 
                                     </div>
                                     <div class="file-upload-content1 upload-contentG img-display-none">
                                         <img class="file-upload-image1" id="upload-imageG" src="" alt="画像" />
@@ -548,7 +547,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapH">
                                         <label htmlFor="upload-photoHC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageH" id="upload-photoHC" class="file-upload-input inputH" onchange="readURLH(this);" value="" > 
+                                        <input type="file" name="imageH" id="upload-photoHC" class="file-upload-input1 inputH" onchange="readURLH(this);" value="" > 
                                     </div>
                                     <div class="file-upload-content1 upload-contentH img-display-none">
                                             <img class="file-upload-image1" id="upload-imageH" src="" alt="画像" />
@@ -560,7 +559,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapI">
                                         <label htmlFor="upload-photoIC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageI" id="upload-photoIC" class="file-upload-input inputI" onchange="readURLI(this);">
+                                        <input type="file" name="imageI" id="upload-photoIC" class="file-upload-input1 inputI" onchange="readURLI(this);">
                                     </div>
                                     <div class="file-upload-content1 upload-contentI img-display-none">
                                         <img class="file-upload-image1" id="upload-imageI" src="" alt="画像" />
@@ -572,7 +571,7 @@ if (! defined('ABSPATH')) {
                                 <div class="item-upload">
                                     <div class="image-upload-wrap1 upload-wrapJ">
                                         <label htmlFor="upload-photoJC" class="general__fileupload">画像を選ぶ</label>
-                                        <input type="file" name="imageJ" id="upload-photoJC" class="file-upload-input inputJ" onchange="readURLJ(this);"> 
+                                        <input type="file" name="imageJ" id="upload-photoJC" class="file-upload-input1 inputJ" onchange="readURLJ(this);"> 
                                     </div>
                                     <div class="file-upload-content1 upload-contentJ img-display-none">
                                         <img class="file-upload-image1" id="upload-imageJ" src="" alt="画像" />
@@ -582,6 +581,7 @@ if (! defined('ABSPATH')) {
                                     </div>
                                 </div>
                             </div>
+                            <div class="red_text" id="red_text">1枚以上の画像を入力してください。</div>
                         </div>
                     </td>
                 </tr>
@@ -615,8 +615,7 @@ if (! defined('ABSPATH')) {
                             foreach ($this->availability_records as $i => $record) {
                                 $checked = '';
                                 
-                                if ($this->get_input_param('availability_id') == $record->ID ) {
-                                    
+                                if ($record->ID == "1") {
                                     $checked = 'checked';
                                 }
                                 echo '<label><input type="radio" name="availability_id" value="' . $record->ID . '" ' . $checked . ' >' . $record->nm . '</label>';
@@ -865,7 +864,7 @@ if (! defined('ABSPATH')) {
         </div>
         <?php } ?>
         <div class="gm-input-button-wrap">
-            <input type="submit" class="gm-input-button" value="確認画面へ">
+            <input type="submit" class="gm-input-button" value="確認画面へ" onclick="checkValidation()">
         </div>
     </form>
 <?php elseif($this->mode == 'completed') :?>
@@ -958,7 +957,23 @@ if (! defined('ABSPATH')) {
         if (srcnameJ[srcnameJ.length - 1] === "/") {
             $('#upload-image-content-divJ').hide();
         }
+
     })
+
+    function checkValidation() {
+        var dump = document.getElementsByClassName("file-upload-input1");
+        for (var i = 0; i < dump.length; i++) {
+            var inputValue = dump[i].value;
+            document.getElementById("red_text").style.display = "block";
+            if (inputValue != "") {
+                dump[0].required = false;
+                break;
+            }
+        }
+
+    }
+
+    
 
     function readURLA(input) {
         if (input.files && input.files[0]) {

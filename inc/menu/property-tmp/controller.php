@@ -31,16 +31,7 @@ class Gm_Property_Tmp_Menu_Controller extends Gm_Abstract_List_Menu_Controller
                 $this->service->apply(isset($_POST['execute_id']) ? $_POST['execute_id'] : null, isset($_GET['show_mode'])?$_GET['show_mode']:"1");
             } elseif ($_POST['process'] == 'deny') {
 
-                echo("<script type='text/javascript'> 
-                        var answer = prompt('差し戻しコメントを入力してください'); 
-                        
-                        setTimeout('myFunction', 5000)
-                
-                </script>");
-                echo ("<script type='text/javascript'> document.cookie = 'userInput='+answer+';'</script>");
-                $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null);
-                
-                
+                $this->service->deny(isset($_POST['execute_id']) ? $_POST['execute_id'] : null, $_COOKIE['userInput']);
             }
         }
 
@@ -149,8 +140,8 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             <div>{$item->get_ID()}</div>
             
             <div class="gm-admin-button-wrap">
-            <button type="button" class="gm-admin-button-apply" onClick="getLatLng(); document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
-            <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
+            <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='apply';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">承認</button>
+            <button type="button" class="gm-admin-button-deny" onClick="sendComment(); document.getElementsByName('process')[0].value='deny';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">否認</button>
             <script type="text/javascript">
                 function getLatLng() {
                     console.log("efe");
@@ -168,6 +159,11 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
                             console.log("Wrong Details: ");  
                         }  
                     });  
+                }
+
+                function sendComment() {
+                    var answer = prompt('差し戻しコメントを入力してください'); 
+                    document.cookie = 'userInput='+answer+';';
                 }
             </script> 
             </div>

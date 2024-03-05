@@ -87,6 +87,19 @@ class Gm_Price_Menu_Service extends Gm_Abstract_Menu_Service
             ]
         );
 
+        $wpdb->update(
+            $wpdb->prefix.'group_map',
+            [
+                'group_map_title' => $this->data_show['apikey'],
+            ],
+            [
+                'group_map_id' => '1'
+            ]
+        );
+
+
+        
+
     }
 
 

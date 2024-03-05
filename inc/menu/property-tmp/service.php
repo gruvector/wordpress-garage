@@ -10,6 +10,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
     public $lng;
     public $show_mode;
     public $name;
+    public $apikey="";
 
     public function __construct()
     {
@@ -33,16 +34,35 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
 
         global $wpdb;
 
-        if($mode == "1"){
             $records = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_property_tmp WHERE ID = {$ID}");
+            $this->apikey = $wpdb->get_results("SELECT group_map_title FROM {$wpdb->prefix}group_map WHERE group_map_id = '1'")[0]->group_map_title;
             if (empty($records)){
                 return;
             }
             $record = $records[0];
-            if (isset($_COOKIE['latitude']) && isset($_COOKIE['longitude'])) {
-                $this->lat = $_COOKIE['latitude'];
-                $this->lng = $_COOKIE['longitude'];
-            }
+            
+            // get lat and lng from google api key
+
+                // Google Maps API Key 
+                $GOOGLE_API_KEY = (string)$this->apikey; 
+                
+                // Address from which the latitude and longitude will be retrieved 
+                $address = '〒'.$record->postal_code.' '.$record->address_1.$record->address_2.$record->address_3.$record->address_4; 
+                // var_dump($address);
+                // Formatted address 
+                $formatted_address = str_replace(' ', '+', $address); 
+                
+                // Get geo data from Google Maps API by address 
+                $geocodeFromAddr = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$formatted_address}&key={$GOOGLE_API_KEY}"); 
+                
+                // Decode JSON data returned by API 
+                $apiResponse = json_decode($geocodeFromAddr); 
+                
+                // Retrieve latitude and longitude from API data 
+                $latitude  = $apiResponse->results[0]->geometry->location->lat;  
+                $longitude = $apiResponse->results[0]->geometry->location->lng; 
+
+            //  end 
             $wpdb->insert(
                 $wpdb->prefix.'gmt_property',
                 [
@@ -72,12 +92,21 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                     'other_description' => $record->other_description,
                     'appeal_description' => $record->appeal_description,
                     'postal_code' => $record->postal_code,
-                    'lat' => $this->lat,
-                    'lng' => $this->lng,
+                    'lat' => $latitude,
+                    'lng' => $longitude,
                     'address_1' => $record->address_1,
                     'address_2' => $record->address_2,
                     'address_3' => $record->address_3,
                     'address_4' => $record->address_4,
+                ]
+            );
+
+            $wpdb->insert(
+                $wpdb->prefix.'gmt_property_publish',
+                [
+                    'property_id' => $record->property_id,
+                    'publish_from' => '',
+                    'publish_to' => '',
                 ]
             );
 
@@ -86,28 +115,21 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                 ['ID' => $ID],
                 ['%d'],
             );
-        } else {
-            $wpdb->update(
-                $wpdb->prefix . 'gmt_property_tmp',
-                ['remand_flg' => 0,],
-                ['ID' => $ID],
-                ['%d'],
-            );
-        }
+            
 
         
 
     }
 
-    
-
-    public function deny($ID)
+    public function deny($ID, $userInput)
     {
-        $reason = "";
-        if(isset($_COOKIE['userInput'])) {
-            $reason = $_COOKIE['userInput'];
-            echo $reason;  
-        }
+        // $reason = "";
+        // if(isset($_COOKIE['userInput'])) {
+        //     $reason = $_COOKIE['userInput'];
+        //     echo $reason;  
+        // }
+
+        // var_dump($userInput);
         if (empty($ID)) {
             return;
         }
@@ -118,7 +140,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
             $wpdb->prefix . 'gmt_property_tmp',
             [
                 'remand_flg' => 1,
-                'remand_comment' => $reason
+                'remand_comment' => $userInput
             ],
             ['ID' => $ID],
         );

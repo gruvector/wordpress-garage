@@ -88,7 +88,7 @@ if (!defined('ABSPATH')) {
                 }));
             d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
         })({
-            key: "AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8",
+            key: "<?= $this->apikey ?>",
             v: "weekly"
         });
     </script>
@@ -107,7 +107,7 @@ if (!defined('ABSPATH')) {
             <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
             <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
             <?php
-                $param = array('id'=>$record->ID);
+                $param = array('id'=>$record->property_id);
                 $link = add_query_arg($param, home_url('propertys'));
             ?>
             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
@@ -133,7 +133,7 @@ if (!defined('ABSPATH')) {
             <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
             <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
             <?php
-                $param = array('id'=>$record->ID);
+                $param = array('id'=>$record->property_id);
                 $link = add_query_arg($param, home_url('propertys'));
             ?>
             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
@@ -332,11 +332,11 @@ if (!defined('ABSPATH')) {
                 
                 <div class="gm-map-item">
                     <div class="gm-card-img">
-                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/${property.property_id}/${img_path[0]}" alt="img" onclick="handleDblClick(${property.ID})">
+                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/${property.property_id}/${img_path[0]}" alt="img" onclick="handleDblClick(${property.property_id})">
                     </div>
-                    <div class="gm-map-info" onclick="handleDblClick(${property.ID})">
+                    <div class="gm-map-info" onclick="handleDblClick(${property.property_id})">
                         <div class="gm-card-info__div">車庫名: ${property.nm}</div>
-                        <div class="gm-card-info__div">価格: ${property.fee_monthly_rent}</div>
+                        <div class="gm-card-info__div">価格: ${property.fee_monthly_rent} 円</div>
                     </div>
                     <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart fa-solid fa-heart border-heart" id="heart${property.ID}"></i></button>
                 </div>

@@ -118,7 +118,7 @@ class Gm_Application_Controller extends Abstract_Template_Controller
             // echo ($email_array);
         }
         if(array_search($params['email'], $email_array)) {
-            var_dump($this->double_url);
+            // var_dump($this->double_url);
             header('Location: /application?email_double=ok&v='.urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE))));
             exit();
         }
@@ -149,7 +149,7 @@ class Gm_Application_Controller extends Abstract_Template_Controller
             // echo ($email_array);
         }
         if(array_search($params['email'], $email_array)) {
-            var_dump($this->double_url);
+            // var_dump($this->double_url);
             header('Location: /application?email_double=ok&v='.urlencode(Gm_Util::encrypt(json_encode($params, JSON_UNESCAPED_UNICODE))));
             exit();
         }

@@ -26,7 +26,7 @@ if (! defined('ABSPATH')) {
                             <div class="gm-card-info__div">車庫名: <?php echo $record[0]->nm ?></div>
                             <div class="gm-card-info__div">価格: <?php echo $record[0]->fee_monthly_rent ?></div>
                             <?php
-                                $param = array('id'=>$record[0]->ID);
+                                $param = array('id'=>$record[0]->property_id);
                                 $link = add_query_arg($param, home_url('propertys'));
                             ?>
                             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>

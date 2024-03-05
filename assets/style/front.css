@@ -568,13 +568,14 @@
 
 .gm-card-img {
   width: 100%;
-  height: 200px;
+  height: 110px;
   border-radius: 30px;
 }
 
 .gm-card-img > img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
 }
@@ -661,6 +662,16 @@
 }
 
 .item > .item-upload > .image-upload-wrap1 > .file-upload-input {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.item > .item-upload > .image-upload-wrap1 > .file-upload-input1 {
   width: 100%;
   margin: 0;
   padding: 0;
@@ -975,9 +986,10 @@ button .fas{
 }
 
 .gm-custom-wrap > .post-garage {
-  margin: 20px;
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: 25% 25% 25% 25%;
+  width: 100%;
+  margin: 20px;
   column-gap: 20px;
   margin-bottom: 50px;
   margin-top: 0;
@@ -1011,4 +1023,9 @@ button .fas{
 
 .display_button {
   display: block;
+}
+
+.red_text {
+  color: red;
+  display: none;
 }

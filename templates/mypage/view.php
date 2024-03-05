@@ -46,15 +46,15 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
             foreach ($this->records1_1 as $i => $record1_1) { $real_i = $i+1;
                 if($record1_1->status1 == "1") {
                 if ($today >= new DateTime($record1_1->publish_from) && $today <= new DateTime($record1_1->publish_to)) {
-                    $hiretype = "公開済み";
+                    $hiretype = "公開済み";$comment="";
             ?>
                     <div class="gm-property-list1_1">
             <?php
-                } else {  $hiretype = "承認済み";
+                } else {  $hiretype = "承認済み"; $comment="display_button";
             ?>
                     <div class="gm-property-list1_3">
             <?php } ?>
-            <?php } elseif ($record1_1->status1 == "9") { $hiretype = "削除";?>
+            <?php } elseif ($record1_1->status1 == "9") { $hiretype = "削除";$comment="";?>
             <div class="gm-property-list1_2">
             <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_1->nm ?></div>
@@ -78,8 +78,7 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
                 <input type="hidden" name="property_id_num" value="<?= $record1_1->property_id ?>">
-                <a class="gm-property-list-private_publicbutton" href="<?= esc_url($link1) ?>">>>公開申請</a>
-
+                <a class="gm-property-list-private_publicbutton <?= $comment ?>" href="<?= esc_url($link1) ?>">>>公開申請</a>
             </form>
             </div> 
         <?php
@@ -88,32 +87,31 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
 
         <?php  
             foreach ($this->records1_2 as $i => $record1_2) {?>
-            <?php if($record1_2->remand_flg == "1") { $status = "差戻"; $comment=""?>
+            <?php if($record1_2->remand_flg == "1") { $status = "差戻"; $comment=$record1_2->remand_comment?>
             <div class="gm-property-list2_1">
-            <?php } else { $status = "承認待ち"; $comment="display_button";?>
+            <?php } else { $status = "承認待ち"; ?>
             <div class="gm-property-list2_2">
             <?php } ?>
             <div class="gm-property-list-header">ガレージ名: <?= $record1_2->nm ?></div>
                 物件番号: <?= $record1_2->property_id ?> <br>
                 掲載状況: <?= $status ?><br>
                 区画名  : <?= $record1_2->section_nm ?> <br>
-                掲載期間: <?php  
-                    foreach ($this->records2 as $i => $record2) {
-                        if($record2->property_id == $record1_2->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ "; }
-                    } 
-                ?> <br />
+                <?php if ($status == "差戻") { ?>
+                    差戻コメント: <?= $comment ?>
+                <?php } ?>
+                 <br />
             <form class="gm-property-list-button" method="post">
                 <?php
                     $info = $record1_2->property_id;
                     $param = array('type'=>'edit', 'id'=>$info);
                     $link = add_query_arg($param, home_url('mypage-property'));
-                    $param1 = array('id'=>$info);
-                    $link1 = add_query_arg($param1, home_url('mypage-publish'));
+                    // $param1 = array('id'=>$info);
+                    // $link1 = add_query_arg($param1, home_url('mypage-publish'));
                 ?>
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 
                 <input type="hidden" name="property_id_num" value="<?= $record1_2->property_id ?>">
-                <a class="gm-property-list-private_publicbutton <?= $comment ?>" href="<?= esc_url($link1) ?>">>>公開申請</a>
+                
 
             </form>
             </div> 

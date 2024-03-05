@@ -167,6 +167,11 @@ class Gm_Price_Menu_Table extends Gm_Abstract_Menu_Table
     {
         return $item->get_priority();
     }
+
+    // public function column_apikey($item)
+    // {
+    //     return $item->get_apikey();
+    // }
     
     
 }
@@ -185,6 +190,7 @@ class Gm_Price_Menu_Item extends Gm_Abstract_Menu_Item
         $this->campaign_to = $record->campaign_to;
         $this->recommend_flg = $record->recommend_flg;
         $this->priority = $record->priority;
+        // $this->apikey = $record->apikey;
     }
 
     protected $ID;
@@ -197,6 +203,8 @@ class Gm_Price_Menu_Item extends Gm_Abstract_Menu_Item
     protected $campaign_to;
     protected $recommend_flg;
     protected $priority;
+    protected $apikey;
+
 
 
 
@@ -210,6 +218,8 @@ class Gm_Price_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_campaign_to(){return $this->campaign_to;}
     public function get_recommend_flg(){return $this->recommend_flg;}
     public function get_priority(){return $this->priority;}
+    public function get_apikey(){return $this->apikey;}
+
     }
 
 class Gm_Price_Menu_Info extends Gm_Abstract_Menu_Info

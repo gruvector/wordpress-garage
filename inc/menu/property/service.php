@@ -10,6 +10,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
     public $data_show;
     public $check_box = [];
     public $data_show1;
+
     
 
     public function __construct()
@@ -51,6 +52,8 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         };
         global $wpdb;
         $record = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gmt_property_publish WHERE property_id = {$ID}");
+        array_push($record, $ID); 
+        // var_dump($record);      
         return $record;
     }
 
@@ -161,17 +164,27 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
         }
         global $wpdb;
         $this->data_show1 = $_POST;
-        // var_dump($this->data_show1);
-        $wpdb->update(
-            $wpdb->prefix . 'gmt_property_publish',
-            [
-                'publish_from' => $this->data_show1['publish_from'],
-                'publish_to' => $this->data_show1['publish_to'],
-            ],
-            [
-                'property_id' => $this->data_show1['ID2']
-            ],
-        );
+        if ($this->data_show1['TYPE2'] == "insert") {
+            $wpdb->insert(
+                $wpdb->prefix.'gmt_property_publish',
+                [
+                    'publish_from' => $this->data_show1['publish_from'],
+                    'publish_to' => $this->data_show1['publish_to'],
+                    'property_id' => $this->data_show1['ID2']
+                ]
+            );
+        } else {
+            $wpdb->update(
+                $wpdb->prefix . 'gmt_property_publish',
+                [
+                    'publish_from' => $this->data_show1['publish_from'],
+                    'publish_to' => $this->data_show1['publish_to'],
+                ],
+                [
+                    'property_id' => $this->data_show1['ID2']
+                ],
+            );
+        }
     }
 
     // -----------------------------------------------

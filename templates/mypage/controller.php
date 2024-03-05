@@ -44,6 +44,7 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
             $this->records1_2 = $this->wpdb->get_results( "SELECT ID, nm, section_nm, property_id, remand_flg, remand_comment  FROM {$this->wpdb->prefix}gmt_property_tmp WHERE account_id = $account_id");
         }
         $this->records2 = $this->wpdb->get_results( "SELECT * FROM {$this->wpdb->prefix}gmt_property_publish");
+
         
         
         
