@@ -72,28 +72,35 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $extensionJ = pathinfo($_FILES["imageJ"]["name"], PATHINFO_EXTENSION);
 
                 if ($this->param_type == "add") {
-                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
-                    $property_id_1 = (int) $property_id_tmp_1 + 1;
+                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp") == [] ? 1 :
+                                        $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;      
+                    $property_id_tmp_2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property") == [] ? 1 :
+                                        $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
+                                        
+                    $property_id_1 = $property_id_tmp_1 >= $property_id_tmp_2 ? $property_id_tmp_1+1 : $property_id_tmp_2+1;
                 } else {
                     $property_id_1 = $_POST['property_id'];
                 }
 
-                $fileNameA = base64_encode($_FILES["imageA"]["name"]).'.'.$extensionA;
-                $fileNameB = base64_encode($_FILES["imageB"]["name"]).'.'.$extensionB;
-                $fileNameC = base64_encode($_FILES["imageC"]["name"]).'.'.$extensionC;
-                $fileNameD = base64_encode($_FILES["imageD"]["name"]).'.'.$extensionD;
-                $fileNameE = base64_encode($_FILES["imageE"]["name"]).'.'.$extensionE;
-                $fileNameF = base64_encode($_FILES["imageF"]["name"]).'.'.$extensionF;
-                $fileNameG = base64_encode($_FILES["imageG"]["name"]).'.'.$extensionG;
-                $fileNameH = base64_encode($_FILES["imageH"]["name"]).'.'.$extensionH;
-                $fileNameI = base64_encode($_FILES["imageI"]["name"]).'.'.$extensionI;
-                $fileNameJ = base64_encode($_FILES["imageJ"]["name"]).'.'.$extensionJ;
+                
+
+                $fileNameA = ($_FILES["imageA"]["name"]) == "" ? "" : base64_encode($_FILES["imageA"]["name"]).'.'.$extensionA;
+                $fileNameB = ($_FILES["imageB"]["name"]) == "" ? "" : base64_encode($_FILES["imageB"]["name"]).'.'.$extensionB;
+                $fileNameC = ($_FILES["imageC"]["name"]) == "" ? "" : base64_encode($_FILES["imageC"]["name"]).'.'.$extensionC;
+                $fileNameD = ($_FILES["imageD"]["name"]) == "" ? "" : base64_encode($_FILES["imageD"]["name"]).'.'.$extensionD;
+                $fileNameE = ($_FILES["imageE"]["name"]) == "" ? "" : base64_encode($_FILES["imageE"]["name"]).'.'.$extensionE;
+                $fileNameF = ($_FILES["imageF"]["name"]) == "" ? "" : base64_encode($_FILES["imageF"]["name"]).'.'.$extensionF;
+                $fileNameG = ($_FILES["imageG"]["name"]) == "" ? "" : base64_encode($_FILES["imageG"]["name"]).'.'.$extensionG;
+                $fileNameH = ($_FILES["imageH"]["name"]) == "" ? "" : base64_encode($_FILES["imageH"]["name"]).'.'.$extensionH;
+                $fileNameI = ($_FILES["imageI"]["name"]) == "" ? "" : base64_encode($_FILES["imageI"]["name"]).'.'.$extensionI;
+                $fileNameJ = ($_FILES["imageJ"]["name"]) == "" ? "" : base64_encode($_FILES["imageJ"]["name"]).'.'.$extensionJ;
 
                 $upload_dir_url = $_SERVER['DOCUMENT_ROOT'];
                 $new_upload_dir = $upload_dir_url.'/wp-content/uploads/gm-property/'.$property_id_1.'/'; // Create a new directory with the current date
                 if (!file_exists($new_upload_dir)) {
                     mkdir($new_upload_dir, 0777, true); // Create the directory if it doesn't exist
                 }
+                var_dump($new_upload_dir);
                 $imageA_path = $new_upload_dir. $fileNameA; // Create the image path
                 move_uploaded_file($_FILES["imageA"]['tmp_name'], $imageA_path);
                 update_option('imageA_path', $imageA_path);
@@ -138,16 +145,16 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 // File Upload End
                 // $img_path_array = explode(',', $this->edit_data_from_db[0]->imgs);
                 // var_dump($img_path_array);
-                $hidden_photoA = $fileNameA != "." ? $fileNameA : $_POST['hidden_photoA'];
-                $hidden_photoB = $fileNameB != "." ? $fileNameB : $_POST['hidden_photoB'];
-                $hidden_photoC = $fileNameC != "." ? $fileNameC : $_POST['hidden_photoC'];
-                $hidden_photoD = $fileNameD != "." ? $fileNameD : $_POST['hidden_photoD'];
-                $hidden_photoE = $fileNameE != "." ? $fileNameE : $_POST['hidden_photoE'];
-                $hidden_photoF = $fileNameF != "." ? $fileNameF : $_POST['hidden_photoF'];
-                $hidden_photoG = $fileNameG != "." ? $fileNameG : $_POST['hidden_photoG'];
-                $hidden_photoH = $fileNameH != "." ? $fileNameH : $_POST['hidden_photoH'];
-                $hidden_photoI = $fileNameI != "." ? $fileNameI : $_POST['hidden_photoI'];
-                $hidden_photoJ = $fileNameJ != "." ? $fileNameJ : $_POST['hidden_photoJ'];
+                $hidden_photoA = $fileNameA != "" ? $fileNameA : $_POST['hidden_photoA'];
+                $hidden_photoB = $fileNameB != "" ? $fileNameB : $_POST['hidden_photoB'];
+                $hidden_photoC = $fileNameC != "" ? $fileNameC : $_POST['hidden_photoC'];
+                $hidden_photoD = $fileNameD != "" ? $fileNameD : $_POST['hidden_photoD'];
+                $hidden_photoE = $fileNameE != "" ? $fileNameE : $_POST['hidden_photoE'];
+                $hidden_photoF = $fileNameF != "" ? $fileNameF : $_POST['hidden_photoF'];
+                $hidden_photoG = $fileNameG != "" ? $fileNameG : $_POST['hidden_photoG'];
+                $hidden_photoH = $fileNameH != "" ? $fileNameH : $_POST['hidden_photoH'];
+                $hidden_photoI = $fileNameI != "" ? $fileNameI : $_POST['hidden_photoI'];
+                $hidden_photoJ = $fileNameJ != "" ? $fileNameJ : $_POST['hidden_photoJ'];
                 array_push($this->img_path, 
                     $hidden_photoA, 
                     $hidden_photoB, 
@@ -188,47 +195,20 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
 
     private function regist($params, $img_path_str)
     {
-        // -----------------
-        // start to get lat and long
-        // -----------------
-        // $result_string = $this->getLnt($params['postal_code']);
-
-        // var_dump($img_path_str);
-        
-        // ---------------------
-        // end to get lat and long
-        // ----------------------
-        // 
+ 
         for ($i = 0; $i < 12 ; $i++) { 
             if(isset($params['facility_id'][$i])) {
                 array_push($this->check_box, $params['facility_id'][$i]);
-        }
+            }
         }
         $a = implode(",", $this->check_box);
-
-        /***** 
-         *
-         *   start to get publish_to date.
-         */
-
         
-
-        switch($params['min_period_unit']) {
-            case '1': $add_date = '+'.$params['min_period'].' years'; break;
-            case '2': $add_date = '+'.$params['min_period'].' months'; break;
-            case '3': $add_date = '+'.$params['min_period'].' days'; break;
-            default: break;
-        }
-        // $publish_date = date("Y/m/d", strtotime($add_date, strtotime($format_date)));
-        /****
-         * 
-         * end to get publish_to date
-         */
-
-
         if($this->param_type == "add") {
-            $property_id_tmp1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
-            $property_id_tmp2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
+            
+            $property_id_tmp1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC") == [] ? 0 :  
+                                $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;
+            $property_id_tmp2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC") == [] ? 0 :  
+                                $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
             
             if (!(isset($property_id_tmp1))) {
                 $property_id_tmp1 = 0;
@@ -274,9 +254,9 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                     // 'lat' => (string) $result_string['lat'],
                     // 'lng' => (string) $result_string['lng'],
                     'facility_ids' => $a,
+                    'special_term' => $params['special_term']
                 ]
             );
-
         }
 
         if ($this->param_type == "edit") {
@@ -326,9 +306,9 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'address_2' => $params['address_2'],
                         'address_3' => $params['address_3'],
                         'address_4' => $params['address_4'],
-                        // 'lat' => (string) $result_string['lat'],
-                        // 'lng' => (string) $result_string['lng'],
+                        'remand_flg' => '0',
                         'facility_ids' => $a,
+                        'special_term'=>$params['special_term']
                     ],
                     [
                         'property_id' => $this->param_id,
@@ -365,9 +345,8 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'address_2' => $params['address_2'],
                         'address_3' => $params['address_3'],
                         'address_4' => $params['address_4'],
-                        // 'lat' => (string) $result_string['lat'],
-                        // 'lng' => (string) $result_string['lng'],
                         'facility_ids' => $a,
+                        'special_term'=>$params['special_term']
                     ],
                     [
                         'property_id' => $this->param_id,

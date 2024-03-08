@@ -448,6 +448,16 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
             </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>特約事項</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input" name="special_term"  maxlength="255"><?= $record_edit->special_term ?></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
         <?php        
             } else {
@@ -861,6 +871,16 @@ if (! defined('ABSPATH')) {
                     </td>
                 </tr>
             </table>
+            <table class="gm-input-table">
+                <tr>
+                    <th><div>特約事項</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input" name="special_term"  maxlength="255"></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
         <?php } ?>
         <div class="gm-input-button-wrap">
@@ -909,52 +929,52 @@ if (! defined('ABSPATH')) {
 
     $(document).ready(function(){
         var srcnameE = String($('#upload-imageE').attr('src'));
-        if (srcnameE[srcnameE.length - 1] === "/") {
+        if (srcnameE[srcnameE.length - 1] === "." || srcnameE[srcnameE.length - 1] === "/") {
             $('#upload-image-content-divE').hide();
         }
 
         var srcnameD = String($('#upload-imageD').attr('src'));
-        if (srcnameD[srcnameD.length - 1] === "/") {
+        if (srcnameD[srcnameD.length - 1] === "." || srcnameD[srcnameD.length - 1] === "/") {
             $('#upload-image-content-divD').hide();
         }
 
         var srcnameC = String($('#upload-imageC').attr('src'));
-        if (srcnameC[srcnameC.length - 1] === "/") {
+        if (srcnameC[srcnameC.length - 1] === "." || srcnameC[srcnameC.length - 1] === "/") {
             $('#upload-image-content-divC').hide();
         }
 
         var srcnameB = String($('#upload-imageB').attr('src'));
-        if (srcnameB[srcnameB.length - 1] === "/") {
+        if (srcnameB[srcnameB.length - 1] === "." || srcnameB[srcnameB.length - 1] === "/") {
             $('#upload-image-content-divB').hide();
         }
 
         var srcnameA = String($('#upload-imageA').attr('src'));
-        if (srcnameA[srcnameA.length - 1] === "/") {
+        if (srcnameA[srcnameA.length - 1] === "." || srcnameA[srcnameA.length - 1] === "/") {
             $('#upload-image-content-divA').hide();
         }
 
         var srcnameF = String($('#upload-imageF').attr('src'));
-        if (srcnameF[srcnameF.length - 1] === "/") {
+        if (srcnameF[srcnameF.length - 1] === "." || srcnameF[srcnameF.length - 1] === "/") {
             $('#upload-image-content-divF').hide();
         }
 
         var srcnameG = String($('#upload-imageG').attr('src'));
-        if (srcnameG[srcnameG.length - 1] === "/") {
+        if (srcnameG[srcnameG.length - 1] === "." || srcnameG[srcnameG.length - 1] === "/") {
             $('#upload-image-content-divG').hide();
         }
 
         var srcnameH = String($('#upload-imageH').attr('src'));
-        if (srcnameH[srcnameH.length - 1] === "/" ) {
+        if (srcnameH[srcnameH.length - 1] === "." || srcnameH[srcnameH.length - 1] === "/" ) {
             $('#upload-image-content-divH').hide();
         }
 
         var srcnameI = String($('#upload-imageI').attr('src'));
-        if (srcnameI[srcnameI.length - 1] === "/") {
+        if (srcnameI[srcnameI.length - 1] === "." || srcnameI[srcnameI.length - 1] === "/") {
             $('#upload-image-content-divI').hide();
         }
 
         var srcnameJ = String($('#upload-imageJ').attr('src'));
-        if (srcnameJ[srcnameJ.length - 1] === "/") {
+        if (srcnameJ[srcnameJ.length - 1] === "." || srcnameJ[srcnameJ.length - 1] === "/") {
             $('#upload-image-content-divJ').hide();
         }
 

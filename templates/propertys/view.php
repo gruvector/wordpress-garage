@@ -114,12 +114,12 @@ if (! defined('ABSPATH')) {
             <div class="gm-special-term">
                 <div class="gm-basic-table-section1 gm-border-right">特約事項</div>
                 <div class="gm-border-left"></div>
-                <div class="gm-basic-table-section4"><?= $record->appeal_description ?></div>
+                <div class="gm-basic-table-section4"><?= $record->special_term ?></div>
             </div>
             <div class="gm-special-term2">
                 <div class="gm-basic-table-section1 gm-border-right">アピールポイント、他の空き区画の紹介</div>
                 <div class="gm-border-left"></div>
-                <div class="gm-basic-table-section4"><?= $record->other_description ?></div>
+                <div class="gm-basic-table-section4"><?= $record->other_description ?><br/><?= $record->appeal_description ?></div>
             </div>
             <div class="gm-input-button-wrap">
                 <a class="gm-input-button" href="<?= home_url('contact-property').'?id='.$record->ID?>">お問い合わせ</a>

@@ -271,8 +271,8 @@ if (!defined('ABSPATH')) {
             AdvancedMarkerElement
         } = await google.maps.importLibrary("marker");
         const center = {
-            lat: 35.66,
-            lng: 139.80
+            lat: 35.447227,
+            lng: 136.756165
         };
 
         const map = new Map(document.getElementById("map"), {

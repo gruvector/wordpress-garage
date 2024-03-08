@@ -101,15 +101,6 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                 ]
             );
 
-            $wpdb->insert(
-                $wpdb->prefix.'gmt_property_publish',
-                [
-                    'property_id' => $record->property_id,
-                    'publish_from' => '',
-                    'publish_to' => '',
-                ]
-            );
-
             $wpdb->delete(
                 $wpdb->prefix.'gmt_property_tmp',
                 ['ID' => $ID],
@@ -173,6 +164,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
             , property_tmp.account_id
             , property_tmp.property_id
             , property_tmp.nm
+            , property_tmp.imgs
             , property_tmp.section_nm
             , property_tmp.availability_id
             , property_tmp.handover_date
