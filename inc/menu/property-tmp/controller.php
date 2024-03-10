@@ -97,6 +97,7 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
             'facility_ids' => '設備情報',
             'other_description' => 'その他紹介',
             'appeal_description' => 'アピールポイント',
+            'special_term' => '特約事項',
             'address_1' => '都道府県',
             'address_2' => '市区町村',
             'address_3' => '地番',
@@ -328,10 +329,10 @@ class Gm_Property_Tmp_Menu_Table extends Gm_Abstract_Menu_Table
         return $item->get_address_4();
     }
 
-    // public function column_remand_flg($item)
-    // {
-    //     return $item->get_remand_flg();
-    // }
+    public function column_special_term($item)
+    {
+        return $item->get_special_term();
+    }
 
     public function column_remand_comment($item)
     {
@@ -355,7 +356,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
         $this->ID = $record->ID;
         $this->property_id = $record->property_id;
         $this->account_id = $record->account_id;
-        // $this->imgs = $record->imgs;
+        $this->special_term = $record->special_term;
         $this->nm = $record->nm;
         $this->section_nm = $record->section_nm;
         $this->availability_id = $record->availability_id;
@@ -394,7 +395,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     protected $account_id;
     protected $nm;
     protected $section_nm;
-    // protected $imgs;
+    protected $special_term;
     protected $availability_id;
     protected $handover_date;
     protected $min_period;
@@ -435,7 +436,7 @@ class Gm_Property_Tmp_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_min_period(){return $this->min_period;}
     public function get_min_period_unit(){return $this->min_period_unit;}
     public function get_size_w(){return $this->size_w;}
-    // public function get_imgs(){return $this->imgs;}
+    public function get_special_term(){return $this->special_term;}
     public function get_size_h(){return $this->size_h;}
     public function get_size_d(){return $this->size_d;}
     public function get_fee_monthly_rent(){return $this->fee_monthly_rent;}

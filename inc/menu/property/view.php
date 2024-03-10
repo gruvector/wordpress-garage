@@ -295,6 +295,14 @@ if (! defined('ABSPATH')) {
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <th><div>特約事項</div></th>
+                    <td>
+                        <div>
+                            <textarea class="gm-input gm-width-80" name="special_term" ><?= $this->show_data[0]->special_term ?></textarea>
+                        </div>
+                    </td>
+                </tr>
             </table>
 
           </div>

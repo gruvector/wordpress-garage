@@ -63,43 +63,94 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                 $longitude = $apiResponse->results[0]->geometry->location->lng; 
 
             //  end 
-            $wpdb->insert(
-                $wpdb->prefix.'gmt_property',
-                [
-                    'property_id' => $record->property_id,
-                    'nm' => $record->nm,
-                    'imgs'=>$record->imgs,
-                    'section_nm' => $record->section_nm,
-                    'availability_id' => $record->availability_id,
-                    'account_id' => $record->account_id,
-                    'handover_date' => $record->handover_date,
-                    'min_period' => $record->min_period,
-                    'min_period_unit' => $record->min_period_unit,
-                    'size_w' => $record->size_w,
-                    'size_h' => $record->size_h,
-                    'size_d' => $record->size_d,
-                    'fee_monthly_rent' => $record->fee_monthly_rent,
-                    'fee_monthly_common_service' => $record->fee_monthly_common_service,
-                    'fee_monthly_others' => $record->fee_monthly_others,
-                    'fee_contract_security' => $record->fee_contract_security,
-                    'fee_contract_security_amortization' => $record->fee_contract_security_amortization,
-                    'fee_contract_deposit' => $record->fee_contract_deposit,
-                    'fee_contract_deposit_amortization' => $record->fee_contract_deposit_amortization,
-                    'fee_contract_key_money' => $record->fee_contract_key_money,
-                    'fee_contract_guarantee_charge' => $record->fee_contract_guarantee_charge,
-                    'fee_contract_other' => $record->fee_contract_other,
-                    'facility_ids' => $record->facility_ids,
-                    'other_description' => $record->other_description,
-                    'appeal_description' => $record->appeal_description,
-                    'postal_code' => $record->postal_code,
-                    'lat' => $latitude,
-                    'lng' => $longitude,
-                    'address_1' => $record->address_1,
-                    'address_2' => $record->address_2,
-                    'address_3' => $record->address_3,
-                    'address_4' => $record->address_4,
-                ]
-            );
+            if ($record->public_edit !== '1') {
+                $wpdb->insert(
+                    $wpdb->prefix.'gmt_property',
+                    [
+                        'property_id' => $record->property_id,
+                        'nm' => $record->nm,
+                        'imgs'=>$record->imgs,
+                        'section_nm' => $record->section_nm,
+                        'availability_id' => $record->availability_id,
+                        'account_id' => $record->account_id,
+                        'handover_date' => $record->handover_date,
+                        'min_period' => $record->min_period,
+                        'min_period_unit' => $record->min_period_unit,
+                        'size_w' => $record->size_w,
+                        'size_h' => $record->size_h,
+                        'size_d' => $record->size_d,
+                        'fee_monthly_rent' => $record->fee_monthly_rent,
+                        'fee_monthly_common_service' => $record->fee_monthly_common_service,
+                        'fee_monthly_others' => $record->fee_monthly_others,
+                        'fee_contract_security' => $record->fee_contract_security,
+                        'fee_contract_security_amortization' => $record->fee_contract_security_amortization,
+                        'fee_contract_deposit' => $record->fee_contract_deposit,
+                        'fee_contract_deposit_amortization' => $record->fee_contract_deposit_amortization,
+                        'fee_contract_key_money' => $record->fee_contract_key_money,
+                        'fee_contract_guarantee_charge' => $record->fee_contract_guarantee_charge,
+                        'fee_contract_other' => $record->fee_contract_other,
+                        'facility_ids' => $record->facility_ids,
+                        'other_description' => $record->other_description,
+                        'appeal_description' => $record->appeal_description,
+                        'postal_code' => $record->postal_code,
+                        'special_term' => $record->special_term,
+                        'lat' => $latitude,
+                        'lng' => $longitude,
+                        'address_1' => $record->address_1,
+                        'address_2' => $record->address_2,
+                        'address_3' => $record->address_3,
+                        'address_4' => $record->address_4,
+                    ]
+                );
+                // $wpdb->insert(
+                //     $wpdb->prefix.'gmt_property_publish',
+                //     [
+                //         'property_id' => $record->property_id,
+                //         'publish_from'=> $record->handover_date,
+                //         'publish_to' => $record->handover_date
+                //     ]
+                // );
+            } else {
+                $wpdb->update(
+                    $wpdb->prefix.'gmt_property',
+                    [
+                        'nm' => $record->nm,
+                        'imgs'=>$record->imgs,
+                        'section_nm' => $record->section_nm,
+                        'availability_id' => $record->availability_id,
+                        'account_id' => $record->account_id,
+                        'handover_date' => $record->handover_date,
+                        'min_period' => $record->min_period,
+                        'min_period_unit' => $record->min_period_unit,
+                        'size_w' => $record->size_w,
+                        'size_h' => $record->size_h,
+                        'size_d' => $record->size_d,
+                        'fee_monthly_rent' => $record->fee_monthly_rent,
+                        'fee_monthly_common_service' => $record->fee_monthly_common_service,
+                        'fee_monthly_others' => $record->fee_monthly_others,
+                        'fee_contract_security' => $record->fee_contract_security,
+                        'fee_contract_security_amortization' => $record->fee_contract_security_amortization,
+                        'fee_contract_deposit' => $record->fee_contract_deposit,
+                        'fee_contract_deposit_amortization' => $record->fee_contract_deposit_amortization,
+                        'fee_contract_key_money' => $record->fee_contract_key_money,
+                        'fee_contract_guarantee_charge' => $record->fee_contract_guarantee_charge,
+                        'fee_contract_other' => $record->fee_contract_other,
+                        'facility_ids' => $record->facility_ids,
+                        'other_description' => $record->other_description,
+                        'appeal_description' => $record->appeal_description,
+                        'postal_code' => $record->postal_code,
+                        'special_term' => $record->special_term,
+                        'lat' => $latitude,
+                        'lng' => $longitude,
+                        'address_1' => $record->address_1,
+                        'address_2' => $record->address_2,
+                        'address_3' => $record->address_3,
+                        'address_4' => $record->address_4,
+                    ], [
+                        'property_id' => $record->property_id
+                    ]
+                );
+            }
 
             $wpdb->delete(
                 $wpdb->prefix.'gmt_property_tmp',
@@ -186,6 +237,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
             , property_tmp.facility_ids
             , property_tmp.other_description
             , property_tmp.appeal_description
+            , property_tmp.special_term
             , property_tmp.postal_code
             , property_tmp.address_1
             , property_tmp.address_2
@@ -232,6 +284,7 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
             , property_tmp.address_2
             , property_tmp.address_3
             , property_tmp.address_4
+            , property_tmp.special_term
             , property_tmp.remand_flg
             , property_tmp.created_at
         FROM

@@ -118,6 +118,7 @@ class Gm_Property_Menu_Table extends Gm_Abstract_Menu_Table
             'facility_ids' => '設備情報',
             'other_description' => 'その他紹介',
             'appeal_description' => 'アピールポイント',
+            'appeal_description' => '特約事項',
             'address_1' => '都道府県',
             'address_2' => '市区町村',
             'address_3' => '地番',
@@ -320,10 +321,10 @@ class Gm_Property_Menu_Table extends Gm_Abstract_Menu_Table
         return $item->get_created_at();
     }
 
-    // public function column_status1($item)
-    // {
-    //     return $item->get_status1();
-    // }
+    public function column_special_term($item)
+    {
+        return $item->get_special_term();
+    }
 
 }
 
@@ -363,6 +364,7 @@ class Gm_Property_Menu_Item extends Gm_Abstract_Menu_Item
         $this->address_4 = $record->address_4;
         $this->status1 = $record->status1;
         $this->created_at = $record->created_at;
+        $this->special_term = $record->special_term;
     }
 
     protected $ID;
@@ -398,6 +400,7 @@ class Gm_Property_Menu_Item extends Gm_Abstract_Menu_Item
     protected $address_4;
     protected $status1;
     protected $created_at;
+    protected $special_term;
 
 
     public function get_ID(){return $this->ID;}
@@ -432,6 +435,8 @@ class Gm_Property_Menu_Item extends Gm_Abstract_Menu_Item
     public function get_address_4(){return $this->address_4;}
     public function get_status1(){return $this->status1;}
     public function get_created_at () {return $this->created_at;}
+    public function get_special_term () {return $this->special_term;}
+
 
 }
 
