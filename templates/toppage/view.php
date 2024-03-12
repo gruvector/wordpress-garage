@@ -9,23 +9,23 @@ if (!defined('ABSPATH')) {
         <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#demo">特徴で絞り込む +</button>
         <div id="demo" class="gm-checkbox-group-wrap collapse">
             <?php
-                foreach ($this->facility_records as $i => $record) {
-                    $checked = '';
-                    if (isset($this->filterDataArray[0])) {
-                        foreach($this->filterDataArray[0] as $item){
-                            if($item == $record->ID)
-                                $checked = 'checked';
-                        };
-                    }
-                               
-                    echo '<label><input type="checkbox" name="facility_id" value="' . $record->ID . '"'.$checked.'  >' . $record->nm . '</label>';
+            foreach ($this->facility_records as $i => $record) {
+                $checked = '';
+                if (isset($this->filterDataArray[0])) {
+                    foreach ($this->filterDataArray[0] as $item) {
+                        if ($item == $record->ID)
+                            $checked = 'checked';
+                    };
                 }
+
+                echo '<label><input type="checkbox" name="facility_id" value="' . $record->ID . '"' . $checked . '  >' . $record->nm . '</label>';
+            }
             ?>
             <div>
                 <button class="btn btn-success" onclick="filterMap()">地図に表示</button>
                 <button class="btn btn-warning" onclick="uncheckAll()">条件をクリアにする</button>
             </div>
-            
+
         </div>
     </div>
 
@@ -37,7 +37,7 @@ if (!defined('ABSPATH')) {
                     allCheckbox[i].checked = false;
                 }
             }
-            let link = "<?= home_url('/')?>";
+            let link = "<?= home_url('/') ?>";
             window.location.assign(link);
         }
 
@@ -46,17 +46,17 @@ if (!defined('ABSPATH')) {
             let allCheckbox = document.getElementsByName("facility_id");
             for (let i = 0; i < allCheckbox.length; i++) {
                 if (allCheckbox[i].checked) {
-                    filterList.push(i+1);
+                    filterList.push(i + 1);
                 }
             }
-            let link = "<?= home_url('/')?>";
+            let link = "<?= home_url('/') ?>";
             console.log(filterList);
             if (filterList.length == 0) {
                 window.location.assign(link);
             } else {
-                window.location.assign(link+"/?filterList="+filterList.toString());
+                window.location.assign(link + "/?filterList=" + filterList.toString());
             }
-            
+
         }
     </script>
 
@@ -96,25 +96,25 @@ if (!defined('ABSPATH')) {
         新着ガレージ
     </div>
     <div class="post-garage">
-        <?php   
-            $active = "active";
-            foreach ($this->recentList as $i => $record) { 
-                $img = explode(',', $record->imgs);
+        <?php
+        $active = "active";
+        foreach ($this->recentList as $i => $record) {
+            $img = explode(',', $record->imgs);
         ?>
 
-        <div class="gm-card-1 ">
-            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
-            <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
-            <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
-            <?php
-                $param = array('id'=>$record->property_id);
+            <div class="gm-card-1 ">
+                <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
+                <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
+                <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
+                <?php
+                $param = array('id' => $record->property_id);
                 $link = add_query_arg($param, home_url('propertys'));
-            ?>
-            <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
-        </div>
+                ?>
+                <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
+            </div>
 
         <?php
-            }
+        }
         ?>
     </div>
 
@@ -122,29 +122,29 @@ if (!defined('ABSPATH')) {
         PickUp!
     </div>
     <div class="post-garage">
-        <?php   
-            $active = "active";
-            foreach ($this->recentList as $i => $record) { 
-                $img = explode(',', $record->imgs);
+        <?php
+        $active = "active";
+        foreach ($this->pickupList as $i => $record) {
+            $img = explode(',', $record->imgs);
         ?>
 
-        <div class="gm-card-1 ">
-            <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
-            <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
-            <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
-            <?php
-                $param = array('id'=>$record->property_id);
+            <div class="gm-card-1 ">
+                <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
+                <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
+                <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
+                <?php
+                $param = array('id' => $record->property_id);
                 $link = add_query_arg($param, home_url('propertys'));
-            ?>
-            <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
-        </div>
-            
+                ?>
+                <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
+            </div>
+
 
         <?php
             if ($i == 3) {
                 break;
             }
-            }
+        }
         ?>
     </div>
 
@@ -296,7 +296,7 @@ if (!defined('ABSPATH')) {
             google.maps.event.addListener(map, "click", function(event) {
                 turnoffHighlight(AdvancedMarkerElement, property);
             });
-        
+
         }
     }
 
@@ -347,7 +347,7 @@ if (!defined('ABSPATH')) {
                     <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart fa-solid fa-heart border-heart" id="heart${property.ID}"></i></button>
                 </div>
             </div> `;
-        
+
         return content;
     }
 
@@ -356,30 +356,30 @@ if (!defined('ABSPATH')) {
 
     function handleFavorite(id) {
         let a = getCookie("favorite");
-        const element = document.getElementById("heart"+id);
-        console.log(element);  
+        const element = document.getElementById("heart" + id);
+        console.log(element);
         if (a.indexOf(id) == -1) {
             setCookie('favorite', id, 1, a);
             console.log(id);
-            element.classList.remove("border-heart"); 
+            element.classList.remove("border-heart");
             element.classList.add("selected-heart");
             console.log(element[id]);
 
         } else {
             let ind = a.indexOf(id);
             deleteCookie('favorite', 365, a, ind);
-            element.classList.remove("selected-heart"); 
+            element.classList.remove("selected-heart");
             element.classList.add("border-heart");
         }
-        
+
     }
-    
+
 
 
     function handleDblClick(id) {
         var href = window.location.href;
-        let link = "<?= home_url('/')?>";
-        window.location.assign(link+'/propertys/?id='+id);
+        let link = "<?= home_url('/') ?>";
+        window.location.assign(link + '/propertys/?id=' + id);
     }
 
     function setCookie(cname, cvalue, exdays, value) {
@@ -387,7 +387,7 @@ if (!defined('ABSPATH')) {
         let b = value.toString();
         const d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        let expires = "expires="+d.toUTCString();
+        let expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + b + ";" + expires + ";path=/";
         console.log(document.cookie);
     }
@@ -401,28 +401,27 @@ if (!defined('ABSPATH')) {
 
     function getCookie(cname) {
         let name = cname + "=";
-        
+
         let decodedCookie = decodeURIComponent(document.cookie);
-        
+
         let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
+        for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
             while (c.charAt(0) == ' ') {
-            c = c.substring(1);
+                c = c.substring(1);
             }
             if (c.indexOf(name) == 0) {
-            let d = c.substring(name.length, c.length);
-            let e = d.split(",");
-            let numberArray = [];
-            length = e.length;
+                let d = c.substring(name.length, c.length);
+                let e = d.split(",");
+                let numberArray = [];
+                length = e.length;
 
-            for (let i = 0; i < length; i++)
-                numberArray.push(parseInt(e[i]));
-        
-            return numberArray;
+                for (let i = 0; i < length; i++)
+                    numberArray.push(parseInt(e[i]));
+
+                return numberArray;
             }
         }
         return "";
     }
-
 </script>

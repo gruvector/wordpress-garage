@@ -17,7 +17,7 @@ class Gm_Timeout_Controller extends Abstract_Template_Controller
 
     public function action()
     {
-        if (!empty($_SESSION)){
+        if (!empty($_SESSION)) {
             session_destroy();
         }
 

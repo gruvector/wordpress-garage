@@ -23,11 +23,6 @@ class Gm_Mypage_Controller extends Abstract_Template_Mypage_Controller
 
 
         $account_id = $_SESSION['account_id'];
-        
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        }
-        
 
         if(isset($_GET['propertyFilter'])){
         $this->radio_value = $_GET['propertyFilter'];
