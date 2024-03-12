@@ -60,7 +60,7 @@ if (!$_SESSION['account_id']) {
         くか、お手数をおかけしますが再度お申し込みをお願いいたします。
         </div>
     </div>
-    <a href="<?= home_url('mypage')?>" class="gm-input-button mt-5">マイペッジに行く >></a>
+    <a href="<?= home_url('mypage')?>" class="gm-input-button mt-5">マイページに戻る >></a>
 <?php endif; ?>
 </div>
 

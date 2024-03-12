@@ -4,8 +4,8 @@ require_once ABSPATH .'wp-content/themes/sango-theme-child-garage/templates/_com
 
 class Gm_MypagePublish_Controller extends Abstract_Template_Mypage_Controller
 {
-    public $property_info1 = [];
-    public $property_info2 = "";
+    public $property_info1 ;
+    public $property_info2 ;
     public $address = "";
 
     protected function setting()
@@ -25,7 +25,6 @@ class Gm_MypagePublish_Controller extends Abstract_Template_Mypage_Controller
         $accountid = $_SESSION['account_id'];
         $b = $_GET['id'] ;
         $this->property_info2 = $this->wpdb->get_results($this->wpdb->prepare("SELECT nm, ID, kana, phone, email FROM {$this->wpdb->prefix}gmt_account WHERE ID = %d", $accountid))[0];
-        // var_dump($this->property_info2);
         if ($b) {
             $this->property_info1 = $this->wpdb->get_results($this->wpdb->prepare("SELECT ID, nm FROM {$this->wpdb->prefix}gmt_property WHERE property_id=%d AND account_id=%d", $b, $accountid))[0];
             if (!(isset($this->property_info1))) {
