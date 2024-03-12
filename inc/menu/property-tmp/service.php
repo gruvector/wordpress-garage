@@ -102,14 +102,17 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                         'address_4' => $record->address_4,
                     ]
                 );
+                // $time = strtotime('01/01/1970');
+                // $newformat = date('Y-m-d',$time);
                 // $wpdb->insert(
                 //     $wpdb->prefix.'gmt_property_publish',
                 //     [
                 //         'property_id' => $record->property_id,
-                //         'publish_from'=> $record->handover_date,
-                //         'publish_to' => $record->handover_date
+                //         'publish_from' => $newformat,
+                //         'publish_to' => $newformat
                 //     ]
                 // );
+
             } else {
                 $wpdb->update(
                     $wpdb->prefix.'gmt_property',
@@ -146,7 +149,8 @@ class Gm_Property_Tmp_Menu_Service extends Gm_Abstract_Menu_Service
                         'address_2' => $record->address_2,
                         'address_3' => $record->address_3,
                         'address_4' => $record->address_4,
-                    ], [
+                    ], 
+                    [
                         'property_id' => $record->property_id
                     ]
                 );

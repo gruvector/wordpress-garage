@@ -17,7 +17,6 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
     align-items: center;
 }
 </style>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <div class="gm-custom-wrap">
     <div id="mySidenav" class="sidenav">
         <a href="<?= home_url('mypage-account') ?>" id="account">アカウント変更</a>
@@ -44,8 +43,8 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
             $real_i = 0;
             $today = new DateTime();
             foreach ($this->records1_1 as $i => $record1_1) { $real_i = $i+1;
-                if($record1_1->status1 == "1") {
-                if ($today >= new DateTime($record1_1->publish_from) && $today <= new DateTime($record1_1->publish_to)) {
+                if($record1_1->status1 == "1" ) {
+                if ($record1_1->publish_from != null && $today >= new DateTime($record1_1->publish_from) && $today <= new DateTime($record1_1->publish_to)) {
                     $hiretype = "公開済み";$comment="";
             ?>
                     <div class="gm-property-list1_1">
@@ -61,10 +60,8 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
                 物件番号: <?= $record1_1->property_id ?> <br>
                 掲載状況: <?= $hiretype ?> <br>
                 区画名  : <?= $record1_1->section_nm ?> <br>
-                掲載期間:<?php  
-                    foreach ($this->records2 as $i => $record2) {
-                        if($record2->property_id == $record1_1->property_id) { echo " ".substr($record2->publish_from,0,10)." ~ ".substr($record2->publish_to,0,10); }
-                    } 
+                掲載期間:<?php
+                        if($record1_1->publish_from != null){ echo " ".substr($record1_1->publish_from,0,10)." ~ ".substr($record1_1->publish_to,0,10); }
                 ?>
 
             <form class="gm-property-list-button" method="post">
@@ -105,8 +102,7 @@ if ($this->wpdb->get_results("SELECT del_flg FROM {$this->wpdb->prefix}gmt_accou
                     $info = $record1_2->property_id;
                     $param = array('type'=>'edit', 'id'=>$info);
                     $link = add_query_arg($param, home_url('mypage-property'));
-                    // $param1 = array('id'=>$info);
-                    // $link1 = add_query_arg($param1, home_url('mypage-publish'));
+
                 ?>
                 <a class="gm-property-list-editbutton" href="<?= esc_url($link) ?>">編集する</a>
 

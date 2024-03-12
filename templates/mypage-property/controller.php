@@ -72,9 +72,9 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $extensionJ = pathinfo($_FILES["imageJ"]["name"], PATHINFO_EXTENSION);
 
                 if ($this->param_type == "add") {
-                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp") == [] ? 1 :
+                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp") == [] ? 0 :
                                         $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;      
-                    $property_id_tmp_2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property") == [] ? 1 :
+                    $property_id_tmp_2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property") == [] ? 0 :
                                         $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
                                         
                     $property_id_1 = $property_id_tmp_1 >= $property_id_tmp_2 ? $property_id_tmp_1+1 : $property_id_tmp_2+1;

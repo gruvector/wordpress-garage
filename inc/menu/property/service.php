@@ -186,6 +186,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
                 ],
             );
         }
+
     }
 
     // -----------------------------------------------
