@@ -72,9 +72,9 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                 $extensionJ = pathinfo($_FILES["imageJ"]["name"], PATHINFO_EXTENSION);
 
                 if ($this->param_type == "add") {
-                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp") == [] ? 1 :
+                    $property_id_tmp_1 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp") == [] ? 0 :
                                         $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property_tmp ORDER BY property_id DESC")[0]->property_id;      
-                    $property_id_tmp_2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property") == [] ? 1 :
+                    $property_id_tmp_2 = $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property") == [] ? 0 :
                                         $this->wpdb->get_results( "SELECT property_id FROM {$this->wpdb->prefix}gmt_property ORDER BY property_id DESC")[0]->property_id;
                                         
                     $property_id_1 = $property_id_tmp_1 >= $property_id_tmp_2 ? $property_id_tmp_1+1 : $property_id_tmp_2+1;
@@ -315,12 +315,14 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                     ]
                 );
             } else {
-                $this->wpdb->update(
-                    $this->wpdb->prefix.'gmt_property',
+                $this->wpdb->insert(
+                    $this->wpdb->prefix.'gmt_property_tmp',
                     [
                         'nm' => $params['nm'],
                         'section_nm' => $params['section_nm'],
                         'availability_id' => $params['availability_id'],
+                        'account_id' => $_SESSION['account_id'],
+                        'property_id' => $this->param_id,
                         'handover_date' => $params['handover_date'],
                         'min_period' => $params['min_period'],
                         'min_period_unit' => $params['min_period_unit'],
@@ -346,10 +348,18 @@ class Gm_Mypage_Property_Controller extends Abstract_Template_Mypage_Controller
                         'address_3' => $params['address_3'],
                         'address_4' => $params['address_4'],
                         'facility_ids' => $a,
-                        'special_term'=>$params['special_term']
+                        'special_term'=>$params['special_term'],
+                        'public_edit' => 1
+                    ]
+                );
+
+                $this->wpdb->update(
+                    $this->wpdb->prefix.'gmt_property',
+                    [
+                        'account_id' => ''
                     ],
                     [
-                        'property_id' => $this->param_id,
+                        'property_id' => $this->param_id
                     ]
                 );
             }

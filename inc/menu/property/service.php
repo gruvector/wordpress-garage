@@ -121,6 +121,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
                 'address_2' => $this->data_show['address_2'],
                 'address_3' => $this->data_show['address_3'],
                 'address_4' => $this->data_show['address_4'],
+                'special_term' => $this->data_show['special_term'],
             ],
             [
                 'ID' => $this->data_show['ID1'],
@@ -185,6 +186,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
                 ],
             );
         }
+
     }
 
     // -----------------------------------------------
@@ -236,6 +238,7 @@ class Gm_Property_Menu_Service extends Gm_Abstract_Menu_Service
             , property.address_4
             , property.status1
             , property.created_at
+            , property.special_term
         FROM
             {$wpdb->prefix}gmt_property AS property
             LEFT JOIN {$wpdb->prefix}gmm_availability AS availability

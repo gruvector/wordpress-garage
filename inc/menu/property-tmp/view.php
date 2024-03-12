@@ -3,7 +3,6 @@ if (! defined('ABSPATH')) {
     exit;
 }
 ?>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf5uy7WQJYPks2LCxQJLezYSA5m9XDHP8&libraries=places&sensor=false"></script>
 <div class="wrap">
   <h1 class="wp-heading-inline"><?php echo $GLOBALS['title'] ?></h1>
   <hr class="wp-header-end">
