@@ -4,7 +4,6 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-
 <div class="gm-custom-wrap">
     <div class="">
         <?php foreach ($this->property_details as $i => $record) {
@@ -15,12 +14,12 @@ if (!defined('ABSPATH')) {
                     array_push($desiredElement, $item);
                 }
             };
+            $img = explode(',', $record->imgs);
         ?>
             <div class="gm-img-property-slide">
 
                 <div class="property-slider">
                     <?php foreach ($img as $j => $img_display) {
-                        // var_dump($img_display);
                         if ($img_display != "") {
                             echo (' <div class="property-slide">
                                 <img src="' . wp_get_upload_dir()["baseurl"] . '/gm-property/' . $record->property_id . '/' . $img_display . '">
@@ -41,8 +40,6 @@ if (!defined('ABSPATH')) {
                     ?>
                 </div>
             </div>
-
-
             <div class="gm-grid">
                 <div class="gm-map" id="map">
                     <script>
@@ -185,8 +182,6 @@ if (!defined('ABSPATH')) {
             lat: <?= $record->lat ?>,
             lng: <?= $record->lng ?>
         };
-        // Request needed libraries.
-        //@ts-ignore
         const {
             Map
         } = await google.maps.importLibrary("maps");
@@ -194,14 +189,12 @@ if (!defined('ABSPATH')) {
             AdvancedMarkerElement
         } = await google.maps.importLibrary("marker");
 
-        // The map, centered at Uluru
         map = new Map(document.getElementById("map"), {
             zoom: 13,
             center: position,
             mapId: "DEMO_MAP_ID",
         });
 
-        // The marker, positioned at Uluru
         const marker = new AdvancedMarkerElement({
             map: map,
             position: position,
@@ -234,20 +227,6 @@ if (!defined('ABSPATH')) {
             carouselSlides.forEach((slide, index) => (slide.style.transform = `translateX(${100 * (index - slides)}%)`));
         };
         changeSlide(currentSlide);
-
-        // const firstSlidePrevButton  = function(slides) {
-        //     if (slides === 0) {
-        //         btnPrev.style.display = "none";
-        //     }
-        // }
-        // firstSlidePrevButton(currentSlide);
-
-        // const lastSlideNextButton = function(slides) {
-        //     if (slides === carouselSlides.length - 1) {
-        //         btnNext.style.display = "none"
-        //     }
-        // }
-        // lastSlideNextButton(currentSlide);
 
         btnNext.addEventListener('click', function() {
             currentSlide++;

@@ -10,21 +10,24 @@ class Gm_Property_Controller extends Abstract_Template_Controller
     public $availability_records = [];
     public $apikey;
 
-    protected function setting() {
+    protected function setting()
+    {
         parent::setting();
     }
 
-    private function render() {
+    private function render()
+    {
         require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_common/header.php';
         require 'view.php';
         require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_common/footer.php';
     }
 
-    public function action() {
+    public function action()
+    {
         if (isset($_GET['id'])) {
             $param = (int) $_GET['id'];
         }
-        
+
         $this->property_details = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property WHERE status1 = 1 AND property_id = {$param}");
         $this->property_special = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmm_facility");
         $this->property_publish = $this->wpdb->get_results("SELECT * FROM {$this->wpdb->prefix}gmt_property_publish WHERE property_id = {$param}");
@@ -32,7 +35,4 @@ class Gm_Property_Controller extends Abstract_Template_Controller
         $this->availability_records = $this->wpdb->get_results("SELECT ID, nm FROM {$this->wpdb->prefix}gmm_availability order by priority");
         $this->render();
     }
-
-    
-    
 }
