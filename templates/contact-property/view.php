@@ -48,7 +48,7 @@ if (! defined('ABSPATH')) {
                     <th><div class="pl-3">電話番号 <small>(必須)</small></div></th>
                     <td>
                         <div>
-                            <input class="gm-input" type="text" name="phone" data-gm-required data-gm-phone data-gm-length="12">
+                            <input class="gm-input" type="text" name="phone" data-gm-required data-gm-phone data-gm-length="255">
                         </div>
                     </td>
                 </tr>
@@ -91,7 +91,7 @@ if (! defined('ABSPATH')) {
         くか、お手数をおかけしますが再度お申し込みをお願いいたします。
         </div>
     </div>
-    <a href="<?= home_url('favorite')?>" class="gm-input-button mt-5">マイペッジに行く >></a>
+    <a href="<?= home_url('/')?>" class="gm-input-button mt-5">トップページに戻る >></a>
 <?php endif; ?>
 </div>
 

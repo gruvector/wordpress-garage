@@ -156,7 +156,7 @@ class Gm_Property_Menu_Table extends Gm_Abstract_Menu_Table
                 <div class="gm-admin-button-wrap">
                     <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
                     <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='ban';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">BAN</button>
-                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='publish_date';document.getElementsByName('execute_id')[0].value='{$item->get_property_id()}'; document.getElementById('gm-admin-form').submit();">PUBLISH</button>
+                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='publish_date';document.getElementsByName('execute_id')[0].value='{$item->get_property_id()}'; document.getElementById('gm-admin-form').submit();">公開期間設定</button>
                 </div>
                 EOM;
         } else {
@@ -165,7 +165,7 @@ class Gm_Property_Menu_Table extends Gm_Abstract_Menu_Table
                 <div class="gm-admin-button-wrap">
                     <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='edit';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">編集</button>
                     <button type="button" class="gm-admin-button-deny" onClick="document.getElementsByName('process')[0].value='recover';document.getElementsByName('execute_id')[0].value='{$item->get_ID()}'; document.getElementById('gm-admin-form').submit();">RECOVER</button>
-                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='publish_date';document.getElementsByName('execute_id')[0].value='{$item->get_property_id()}'; document.getElementById('gm-admin-form').submit();">PUBLISH</button>
+                    <button type="button" class="gm-admin-button-apply" onClick="document.getElementsByName('process')[0].value='publish_date';document.getElementsByName('execute_id')[0].value='{$item->get_property_id()}'; document.getElementById('gm-admin-form').submit();">公開期間設定</button>
                 </div>
                 EOM;
         }

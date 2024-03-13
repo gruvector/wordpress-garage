@@ -323,10 +323,10 @@ if (!defined('ABSPATH')) {
     function buildContent(property) {
         const content = document.createElement("div");
         const img_path = property.imgs.split(',');
-        let desiredElement = "";
+        let desiredElement = [];
         img_path.forEach(item => {
             if (item !== "") {
-                desiredElement = item;
+                desiredElement.push(item);
             }
         });
         content.classList.add("property");
@@ -338,7 +338,7 @@ if (!defined('ABSPATH')) {
                 
                 <div class="gm-map-item">
                     <div class="gm-card-img">
-                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/${property.property_id}/${desiredElement}" alt="img" onclick="handleDblClick(${property.property_id})">
+                        <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/${property.property_id}/${desiredElement[0]}" alt="img" onclick="handleDblClick(${property.property_id})">
                     </div>
                     <div class="gm-map-info" onclick="handleDblClick(${property.property_id})">
                         <div class="gm-card-info__div">車庫名: ${property.nm}</div>

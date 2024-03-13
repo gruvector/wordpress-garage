@@ -7,13 +7,19 @@ if (!defined('ABSPATH')) {
 <div class="gm-custom-wrap">
     <div class="">
         <?php foreach ($this->property_details as $i => $record) {
+            $desiredElement = [];
+            $img = explode(',', $record->imgs);
+            foreach ($img as $item) {
+                if ($item !== "") {
+                    array_push($desiredElement, $item);
+                }
+            };
             $img = explode(',', $record->imgs);
         ?>
             <div class="gm-img-property-slide">
 
                 <div class="property-slider">
                     <?php foreach ($img as $j => $img_display) {
-                        // var_dump($img_display);
                         if ($img_display != "") {
                             echo (' <div class="property-slide">
                                 <img src="' . wp_get_upload_dir()["baseurl"] . '/gm-property/' . $record->property_id . '/' . $img_display . '">
@@ -28,7 +34,7 @@ if (!defined('ABSPATH')) {
                 <div class="dots-container">
                     <span class="dot active" data-slide="0"></span>
                     <?php
-                    for ($i = 0; $i < count($img) - 1; $i++) {
+                    for ($i = 0; $i < count($desiredElement) - 1; $i++) {
                         echo ('<span class="dot" data-slide="' . ($i + 1) . '"></span>');
                     }
                     ?>
@@ -73,15 +79,33 @@ if (!defined('ABSPATH')) {
                     <div class="gm-basic-table-section1">区画</div>
                     <div class="gm-basic-table-section2"><?= $record->section_nm ?></div>
                     <div class="gm-basic-table-section1">現況</div>
-                    <div class="gm-basic-table-section2"><?php if ($record->availability_id) {
-                                                                echo "空き予定";
-                                                            } else {
-                                                                echo "使用中";
-                                                            }; ?></div>
+                    <div class="gm-basic-table-section2">
+                        <?php
+                        foreach ($this->availability_records as $i => $records) {
+                            if ($record->availability_id == $records->ID || (empty($this->get_input_param('availability_id')) && $i == 0)) {
+                                echo $records->nm;
+                            }
+                        }
+                        ?>
+                    </div>
                     <div class="gm-basic-table-section1">使用開始可能日</div>
                     <div class="gm-basic-table-section2"><?= $this->property_publish[0]->publish_from ?></div>
                     <div class="gm-basic-table-section1">最低契約期間</div>
-                    <div class="gm-basic-table-section2"><?= $record->min_period ?></div>
+                    <div class="gm-basic-table-section2">
+                        <?php
+                        switch ($record->min_period_unit) {
+                            case '1':
+                                echo $record->min_period . " 年";
+                                break;
+                            case '2':
+                                echo $record->min_period . " ヵ月";
+                                break;
+                            case '3':
+                                echo $record->min_period . " 日";
+                                break;
+                        }
+                        ?>
+                    </div>
                     <div class="gm-basic-table-section1">サイズ</div>
                     <div class="gm-basic-table-section2"><?= "横幅" . $record->size_w . "m x 高さ" . $record->size_h . "m x 奥行" . $record->size_d . "m" ?></div>
                     <div class="gm-basic-table-section1">住所</div>
@@ -109,7 +133,7 @@ if (!defined('ABSPATH')) {
                 <div class="gm-basic-table-section2">共益費</div>
                 <div class="gm-basic-table-section2"><?= $record->fee_monthly_common_service ?> 円</div>
                 <div class="gm-basic-table-section2">その他<br>毎月支払う料金</div>
-                <div class="gm-basic-table-section2">-電気代 <?= $record->fee_monthly_others ?>円<br>-振替手数料 <?= $record->fee_monthly_others ?>円</div>
+                <div class="gm-basic-table-section3"><?= $record->fee_monthly_others ?>円</div>
             </div>
             <div class="gm-fee-month">
                 <div class="gm-basic-table-section1 gm-border-right">特徴</div>
@@ -158,7 +182,6 @@ if (!defined('ABSPATH')) {
             lat: <?= $record->lat ?>,
             lng: <?= $record->lng ?>
         };
-
         const {
             Map
         } = await google.maps.importLibrary("maps");
@@ -215,8 +238,8 @@ if (!defined('ABSPATH')) {
         });
         btnPrev.addEventListener('click', function() {
             currentSlide--;
-            if (0 >= currentSlide) {
-                currentSlide = 0;
+            if (0 > currentSlide) {
+                currentSlide = carouselSlides.length - 1;
             };
             changeSlide(currentSlide);
             activeDot(currentSlide);
