@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once ABSPATH . 'wp-content/themes/sango-theme-child-garage/templates/_common/abstarct-template-controller.php';
 class Gm_Toppage_Controller extends Abstract_Template_Controller
 {
@@ -93,7 +93,11 @@ class Gm_Toppage_Controller extends Abstract_Template_Controller
         } else {
             $this->filteredArray = $wpgomap;
         }
-
+        $availability_list = [];
+        foreach($this->filteredArray as $item) {
+            array_push($availability_list, $item->property_id);
+        }
+        $_SESSION["avail_list"] = $availability_list;
         $this->recentList = count($this->filteredArray) < 4 ? $this->filteredArray : array_rand($this->filteredArray, 3);
         $this->pickupList = count($this->filteredArray) < 5 ? $this->filteredArray : array_slice($this->filteredArray, -4, 4);
         // -------------------

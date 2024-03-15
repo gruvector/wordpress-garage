@@ -77,24 +77,6 @@ final class Gm_Menu
             null,
             null
         );
-        // add_submenu_page(
-        //     'menu_gm_account',
-        //     'アカウント管理[編集]',
-        //     '編集',
-        //     'manage_options',
-        //     'menu_gm_account&show_mode=1',
-        //     'Gm_Menu::show_account'
-        // );
-
-        // add_submenu_page(
-        //     'menu_gm_account',
-        //     'アカウント管理[BAN]',
-        //     'BAN',
-        //     'manage_options',
-        //     'menu_gm_account&show_mode=1',
-        //     'Gm_Menu::show_account'
-        // );
-
         add_menu_page(
             '物件管理[編集]',
             '',
@@ -104,24 +86,6 @@ final class Gm_Menu
             // 'dashicons-admin-users',
             null,null
         );
-        // add_submenu_page(
-        //     'menu_gm_property',
-        //     '物件管理[編集]',
-        //     '編集',
-        //     'manage_options',
-        //     'menu_gm_property&show_mode=1',
-        //     'Gm_Menu::show_property'
-        // );
-
-        // add_submenu_page(
-        //     'menu_gm_property',
-        //     '物件管理[BAN]',
-        //     'BAN',
-        //     'manage_options',
-        //     'menu_gm_property&show_mode=9',
-        //     'Gm_Menu::show_property'
-        // );
-
         add_menu_page(
             '料金[編集]',
             '[G]料金',
@@ -146,6 +110,15 @@ final class Gm_Menu
             'manage_options',
             'menu_gm_price',
             'Gm_Menu::show_price'
+        );
+        add_menu_page(
+            '設定',
+            '[G]設定',
+            'manage_options',
+            'menu_gm_setting',
+            'Gm_Menu::show_setting',
+            'dashicons-admin-generic',
+            101
         );
 
 
@@ -191,33 +164,40 @@ final class Gm_Menu
         $contoroller->action();
     }
 
-
-    public static function request_ajax()
+    public static function show_setting()
     {
-        $result = false;
-        $process = $_POST['ajax_process'];
-
-        switch ($process) {
-            // ジャンルトップ集計
-            // case 'uy_admin_aggregate':
-                // require_once plugin_dir_path(__FILE__) . '/aggregate/service.php';
-                // $service = new Gm_Aggregate_Service();
-                // $data = $service->execute($_POST['mode'], $_POST['keys'], $_POST['params']);
-                // break;
-            default:
-                break;
-        }
-
-        header('Content-Type: application/json; charset=utf-8');
-        if (is_string($data)) {
-            echo json_encode(array( 'status' => 'NG', 'message' => $data));
-        } elseif (is_Object($data) || $data == null) {
-            echo json_encode(array( 'status' => 'OK', 'data' => $data));
-        } else {
-            echo json_encode(array( 'status' => 'NG', 'data' => $data));
-        }
-        die();
+        require_once plugin_dir_path(__FILE__) . '/setting/controller.php';
+        $contoroller = new Gm_Setting_Menu_Controller();
+        $contoroller->action();
     }
+
+
+    // public static function request_ajax()
+    // {
+    //     $result = false;
+    //     $process = $_POST['ajax_process'];
+
+    //     switch ($process) {
+    //         // ジャンルトップ集計
+    //         // case 'uy_admin_aggregate':
+    //             // require_once plugin_dir_path(__FILE__) . '/aggregate/service.php';
+    //             // $service = new Gm_Aggregate_Service();
+    //             // $data = $service->execute($_POST['mode'], $_POST['keys'], $_POST['params']);
+    //             // break;
+    //         default:
+    //             break;
+    //     }
+
+    //     header('Content-Type: application/json; charset=utf-8');
+    //     if (is_string($data)) {
+    //         echo json_encode(array( 'status' => 'NG', 'message' => $data));
+    //     } elseif (is_Object($data) || $data == null) {
+    //         echo json_encode(array( 'status' => 'OK', 'data' => $data));
+    //     } else {
+    //         echo json_encode(array( 'status' => 'NG', 'data' => $data));
+    //     }
+    //     die();
+    // }
 }
 add_action('wp_ajax_uy_child_admin', 'Gm_Menu::request_ajax');
 add_action('admin_menu', 'Gm_Menu::add');

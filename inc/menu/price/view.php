@@ -105,14 +105,6 @@ if (! defined('ABSPATH')) {
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <th><div>APIkey</div></th>
-                        <td>
-                            <div>
-                                <input class="gm-input" type="text" name="apikey" value="" >
-                            </div>
-                        </td>
-                    </tr>
                 </table>    
 
             </div>

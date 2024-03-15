@@ -100,12 +100,20 @@ if (!defined('ABSPATH')) {
         $active = "active";
         foreach ($this->recentList as $i => $record) {
             $img = explode(',', $record->imgs);
+            $desiredElement = [];
+            foreach($img as $item){
+            if ($item !== "") {
+                array_push($desiredElement, $item);
+            }
+        }
         ?>
 
-            <div class="gm-card-1 ">
-                <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
-                <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
-                <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
+            <div class="gm-card-1">
+                <div class="gm-card-img1">
+                    <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $desiredElement[0] ?>">
+                </div>
+                <div class="gm-card-info__div">ガレージ名: <?php echo $record->nm ?></div>
+                <div class="gm-card-info__div">賃料: <?php echo $record->fee_monthly_rent ?>円</div>
                 <?php
                 $param = array('id' => $record->property_id);
                 $link = add_query_arg($param, home_url('propertys'));
@@ -125,13 +133,21 @@ if (!defined('ABSPATH')) {
         <?php
         $active = "active";
         foreach ($this->pickupList as $i => $record) {
-            $img = explode(',', $record->imgs);
+            $img1 = explode(',', $record->imgs);
+            $desiredElement1 = [];
+            foreach($img1 as $item){
+            if ($item !== "") {
+                array_push($desiredElement1, $item);
+            }
+        }
         ?>
 
             <div class="gm-card-1 ">
-                <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $img[0] ?>">
-                <div class="gm-card-info__div">車庫名: <?php echo $record->nm ?></div>
-                <div class="gm-card-info__div">価格: <?php echo $record->fee_monthly_rent ?></div>
+                <div class="gm-card-img1">
+                    <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record->property_id ?>/<?= $desiredElement1[0] ?>">
+                </div>
+                <div class="gm-card-info__div">ガレージ名: <?php echo $record->nm ?></div>
+                <div class="gm-card-info__div">賃料: <?php echo $record->fee_monthly_rent ?>円</div>
                 <?php
                 $param = array('id' => $record->property_id);
                 $link = add_query_arg($param, home_url('propertys'));
@@ -148,88 +164,7 @@ if (!defined('ABSPATH')) {
         ?>
     </div>
 
-    <div class="gm-help">
-        <div class="gm-help1">
-            <div class="gm-help1-desc">
-                <div class="gm-help1-desc-img">
-                    <img src="<?php echo get_template_directory_uri() ?>/library/images/toppage1.png" alt="">
-                </div>
-                <div class="gm-help1-desc-text">
-                    貸主模や管理会社の方自貪が決められた璽に物件情第!を入力し、<br>表示したい写真を指定するだけでこのようにmapで表示されます。<br> さらに、各物件詳細ページ,も自動で作成されます。<br>
-                    •入力が•しい方幽けに、入力代行オプション网窟しております。
-                </div>
-            </div>
-            <div class="gm-help1-property">
-                <div class="gm-help1-property-header">各物件詳細ページサンプル</div>
-                <div class="gm-help1-property-content">
-                    <!-- 物件詳細 -->
-
-
-                    <!-- 物件詳細 -->
-                </div>
-            </div>
-            <div class="gm-help1-flow">
-                <div class="gm-help1-flow-tap">
-                    流れ
-                </div>
-                <div class="gm-help-flow-content">
-                    1. 商品情報の入力 <br>
-                    2. 物件掲戲 <br>
-                    3. 契約希望者が 問い合わせ <br>
-                    4. 契約お望者の 連絡先通師 <br>
-                    5. 自分で契約または伸介を依頼
-                </div>
-            </div>
-            <div class="gm-help1-steps">
-                <div class="gm-help1-steps1">
-                    <div class="gm-help1-steps-text">
-                        1. 商品情報の入力
-                    </div>
-                    <div class="gm-help1-steps-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/library/images/toppage2.png" alt="">
-                    </div>
-                </div>
-                <div class="gm-help1-steps1">
-                    <div class="gm-help1-steps-text">
-                        2. 物件掲戲<br><br>
-                    </div>
-                    <div class="gm-help1-steps-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/library/images/toppage5.png" alt="">
-                    </div>
-                </div>
-                <div class="gm-help1-steps1">
-                    <div class="gm-help1-steps-text">
-                        3. 契約希望者が 問い合わせ
-                    </div>
-                    <div class="gm-help1-steps-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/library/images/toppage3.png" alt="">
-                    </div>
-                </div>
-                <div class="gm-help1-steps1">
-                    <div class="gm-help1-steps-text">
-                        4. 契約お望者の 連絡先通師
-                    </div>
-                    <div class="gm-help1-steps-img">
-
-                    </div>
-                </div>
-                <div class="gm-help1-steps1">
-                    <div class="gm-help1-steps-text">
-                        5. 自分で契約または伸介を依頼
-                    </div>
-                    <div class="gm-help1-steps-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/library/images/toppage4.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="gm-help2">
-
-        </div>
-        <div class="gm-help3">
-
-        </div>
-    </div>
+    
 </div>
 
 <script>
@@ -262,8 +197,7 @@ if (!defined('ABSPATH')) {
 
     async function initMap() {
         // Request needed libraries.
-        document.cookie = "favorite=0;";
-        console.log(document.cookie);
+
         const {
             Map
         } = await google.maps.importLibrary("maps");
@@ -321,6 +255,16 @@ if (!defined('ABSPATH')) {
     }
 
     function buildContent(property) {
+        let heartcolor = "";
+        let a = getCookie("favorite");
+        console.log(a, property.ID);
+        if (a.indexOf(Number(property.ID)) === -1) {
+            heartcolor = "border-heart";
+            console.log(heartcolor);
+        } else {
+            heartcolor = "selected-heart"
+        }
+
         const content = document.createElement("div");
         const img_path = property.imgs.split(',');
         let desiredElement = [];
@@ -341,10 +285,10 @@ if (!defined('ABSPATH')) {
                         <img src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/${property.property_id}/${desiredElement[0]}" alt="img" onclick="handleDblClick(${property.property_id})">
                     </div>
                     <div class="gm-map-info" onclick="handleDblClick(${property.property_id})">
-                        <div class="gm-card-info__div">車庫名: ${property.nm}</div>
-                        <div class="gm-card-info__div">価格: ${property.fee_monthly_rent} 円</div>
+                        <div class="gm-card-info__div">ガレージ名: ${property.nm}</div>
+                        <div class="gm-card-info__div">賃料: ${property.fee_monthly_rent} 円</div>
                     </div>
-                    <button class="heart" onclick="handleFavorite(${property.ID})"><i class="heart fa-solid fa-heart border-heart" id="heart${property.ID}"></i></button>
+                    <i class="heart123 fa fa-heart ${heartcolor}" id="heart${property.ID}" onclick="handleFavorite(${property.ID})"></i>
                 </div>
             </div> `;
 
@@ -355,23 +299,22 @@ if (!defined('ABSPATH')) {
     initMap();
 
     function handleFavorite(id) {
+        if (!(getCookie("favorite"))) {
+            document.cookie = "favorite=0";
+        }
         let a = getCookie("favorite");
         const element = document.getElementById("heart" + id);
-        console.log(element);
         if (a.indexOf(id) == -1) {
             setCookie('favorite', id, 1, a);
-            console.log(id);
             element.classList.remove("border-heart");
             element.classList.add("selected-heart");
-            console.log(element[id]);
 
         } else {
             let ind = a.indexOf(id);
-            deleteCookie('favorite', 365, a, ind);
+            deleteCookie('favorite', 1, a, ind);
             element.classList.remove("selected-heart");
             element.classList.add("border-heart");
         }
-
     }
 
 
@@ -395,7 +338,7 @@ if (!defined('ABSPATH')) {
     function deleteCookie(cname, expires, value, indi) {
         const spliced = value.toSpliced(indi, 1);
         let b = spliced.toString();
-        document.cookie = cname + "=" + b + ";" + expires + ";path=/";
+        document.cookie = cname + "=" + b + ";" + expires + ";";
         console.log(document.cookie);
     }
 

@@ -30,14 +30,14 @@ if (! defined('ABSPATH')) {
                 <?php } ?>
                         <div class="col-lg-5 col-md-4 gm-card">
                             <img class="img-fluid w-100" src="<?= wp_get_upload_dir()['baseurl'] ?>/gm-property/<?= $record[0]->property_id ?>/<?= $desiredElement ?>" data-target="#lightbox-gallery" data-slide-to=<?= $i?>>
-                            <div class="gm-card-info__div">車庫名: <?php echo $record[0]->nm ?></div>
-                            <div class="gm-card-info__div">価格: <?php echo $record[0]->fee_monthly_rent ?></div>
+                            <div class="gm-card-info__div">ガレージ名: <?php echo $record[0]->nm ?></div>
+                            <div class="gm-card-info__div">賃料: <?php echo $record[0]->fee_monthly_rent ?></div>
                             <?php
                                 $param = array('id'=>$record[0]->property_id);
                                 $link = add_query_arg($param, home_url('propertys'));
                             ?>
                             <div class="gm-mypage-add-button ml-20"><a href="<?= esc_url($link) ?>" class="gm-mypage-add-button ml-20">詳細を見る</a></div>
-                            <button class="heart" onclick="handleFavorite('<?= $record[0]->ID ?>')"><i class="heart fa-solid fa-heart selected-heart" id="heart${property.ID}"></i></button>
+                            <i class="heart123 fa-solid fa-heart selected-heart" id="heart${property.ID}" onclick="handleFavorite('<?= $record[0]->ID ?>')"></i>
                         </div>
                         <?php if (count($this->favorite_list) > 2) { ?>
                     </div>

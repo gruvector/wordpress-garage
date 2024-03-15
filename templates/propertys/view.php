@@ -20,7 +20,6 @@ if (!defined('ABSPATH')) {
 
                 <div class="property-slider">
                     <?php foreach ($img as $j => $img_display) {
-                        // var_dump($img_display);
                         if ($img_display != "") {
                             echo (' <div class="property-slide">
                                 <img src="' . wp_get_upload_dir()["baseurl"] . '/gm-property/' . $record->property_id . '/' . $img_display . '">
@@ -85,7 +84,7 @@ if (!defined('ABSPATH')) {
                     <div class="gm-basic-table-section2">
                         <?php
                         foreach ($this->availability_records as $i => $records) {
-                            if ($record->availability_id == $records->ID || (empty($this->get_input_param('availability_id')) && $i == 0)) {
+                            if ($record->availability_id == $records->ID) {
                                 echo $records->nm;
                             }
                         }
@@ -136,7 +135,7 @@ if (!defined('ABSPATH')) {
                 <div class="gm-basic-table-section2">共益費</div>
                 <div class="gm-basic-table-section2"><?= $record->fee_monthly_common_service ?> 円</div>
                 <div class="gm-basic-table-section2">その他<br>毎月支払う料金</div>
-                <div class="gm-basic-table-section3"><?= $record->fee_monthly_others ?>円</div>
+                <div class="gm-basic-table-section3"><?= $record->fee_monthly_others ?></div>
             </div>
             <div class="gm-fee-month">
                 <div class="gm-basic-table-section1 gm-border-right">特徴</div>
