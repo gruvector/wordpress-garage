@@ -9,6 +9,8 @@ function enqueue_my_child_styles()
         get_stylesheet_directory_uri() . '/style.css',
         array('sng-stylesheet','sng-option')
     );
+
+    
 }
 /************************
  *functions.phpへの追記は以下に
